@@ -20,3 +20,18 @@ class Post:
         post_id = None  # generate post id here
         post_info = (post_id,) + post_info
         return cls(post_info)
+
+    def add_post(self):  # add using this class object
+        pass
+
+    def remove_post(self):
+        pass
+
+    def get_post_by_user_id(self):
+        pass
+
+    def upvote(self):
+        pass
+
+    def downvote(self):
+        pass

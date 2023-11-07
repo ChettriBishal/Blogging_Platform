@@ -20,9 +20,16 @@ class User:
         complete_user_info = (user_id, registration_date) + user_info
         return cls(complete_user_info)
 
+    def remove_user(self):
+        pass
+
+    def change_password(self):
+        pass
+
 
 class Admin(User):
-    pass
+    def get_users(self):
+        pass
 
 
 class Blogger(User):
