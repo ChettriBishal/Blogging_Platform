@@ -1,6 +1,6 @@
 import sqlite3
 
-from src.helpers.common import BLOGGING_DB
+from src.common.filepaths import BLOGGING_DB
 
 
 class DBConnection:

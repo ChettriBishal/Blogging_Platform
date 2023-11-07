@@ -1,7 +1,11 @@
+from datetime import datetime
+
 from bcrypt import checkpw, hashpw, gensalt
 
 from src.helpers import take_input
 from src.controllers import user
+from src.common.roles import Role
+
 
 class Authentication:
 
@@ -19,11 +23,10 @@ class Authentication:
         username, passw, email = take_input.get_user_details()
         hashed_password = self._hash_password(passw)
 
-        #create user object
-        new_user = user.User()
-
-
-
+        # create user object
+        registration_date = datetime.today().strftime('%Y-%m-%d')
+        new_user = user.User(username, hashed_password, Role.BLOGGER, registration_date)
+        new_user.add()
 
     def sign_in(self):
         pass

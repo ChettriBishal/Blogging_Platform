@@ -5,7 +5,7 @@ class Post:
 
     def __init__(self, post_info):
         (
-            self.post_id,
+            #post_id will be auto-incremented
             self.title,
             self.content,
             self.creator,
@@ -14,12 +14,6 @@ class Post:
             self.tag_name
         ) = post_info
         # db must contain these fields in this order only
-
-    @classmethod
-    def new_post(cls, post_info):
-        post_id = None  # generate post id here
-        post_info = (post_id,) + post_info
-        return cls(post_info)
 
     def add_post(self):  # add using this class object
         pass
