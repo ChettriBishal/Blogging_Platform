@@ -1,6 +1,5 @@
+import hashlib
 from datetime import datetime
-
-from bcrypt import checkpw, hashpw, gensalt
 
 from src.helpers import take_input
 from src.controllers import user
@@ -12,15 +11,14 @@ from src.common.sql_query import SQL
 
 class Authentication:
 
+    def _hash_password(self, password):
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        return hashed_password
+
     def _check_password(self, password, hashed_password):
-        if checkpw(password.encode('utf8'), hashed_password):
+        if self._hash_password(password) == hashed_password:
             return True
         return False
-
-    def _hash_password(self, password):
-        salt = gensalt()
-        hashed_password = hashpw(password.encode('utf-8'), salt)
-        return hashed_password
 
     def sign_up(self):
         username, passw, email = take_input.get_user_details()
@@ -36,7 +34,7 @@ class Authentication:
 
     def sign_in(self):
         username, passw = take_input.get_username_password()
-        password_in_db = database.get_item(SQL['GET_PASSWORD'].value, (username,))
+        password_in_db = database.get_item(SQL['GET_PASSWORD'].value, (username,))[0]
 
         if self._check_password(passw, password_in_db):
             return True
