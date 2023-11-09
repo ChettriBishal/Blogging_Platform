@@ -56,3 +56,11 @@ def single_query(query):
             cursor.execute(query)
         except sqlite3.Error as error:
             print(error)
+
+
+def query_with_params(query, data):
+    with DBConnection() as cursor:
+        try:
+            cursor.execute(query, data)
+        except sqlite3.Error as error:
+            print(error)

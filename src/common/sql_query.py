@@ -43,6 +43,12 @@ class SQL(Enum):
     FROM users 
     """
 
+    GET_USER_BY_USERNAME = """
+    SELECT * 
+    FROM users
+    WHERE username = ?
+    """
+
     GET_PASSWORD = """
     SELECT password 
     FROM users 
