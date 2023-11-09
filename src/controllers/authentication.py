@@ -26,7 +26,10 @@ class Authentication:
             return -1  # will return -1 for invalid username and password
 
         if validation.validate_password(passw) is None:
-            return -1
+            return -2
+
+        if validation.validate_email(email) is None:
+            return -3
 
         hashed_password = self._hash_password(passw)
 
@@ -64,7 +67,13 @@ if __name__ == "__main__":
     auth = Authentication()
     usr = auth.sign_up()
     if usr == -1:
-        print("Invalid username or password")
+        print("Invalid username")
+        auth.sign_up()
+    elif usr == -2:
+        print("Invalid password")
+        auth.sign_up()
+    elif usr == -3:
+        print("Invalid email")
         auth.sign_up()
     elif usr:
         print("User signed up successfully!!")
