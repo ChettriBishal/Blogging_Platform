@@ -5,7 +5,7 @@ class Post:
 
     def __init__(self, post_info):
         (
-            #post_id will be auto-incremented
+            # post_id will be auto-incremented
             self.title,
             self.content,
             self.creator,
