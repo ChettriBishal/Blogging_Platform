@@ -32,7 +32,7 @@ class Authentication:
 
         # create user object
         registration_date = datetime.today().strftime('%Y-%m-%d')
-        new_user = user.User(username, hashed_password, Role['BLOGGER'].value, email, registration_date)
+        new_user = user.User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
         if new_user.add():
             return new_user
         else:
@@ -42,7 +42,8 @@ class Authentication:
         username, passw = take_input.get_username_password()
 
         # before getting the password check if user exists
-        user_presence = database.query_with_params(SQL.GET_USER_BY_USERNAME, (username,))
+        print(SQL.GET_USER_BY_USERNAME.value)
+        user_presence = database.get_item(SQL.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence is None:
             return -1
@@ -51,7 +52,7 @@ class Authentication:
         password_in_db = database.get_item(SQL.GET_PASSWORD.value, (username,))[0]
 
         if validation.validate_username(username) is None:
-            return -1
+            return -3
 
         if self._check_password(passw, password_in_db):
             return True
@@ -61,14 +62,22 @@ class Authentication:
 
 if __name__ == "__main__":
     auth = Authentication()
-    # usr = auth.sign_up()
-    # if usr:
-    #     print("User signed up successfully!!")
-    #     print(usr.get_details())
-    # else:
-    #     print("Try again")
-    #     auth.sign_up()
-    if auth.sign_in():
+    usr = auth.sign_up()
+    if usr == -1:
+        print("Invalid username or password")
+        auth.sign_up()
+    elif usr:
+        print("User signed up successfully!!")
+        print(usr.get_details())
+    else:
+        print("Try again")
+        auth.sign_up()
+    usr = auth.sign_in()
+    if usr == -1:
+        print("User does not exist")
+    elif usr == -3:
+        print("Invalid username!")
+    elif usr:
         print("User signed in successfully!!")
     else:
         print("Try again")
