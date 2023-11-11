@@ -11,16 +11,17 @@ class Post(ABC):
         pass
 
     @abstractmethod
+    def edit_content(self):
+        pass
+
+    @abstractmethod
     def remove_content(self):
         pass
 
-    def get_post_by_user_id(self):
-        pass
-
+    @abstractmethod
     def upvote(self):
         pass
 
+    @abstractmethod
     def downvote(self):
         pass
-
-

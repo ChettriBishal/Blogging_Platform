@@ -15,9 +15,12 @@ def get_username_password():
 
 
 def get_blog_post_details():
-    pass
+    title = input(prompts.ENTER_BLOG_TITLE)
+    content = input(prompts.ENTER_BLOG_CONTENT)
+    tag = input(prompts.ENTER_BLOG_TAG)
+    return title, content, tag
 
 
 def get_comment_details():
-    ...  # comment is not going to have title
-    pass
+    content = input(prompts.ENTER_COMMENT)
+    return content

@@ -9,10 +9,6 @@ class Sql(Enum):
     )
     """
 
-    DELETE_POSTS_TABLE = """
-    drop table posts;
-    """
-
     CREATE_BLOG_TABLE = """
     CREATE TABLE IF NOT EXISTS blogs (
     blog_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +17,7 @@ class Sql(Enum):
     creator_id INTEGER,
     upvotes INTEGER,
     tag_name TEXT,
+    creation_date DATE,
     FOREIGN KEY (creator_id) REFERENCES users(user_id)
     )
     """
@@ -32,6 +29,7 @@ class Sql(Enum):
     content TEXT,
     creator_id INTEGER,
     upvotes INTEGER,
+    creation_date DATE,
     FOREIGN KEY (creator_id) REFERENCES users(user_id),
     FOREIGN KEY (blog_id) REFERENCES blogs(blog_id)
     )
@@ -42,7 +40,7 @@ class Sql(Enum):
     VALUES (?,?,?,?,?)
     """
 
-    REMOVE_USER = """
+    REMOVE_USER_BY_USERNAME = """
     DELETE FROM users 
     WHERE username = ?
     """
@@ -76,8 +74,34 @@ class Sql(Enum):
     WHERE username = ?
     """
 
-# fix this
-    INSERT_POST = """
-    INSERT INTO posts (title,content,creator_id,upvotes, post_type, tag_name)
-    VALUES (?,?,?,?,?,?)
+    INSERT_BLOG = """
+    INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date)
+    VALUES(?,?,?,?,?,?)
+    """
+
+    GET_BLOG_ID = """
+    SELECT blog_id 
+    FROM blogs 
+    WHERE title = ? AND creator_id = ?
+    """
+
+    GET_COMMENT_ID = """
+    SELECT comment_id 
+    FROM comments 
+    WHERE blog_id = ? AND creator_id = ?
+    """
+
+    INSERT_COMMENT = """
+    INSERT INTO comments(blog_id,content,creator_id,upvotes,creation_date)
+    VALUES(?,?,?,?,?)
+    """
+
+    REMOVE_BLOG_BY_ID = """
+    DELETE FROM blogs 
+    WHERE blog_id = ?
+    """
+
+    REMOVE_COMMENT_BY_ID = """
+    DELETE FROM comments 
+    WHERE comment_id = ?
     """
