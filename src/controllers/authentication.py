@@ -4,9 +4,10 @@ from datetime import datetime
 from src.helpers import take_input, validation
 from src.controllers import user
 from src.common.roles import Role
+from src.common.flags import Flag
 
 from src.models import database
-from src.common.sql_query import SQL
+from src.common.sql_query import Sql
 
 
 class Authentication:
@@ -23,13 +24,13 @@ class Authentication:
     def sign_up(self):
         username, passw, email = take_input.get_user_details()
         if validation.validate_username(username) is None:
-            return -1  # will return -1 for invalid username and password
+            return Flag.INVALID_USERNAME.value  # will return -1 for invalid username and password
 
         if validation.validate_password(passw) is None:
-            return -2
+            return Flag.INVALID_PASSWORD.value
 
         if validation.validate_email(email) is None:
-            return -3
+            return Flag.INVALID_EMAIL.value
 
         hashed_password = self._hash_password(passw)
 
@@ -45,14 +46,14 @@ class Authentication:
         username, passw = take_input.get_username_password()
 
         # before getting the password check if user exists
-        print(SQL.GET_USER_BY_USERNAME.value)
-        user_presence = database.get_item(SQL.GET_USER_BY_USERNAME.value, (username,))
+        print(Sql.GET_USER_BY_USERNAME.value)
+        user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence is None:
             return -1
             # -1 denotes that user does not exist
 
-        password_in_db = database.get_item(SQL.GET_PASSWORD.value, (username,))[0]
+        password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
         if validation.validate_username(username) is None:
             return -3

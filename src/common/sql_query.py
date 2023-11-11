@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class SQL(Enum):
+class Sql(Enum):
     CREATE_USER_TABLE = """
     CREATE TABLE IF NOT EXISTS users(
     user_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT,password TEXT, role TEXT,
@@ -39,7 +39,7 @@ class SQL(Enum):
     """
 
     GET_ALL_USERS = """
-    SELECT (username,role,email) 
+    SELECT username,role,email
     FROM users 
     """
 

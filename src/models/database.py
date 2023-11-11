@@ -34,6 +34,18 @@ def get_item(query, data):
         return response
 
 
+def get_items(query, data=None):
+    with DBConnection() as cursor:
+        try:
+            if data is None:
+                response = cursor.execute(query).fetchall()
+            else:
+                response = cursor.execute(query, data).fetchall()
+            return response
+        except sqlite3.Error as error:
+            print(error)
+
+
 def insert_item(query, data):
     with DBConnection() as cursor:
         try:
