@@ -19,7 +19,7 @@ class Post(ABC):
         pass
 
     @abstractmethod
-    def upvote(self):
+    def upvote(self, user_id):
         pass
 
     @abstractmethod

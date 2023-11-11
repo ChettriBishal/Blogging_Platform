@@ -39,16 +39,24 @@ class Blog(Post):
         except Exception as exc:
             print(exc)
 
-    def upvote(self):
-        pass
+    def upvote(self, user_id):
+        upvote_record = database.get_item(Sql.CHECK_BLOG_UPVOTE.value, (user_id, self.blog_id,))
+        if upvote_record is None:
+            self.upvotes += 1
+            database.query_with_params(Sql.ADD_BLOG_UPVOTE.value, (user_id, self.blog_id,))
+            database.query_with_params(Sql.UPDATE_BLOG_UPVOTE.value, (self.upvotes, self.blog_id,))
+            return True
+        else:
+            return False
 
     def downvote(self):
         pass
 
     def show_details(self):
-        print(f"""
+        username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
+        return(f"""
         Title: {self.title}
-        Author: {self.creator}
+        Author: {username}
         Content: {self.content}
         Upvotes: {self.upvotes}
         Created on: {self.creation_date}
@@ -59,14 +67,16 @@ if __name__ == "__main__":
     from src.helpers import take_input
     from datetime import datetime
 
-    title, content, tag = take_input.get_blog_post_details()
-    rn = datetime.today()
-    # blog_post_d = ('ABC', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
-    blog_post_d = (title, content, 'snow123', 0, tag, rn)
+    # title, content, tag = take_input.get_blog_post_details()
+    # rn = datetime.today()
+    blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    # blog_post_d = (title, content, 'snow123', 0, tag, rn)
     new_blog = Blog(blog_post_d)
-    new_blog.show_details()
-    new_blog.add_content()
+    # new_blog.show_details()
+    # new_blog.add_content()
     # if new_blog.edit_content("Change to this"):
     #     print("Edited successfully!")
     # else:
     #     print("Failed to edit!")
+    new_blog.blog_id = 3
+    new_blog.upvote(2)

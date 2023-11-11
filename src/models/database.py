@@ -29,9 +29,9 @@ def get_item(query, data):
     with DBConnection() as cursor:
         try:
             response = cursor.execute(query, data).fetchone()
+            return response
         except sqlite3.Error as error:
             print(error)
-        return response
 
 
 def get_items(query, data=None):

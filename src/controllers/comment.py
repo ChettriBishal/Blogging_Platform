@@ -37,14 +37,26 @@ class Comment(Post):
         except Exception as exc:
             print(exc)
 
-    def upvote(self):
-        pass
+    def upvote(self, user_id):
+        upvote_record = database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
+        if upvote_record is None:
+            self.upvotes += 1
+            database.insert_item(Sql.ADD_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
+            database.query_with_params(Sql.UPDATE_COMMENT_UPVOTE.value, (self.upvotes, self.comment_id,))
+            return True
+        else:
+            return False
 
     def downvote(self):
         pass
 
     def show_details(self):
-        pass
+        username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
+        return(f"""
+        Author: {username}
+        Comment: {self.content}
+        Written on: {self.creation_date}
+        """)
 
 
 if __name__ == "__main__":
@@ -55,9 +67,11 @@ if __name__ == "__main__":
     # rn = datetime.today()
     # comment_d = (1, content, 'snow123', 0, rn)
     comment_d = (1, "xyz", 'snow123', 0, 'no worries')
-    new_blog = Comment(comment_d)
+    new_c = Comment(comment_d)
     # new_blog.add_content()
-    if new_blog.edit_content("changed this comment as well"):
-        print("Edited comment successfully")
-    else:
-        print("Could not edit comment")
+    # if new_blog.edit_content("changed this comment as well"):
+    #     print("Edited comment successfully")
+    # else:
+    #     print("Could not edit comment")
+    new_c.comment_id = 1
+    new_c.upvote(3)
