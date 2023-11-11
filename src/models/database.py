@@ -47,9 +47,11 @@ def get_items(query, data=None):
 
 
 def insert_item(query, data):
-    with DBConnection() as cursor:
+    with DBConnection() as connection:
+        cursor = connection.cursor()
         try:
             cursor.execute(query, data)
+            return cursor.lastrowid
         except sqlite3.Error as error:
             print(error)
 

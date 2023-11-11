@@ -14,11 +14,12 @@ class Blog(Post):
             self.tag_name,
             self.creation_date
         ) = blog_info
+        self.blog_id = None
         self.blog_info = blog_info
 
     def add_content(self):
         try:
-            database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
+            self.blog_id = database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
         except Exception as exc:
             print(exc)
 
@@ -58,13 +59,14 @@ if __name__ == "__main__":
     from src.helpers import take_input
     from datetime import datetime
 
-    # title, content, tag = take_input.get_blog_post_details()
-    # rn = datetime.today()
-    blog_post_d = ('ABC', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    title, content, tag = take_input.get_blog_post_details()
+    rn = datetime.today()
+    # blog_post_d = ('ABC', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    blog_post_d = (title, content, 'snow123', 0, tag, rn)
     new_blog = Blog(blog_post_d)
     new_blog.show_details()
-    # new_blog.add_content()
-    if new_blog.edit_content("Change to this"):
-        print("Edited successfully!")
-    else:
-        print("Failed to edit!")
+    new_blog.add_content()
+    # if new_blog.edit_content("Change to this"):
+    #     print("Edited successfully!")
+    # else:
+    #     print("Failed to edit!")

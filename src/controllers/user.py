@@ -16,6 +16,7 @@ class User:
         ) = user_info
 
         self.user_info = user_info
+        self.user_id = None
         # db must contain these fields in this order only
 
     def get_details(self):
@@ -29,7 +30,7 @@ class User:
     def add(self):
         # adding this user object to db
         try:
-            database.insert_item(Sql.INSERT_USER.value, self.user_info)
+            self.user_id = database.insert_item(Sql.INSERT_USER.value, self.user_info)
             return True
         except Exception as exc:
             print(exc)

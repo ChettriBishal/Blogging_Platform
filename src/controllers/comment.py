@@ -13,11 +13,12 @@ class Comment(Post):
             self.upvotes,
             self.creation_date,
         ) = comment_info
+        self.comment_id = None
         self.comment_info = comment_info
 
     def add_content(self):
         try:
-            database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
+            self.comment_id = database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
         except Exception as exc:
             print(exc)
 
