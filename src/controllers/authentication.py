@@ -50,13 +50,13 @@ class Authentication:
         user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence is None:
-            return -1
+            return Flag.DOES_NOT_EXIST.value
             # -1 denotes that user does not exist
 
         password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
         if validation.validate_username(username) is None:
-            return -3
+            return Flag.INVALID_USERNAME.value
 
         if self._check_password(passw, password_in_db):
             return True
@@ -70,10 +70,10 @@ if __name__ == "__main__":
     if usr == -1:
         print("Invalid username")
         auth.sign_up()
-    elif usr == -2:
+    elif usr == Flag.INVALID_PASSWORD.value:
         print("Invalid password")
         auth.sign_up()
-    elif usr == -3:
+    elif usr == Flag.INVALID_EMAIL.value:
         print("Invalid email")
         auth.sign_up()
     elif usr:
@@ -83,9 +83,9 @@ if __name__ == "__main__":
         print("Try again")
         auth.sign_up()
     usr = auth.sign_in()
-    if usr == -1:
+    if usr == Flag.DOES_NOT_EXIST.value:
         print("User does not exist")
-    elif usr == -3:
+    elif usr == Flag.INVALID_USERNAME.value:
         print("Invalid username!")
     elif usr:
         print("User signed in successfully!!")
