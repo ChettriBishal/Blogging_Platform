@@ -61,6 +61,7 @@ class Admin(User):
             print(exc)
 
 
+# remove this if you don't have anything inside later
 class Blogger(User):
     pass
 
