@@ -11,7 +11,7 @@ class Post(ABC):
         pass
 
     @abstractmethod
-    def edit_content(self):
+    def edit_content(self, new_content):
         pass
 
     @abstractmethod
@@ -24,4 +24,8 @@ class Post(ABC):
 
     @abstractmethod
     def downvote(self):
+        pass
+
+    @abstractmethod
+    def show_details(self):
         pass

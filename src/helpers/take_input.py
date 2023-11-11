@@ -21,6 +21,6 @@ def get_blog_post_details():
     return title, content, tag
 
 
-def get_comment_details():
+def get_comment():
     content = input(prompts.ENTER_COMMENT)
     return content

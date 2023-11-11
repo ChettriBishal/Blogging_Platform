@@ -21,8 +21,13 @@ class Comment(Post):
         except Exception as exc:
             print(exc)
 
-    def edit_content(self):
-        pass
+    def edit_content(self, new_content):
+        try:
+            comment_id = database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator,))[0]
+            database.query_with_params(Sql.EDIT_COMMENT.value, (new_content, comment_id,))
+            return True
+        except Exception as exc:
+            print(exc)
 
     def remove_content(self):
         comment_to_remove = database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
@@ -37,13 +42,21 @@ class Comment(Post):
     def downvote(self):
         pass
 
+    def show_details(self):
+        pass
+
 
 if __name__ == "__main__":
     from src.helpers import take_input
     from datetime import datetime
 
-    content = take_input.get_comment_details()
-    rn = datetime.today()
-    comment_d = (1, content, 'snow123', 0, rn)
+    # content = take_input.get_comment()
+    # rn = datetime.today()
+    # comment_d = (1, content, 'snow123', 0, rn)
+    comment_d = (1, "xyz", 'snow123', 0, 'no worries')
     new_blog = Comment(comment_d)
-    new_blog.add_content()
+    # new_blog.add_content()
+    if new_blog.edit_content("changed this comment as well"):
+        print("Edited comment successfully")
+    else:
+        print("Could not edit comment")

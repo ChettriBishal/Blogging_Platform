@@ -78,6 +78,11 @@ class Sql(Enum):
     INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date)
     VALUES(?,?,?,?,?,?)
     """
+    EDIT_BLOG = """
+        UPDATE blogs 
+        SET content = ? 
+        WHERE blog_id = ? 
+    """
 
     GET_BLOG_ID = """
     SELECT blog_id 
@@ -94,6 +99,12 @@ class Sql(Enum):
     INSERT_COMMENT = """
     INSERT INTO comments(blog_id,content,creator_id,upvotes,creation_date)
     VALUES(?,?,?,?,?)
+    """
+
+    EDIT_COMMENT = """
+    UPDATE comments 
+    SET content = ? 
+    WHERE comment_id = ? 
     """
 
     REMOVE_BLOG_BY_ID = """
