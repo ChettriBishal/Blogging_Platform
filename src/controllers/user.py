@@ -36,6 +36,9 @@ class User:
             print(exc)
             return False
 
+    def set_user_id(self, user_id):
+        self.user_id = user_id
+
     def remove_user_by_username(self):
         try:
             database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, self.username)
@@ -51,6 +54,14 @@ class User:
         except Exception as exc:
             print(exc)
             return False
+
+    def __repr__(self):
+        return f"""
+        username: {self.username},
+        role: {self.user_role},
+        email: {self.email},
+        registration_date: {self.registration_date},
+        """
 
 
 class Admin(User):

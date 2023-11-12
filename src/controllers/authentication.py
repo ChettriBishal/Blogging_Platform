@@ -44,6 +44,8 @@ class Authentication:
 
     def sign_in(self):
         username, passw = take_input.get_username_password()
+        if validation.validate_username(username) is None:
+            return Flag.INVALID_USERNAME.value
 
         # before getting the password check if user exists
         print(Sql.GET_USER_BY_USERNAME.value)
@@ -55,11 +57,8 @@ class Authentication:
 
         password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
-        if validation.validate_username(username) is None:
-            return Flag.INVALID_USERNAME.value
-
         if self._check_password(passw, password_in_db):
-            return True
+            return username
         else:
             return False
 
