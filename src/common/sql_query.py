@@ -104,7 +104,7 @@ class Sql(Enum):
     """
 
     GET_ALL_USERS = """
-    SELECT username,role,email
+    SELECT *
     FROM users 
     """
 

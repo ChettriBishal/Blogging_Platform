@@ -39,7 +39,6 @@ def signup():
         signup()
     elif new_user:
         print("User signed up successfully!!")
-        print(new_user.get_details())
         home_menu()
     else:
         print("Try again")
@@ -69,8 +68,10 @@ def signin():
         print(f"User role for {user_logging_in} -> {user_logged_in.user_role}")
 
         user_logged_in.user_role = int(user_logged_in.user_role)
-
-        blogger.blogger_menu(user_logged_in)
+        if user_logged_in.user_role == Role.ADMIN.value:
+            blogger.admin_menu(user_logged_in)
+        elif user_logged_in.user_role == Role.BLOGGER.value:
+            blogger.blogger_menu(user_logged_in)
     else:
         print("Wrong password! Please try again!")
         signin()

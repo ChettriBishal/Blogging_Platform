@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from src.common import prompts
-from src.helpers import take_input, fetch_from_db
+from src.helpers import take_input
+from src.helpers.admin_only import admin
 from src.controllers.blog import Blog
 from src.controllers.comment import Comment
 from src.common.sql_query import Sql
@@ -14,7 +15,9 @@ from src.models import database
 
 
 def blogger_menu(active_user):
-    choice = input(prompts.BLOGGER_MENU)
+    menu_prompt = prompts.BLOGGER_MENU
+
+    choice = input(menu_prompt)
     if choice == '1':
         view_blogs()
         blogger_menu(active_user)
@@ -41,6 +44,56 @@ def blogger_menu(active_user):
     else:
         print("Please enter a valid choice!")
         blogger_menu(active_user)
+
+
+def admin_menu(active_user):
+    menu_prompt = prompts.ADMIN_SPECIFIC
+
+    choice = input(menu_prompt)
+    if choice == '1':
+        view_blogs()
+        admin_menu(active_user)
+    elif choice == '2':
+        view_one_blog()
+        admin_menu(active_user)
+    elif choice == '3':
+        create_blog(active_user)
+        admin_menu(active_user)
+    elif choice == '4':
+        edit_blog(active_user)
+        admin_menu(active_user)
+    elif choice == '5':
+        remove_blog(active_user)
+        admin_menu(active_user)
+    elif choice == '6':
+        upvote_blog(active_user)
+        admin_menu(active_user)
+    elif choice == '7':
+        comment_on_blog(active_user)
+        admin_menu(active_user)
+    elif choice == '8':
+        users = get_users(active_user)
+        for u1 in users:
+            print(u1.get_details())
+        admin_menu(active_user)
+    elif choice == '9':
+        ...
+        # to remove user by username
+    elif choice == '10':
+        pass
+    else:
+        print("Please enter a valid choice!")
+        admin_menu(active_user)
+
+
+@admin
+def get_users(active_user):
+    try:
+        user_list = database.get_items(Sql.GET_ALL_USERS.value)
+        users = [User(*record[1:]) for record in user_list]
+        return users
+    except Exception as exc:
+        print(exc)
 
 
 def view_blogs():

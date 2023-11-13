@@ -24,17 +24,33 @@ Enter your choice: """
 BLOGGER_MENU = f"""
 {render.renderText("BLOGGER")}
 1. View blogs
-2. Create a new blog
-3. Edit existing blog
-4. Remove a blog 
-5. Upvote a blog
-6. Comment on a blog
-7. Exit
+2. View a single blog
+3. Create a new blog
+4. Edit existing blog
+5. Remove a blog 
+6. Upvote a blog
+7. Comment on a blog
+8. Exit
 
 Enter your choice: """
 
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
 COMMENTS = "--------------Comments--------------"
+
+ADMIN_SPECIFIC = f"""
+{render.renderText("ADMIN")}
+1. View blogs
+2. View a single blog
+3. Create a new blog
+4. Edit existing blog
+5. Remove a blog 
+6. Upvote a blog
+7. Comment on a blog
+8. List all users
+9. Remove user by username
+10. Exit
+
+Enter your choice: """
 
 
