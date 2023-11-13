@@ -16,37 +16,57 @@ from src.models import database
 def blogger_menu(active_user):
     choice = input(prompts.BLOGGER_MENU)
     if choice == '1':
-        view_blogs(active_user)
+        view_blogs()
         blogger_menu(active_user)
     elif choice == '2':
-        create_blog(active_user)
+        view_one_blog()
         blogger_menu(active_user)
     elif choice == '3':
-        edit_blog(active_user)
+        create_blog(active_user)
         blogger_menu(active_user)
     elif choice == '4':
-        remove_blog(active_user)
+        edit_blog(active_user)
         blogger_menu(active_user)
     elif choice == '5':
-        upvote_blog(active_user)
+        remove_blog(active_user)
         blogger_menu(active_user)
     elif choice == '6':
-        comment_on_blog(active_user)
+        upvote_blog(active_user)
         blogger_menu(active_user)
     elif choice == '7':
+        comment_on_blog(active_user)
+        blogger_menu(active_user)
+    elif choice == '8':
         pass
     else:
         print("Please enter a valid choice!")
         blogger_menu(active_user)
 
 
-def view_blogs(active_user):
+def view_blogs():
     # this user should be able to view all blogs
     blogs = database.get_items(Sql.GET_ALL_BLOGS.value)
     blogs = [Blog(blog[1:]) for blog in blogs]
 
     for blog in blogs:
         print(blog.details())
+
+
+def view_one_blog():
+    title = input(prompts.ENTER_BLOG_TITLE)
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    if blog_details is None:
+        return Flag.DOES_NOT_EXIST.value
+
+    current_blog = Blog(blog_details[1:])
+    current_blog.set_blog_id(blog_details[0])
+    print(current_blog.details())
+    blog_comments = current_blog.get_comments()
+    print(prompts.COMMENTS)
+    for record in blog_comments:
+        print(record.details())
+
+    return True
 
 
 def create_blog(active_user):
@@ -150,4 +170,5 @@ if __name__ == "__main__":
     # remove_blog(current_user)
     print(current_user.get_details())
     # view_blogs(current_user)
-    blogger_menu(current_user)
+    # blogger_menu(current_user)
+    view_one_blog()

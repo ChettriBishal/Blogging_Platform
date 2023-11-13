@@ -1,6 +1,7 @@
 from src.controllers.post import Post
 from src.common.sql_query import Sql
 from src.models import database
+from src.controllers.comment import Comment
 
 
 class Blog(Post):
@@ -69,7 +70,11 @@ class Blog(Post):
 
     def get_comments(self):
         all_comments = database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
-        return all_comments
+
+        blog_comments = [Comment(record[1:]) for record in all_comments]
+        # for comment in all_comments:
+
+        return blog_comments
 
 
 if __name__ == "__main__":
@@ -90,4 +95,8 @@ if __name__ == "__main__":
     #     print("Failed to edit!")
     new_blog.blog_id = 1
     # new_blog.upvote(2)
-    print(*new_blog.get_comments())
+    comments = new_blog.get_comments()
+
+    for comment in comments:
+        print(comment.details())
+    # print(*new_blog.get_comments())

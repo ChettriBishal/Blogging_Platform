@@ -52,9 +52,9 @@ class Comment(Post):
         pass
 
     def details(self):
-        username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
+        # username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
         return(f"""
-        Author: {username}
+        Author: {self.creator}
         Comment: {self.content}
         Written on: {self.creation_date}
         """)

@@ -35,4 +35,6 @@ Enter your choice: """
 
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
+COMMENTS = "--------------Comments--------------"
+
 
