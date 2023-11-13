@@ -40,6 +40,7 @@ def signup():
     elif new_user:
         print("User signed up successfully!!")
         print(new_user.get_details())
+        home_menu()
     else:
         print("Try again")
         signup()
@@ -58,7 +59,7 @@ def signin():
     elif user_logging_in:
         # firstly create a user object,
         # then show menus on the basis of roles
-        print("User logged successfully!!!")
+        print("User logged in successfully!!!")
         record = database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
 
         user_logged_in = User(*record[1:])
@@ -69,14 +70,7 @@ def signin():
 
         user_logged_in.user_role = int(user_logged_in.user_role)
 
-        if user_logged_in.user_role == Role.ADMIN.value:
-            pass
-            # menu for blogger operations
-        elif user_logged_in.user_role == Role.BLOGGER.value:
-            blogger.blogger_menu(user_logged_in)
-            # menu for admin operations
-        print(user_logged_in)
-
+        blogger.blogger_menu(user_logged_in)
     else:
         print("Wrong password! Please try again!")
         signin()

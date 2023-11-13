@@ -2,6 +2,7 @@ from datetime import date
 
 from src.common.sql_query import Sql
 from src.models import database
+from src.helpers.admin_only import admin
 
 
 class User:
@@ -55,6 +56,14 @@ class User:
             print(exc)
             return False
 
+    @admin
+    def get_users(self):
+        try:
+            user_list = database.get_items(Sql.GET_ALL_USERS.value)
+            return user_list
+        except Exception as exc:
+            print(exc)
+
     def __repr__(self):
         return f"""
         username: {self.username},
@@ -62,20 +71,6 @@ class User:
         email: {self.email},
         registration_date: {self.registration_date},
         """
-
-
-class Admin(User):
-    def get_users(self):
-        try:
-            users = database.get_items(Sql.GET_ALL_USERS.value)
-            return users
-        except Exception as exc:
-            print(exc)
-
-
-# remove this if you don't have anything inside later
-class Blogger(User):
-    pass
 
 
 if __name__ == "__main__":
