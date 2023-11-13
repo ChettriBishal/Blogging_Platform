@@ -67,9 +67,9 @@ class Sql(Enum):
     """
 
     UPDATE_COMMENT_UPVOTE = """
-        UPDATE comments 
-        SET upvotes = ? 
-        WHERE comment_id = ?
+    UPDATE comments 
+    SET upvotes = ? 
+    WHERE comment_id = ?
     """
 
     CHECK_COMMENT_UPVOTE = """
@@ -138,9 +138,9 @@ class Sql(Enum):
     """
 
     EDIT_BLOG = """
-        UPDATE blogs 
-        SET content = ? 
-        WHERE blog_id = ? 
+    UPDATE blogs 
+    SET content = ? 
+    WHERE blog_id = ? 
     """
 
     GET_BLOG_ID = """
@@ -153,6 +153,12 @@ class Sql(Enum):
     SELECT * 
     FROM blogs 
     WHERE title = ? AND creator_id = ?
+    """
+
+    GET_BLOG_RECORD_BY_TITLE = """
+    SELECT * 
+    FROM blogs 
+    WHERE title = ?
     """
 
     GET_COMMENT_ID = """

@@ -7,6 +7,8 @@ from src.common.roles import Role
 
 from src.models import database
 
+from src.views import blogger
+
 
 def home_menu():
     choice = input(prompts.HOME_DISPLAY)
@@ -61,12 +63,17 @@ def signin():
 
         user_logged_in = User(*record[1:])
         user_logged_in.set_user_id(record[0])
+        print(user_logged_in.get_details())
+
+        print(f"User role for {user_logging_in} -> {user_logged_in.user_role}")
+
+        user_logged_in.user_role = int(user_logged_in.user_role)
 
         if user_logged_in.user_role == Role.ADMIN.value:
             pass
             # menu for blogger operations
         elif user_logged_in.user_role == Role.BLOGGER.value:
-            pass
+            blogger.blogger_menu(user_logged_in)
             # menu for admin operations
         print(user_logged_in)
 

@@ -24,11 +24,16 @@ def blogger_menu(active_user):
         edit_blog(active_user)
         blogger_menu(active_user)
     elif choice == '4':
-        pass
+        remove_blog(active_user)
+        blogger_menu(active_user)
     elif choice == '5':
+        upvote_blog(active_user)
+        blogger_menu(active_user)
+    elif choice == '6':
         pass
     else:
         print("Please enter a valid choice!")
+        blogger_menu(active_user)
 
 
 def view_blogs(active_user):
@@ -92,6 +97,24 @@ def remove_blog(active_user):
         print("Blog removed successfully!")
     else:
         print("Could not remove the blog")
+
+
+def upvote_blog(active_user):
+    # active user will be upvoting posts
+    title = take_input.get_title()
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    if blog_details is None:
+        return Flag.DOES_NOT_EXIST.value
+
+    # create blog object
+    current_blog = Blog(blog_details[1:])
+    current_blog.set_blog_id(blog_details[0])
+
+    # if current_blog.creator != active_user.username:
+    #     raise PermissionError("Only the creator can delete blogs")
+    upvoted = current_blog.upvote(active_user.user_id)
+    if upvoted:
+        print(f"{title} is upvoted successfully!")
 
 
 if __name__ == "__main__":
