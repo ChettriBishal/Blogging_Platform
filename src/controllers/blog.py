@@ -41,6 +41,8 @@ class Blog(Post):
         try:
             if self.blog_id is None:
                 self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
+
+            self.remove_comments()
             database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
             return True
         except Exception as exc:
@@ -73,6 +75,14 @@ class Blog(Post):
 
         return blog_comments
 
+    def remove_comments(self):
+        # get all those comments which have the same blog_id
+        all_comments = database.get_items(Sql.GET_COMMENTS_BY_BLOG_ID.value, (self.blog_id,))
+
+        for comment_id in all_comments:
+            comment_to_remove = comment_id[0]
+            database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
+
 
 if __name__ == "__main__":
     from src.helpers import take_input
@@ -81,7 +91,7 @@ if __name__ == "__main__":
     # title, content, tag = take_input.get_blog_post_details()
     # rn = datetime.today()
     # blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
-    blog_post_d = ('ABC', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    blog_post_d = ('Test2', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
     # blog_post_d = (title, content, 'snow123', 0, tag, rn)
     new_blog = Blog(blog_post_d)
     # new_blog.show_details()
@@ -90,10 +100,11 @@ if __name__ == "__main__":
     #     print("Edited successfully!")
     # else:
     #     print("Failed to edit!")
-    new_blog.blog_id = 1
-    # new_blog.upvote(2)
-    comments = new_blog.get_comments()
-
-    for comment in comments:
-        print(comment.details())
+    new_blog.blog_id = 2
+    # # new_blog.upvote(2)
+    # comments = new_blog.get_comments()
+    #
+    # for comment in comments:
+    #     print(comment.details())
     # print(*new_blog.get_comments())
+    new_blog.remove_comments()

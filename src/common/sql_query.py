@@ -77,6 +77,12 @@ class Sql(Enum):
     WHERE user_id = ? AND comment_id = ?
     """
 
+    GET_COMMENTS_BY_BLOG_ID = """
+    SELECT comment_id 
+    FROM comments 
+    WHERE blog_id = ?
+    """
+
     CREATE_COMMENT_UPVOTES_TABLE = """
     CREATE TABLE IF NOT EXISTS comment_upvotes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
