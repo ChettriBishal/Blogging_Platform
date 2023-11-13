@@ -19,6 +19,7 @@ class Comment(Post):
     def add_content(self):
         try:
             self.comment_id = database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
+            return True
         except Exception as exc:
             print(exc)
 

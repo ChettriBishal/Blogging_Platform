@@ -167,6 +167,12 @@ class Sql(Enum):
     WHERE blog_id = ? AND creator_id = ?
     """
 
+    GET_COMMENT_BY_BLOG_ID = """
+    SELECT * 
+    FROM comments 
+    WHERE blog_id = ?
+    """
+
     INSERT_COMMENT = """
     INSERT INTO comments(blog_id,content,creator_id,upvotes,creation_date)
     VALUES(?,?,?,?,?)

@@ -3,6 +3,7 @@ from datetime import datetime
 from src.common import prompts
 from src.helpers import take_input, fetch_from_db
 from src.controllers.blog import Blog
+from src.controllers.comment import Comment
 from src.common.sql_query import Sql
 from src.controllers.authentication import Authentication
 from src.controllers.user import User
@@ -30,6 +31,9 @@ def blogger_menu(active_user):
         upvote_blog(active_user)
         blogger_menu(active_user)
     elif choice == '6':
+        comment_on_blog(active_user)
+        blogger_menu(active_user)
+    elif choice == '7':
         pass
     else:
         print("Please enter a valid choice!")
@@ -117,6 +121,26 @@ def upvote_blog(active_user):
         print(f"{title} is upvoted successfully!")
 
 
+def comment_on_blog(active_user):
+    title = take_input.get_title()
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    if blog_details is None:
+        return Flag.DOES_NOT_EXIST.value
+
+    current_blog = Blog(blog_details[1:])
+    current_blog.set_blog_id(blog_details[0])
+
+    content = take_input.get_comment()
+    current_time = datetime.today()
+
+    comment_info = (current_blog.blog_id, content, active_user.username, 0, current_time)
+
+    new_comment = Comment(comment_info)
+    status = new_comment.add_content()
+    if status:
+        print("Comment added successfully!")
+
+
 if __name__ == "__main__":
     user_info = ('snow123', '4ac22cda6741c8c6259b69ca423f455f9149c6fa8c8fbec5060ef0a749af81f3', 2, 'snow', '2023-11-09')
 
@@ -125,4 +149,5 @@ if __name__ == "__main__":
     # edit_blog(current_user)
     # remove_blog(current_user)
     print(current_user.get_details())
-    view_blogs(current_user)
+    # view_blogs(current_user)
+    blogger_menu(current_user)

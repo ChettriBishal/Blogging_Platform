@@ -67,6 +67,10 @@ class Blog(Post):
         Upvotes: {self.upvotes}
         """)
 
+    def get_comments(self):
+        all_comments = database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
+        return all_comments
+
 
 if __name__ == "__main__":
     from src.helpers import take_input
@@ -74,7 +78,8 @@ if __name__ == "__main__":
 
     # title, content, tag = take_input.get_blog_post_details()
     # rn = datetime.today()
-    blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    # blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    blog_post_d = ('ABC', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
     # blog_post_d = (title, content, 'snow123', 0, tag, rn)
     new_blog = Blog(blog_post_d)
     # new_blog.show_details()
@@ -83,5 +88,6 @@ if __name__ == "__main__":
     #     print("Edited successfully!")
     # else:
     #     print("Failed to edit!")
-    new_blog.blog_id = 3
-    new_blog.upvote(2)
+    new_blog.blog_id = 1
+    # new_blog.upvote(2)
+    print(*new_blog.get_comments())

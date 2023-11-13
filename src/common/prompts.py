@@ -13,7 +13,7 @@ ENTER_BLOG_TAG = "Enter the tag for the blog: "
 ENTER_COMMENT = "Enter the comment: "
 
 HOME_DISPLAY = f"""
-{render.renderText("BLOGGING AND QNA")}
+{render.renderText("BLOGGING & QNA")}
 
 1. Sign Up
 2. Sign In
@@ -28,8 +28,10 @@ BLOGGER_MENU = f"""
 3. Edit existing blog
 4. Remove a blog 
 5. Upvote a blog
-6. Exit
-"""
+6. Comment on a blog
+7. Exit
+
+Enter your choice: """
 
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
