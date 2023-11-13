@@ -27,5 +27,5 @@ class Post(ABC):
         pass
 
     @abstractmethod
-    def show_details(self):
+    def details(self):
         pass

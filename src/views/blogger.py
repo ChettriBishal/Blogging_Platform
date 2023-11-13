@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from src.common import prompts
-from src.helpers import take_input
+from src.helpers import take_input, fetch_from_db
 from src.controllers.blog import Blog
 from src.common.sql_query import Sql
 from src.controllers.authentication import Authentication
@@ -32,7 +32,12 @@ def blogger_menu(active_user):
 
 
 def view_blogs(active_user):
-    pass
+    # this user should be able to view all blogs
+    blogs = database.get_items(Sql.GET_ALL_BLOGS.value)
+    blogs = [Blog(blog[1:]) for blog in blogs]
+
+    for blog in blogs:
+        print(blog.details())
 
 
 def create_blog(active_user):
@@ -95,5 +100,6 @@ if __name__ == "__main__":
     current_user = User(*user_info)
     # create_blog(current_user)
     # edit_blog(current_user)
-    remove_blog(current_user)
+    # remove_blog(current_user)
     print(current_user.get_details())
+    view_blogs(current_user)

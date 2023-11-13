@@ -49,6 +49,7 @@ class Sql(Enum):
     INSERT INTO blog_upvotes (user_id, blog_id) 
     VALUES (?,?)
     """
+
     UPDATE_BLOG_UPVOTE = """
     UPDATE blogs 
     SET upvotes = ? 
@@ -120,9 +121,9 @@ class Sql(Enum):
     """
 
     GET_USERNAME_BY_USERID = """
-        SELECT user_id
-        FROM users
-        WHERE username = ?
+    SELECT username
+    FROM users
+    WHERE user_id = ?
     """
 
     GET_PASSWORD = """
@@ -135,6 +136,7 @@ class Sql(Enum):
     INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date)
     VALUES(?,?,?,?,?,?)
     """
+
     EDIT_BLOG = """
         UPDATE blogs 
         SET content = ? 
@@ -180,4 +182,7 @@ class Sql(Enum):
     WHERE comment_id = ?
     """
 
+    GET_ALL_BLOGS = """
+    SELECT * FROM blogs
+    """
 

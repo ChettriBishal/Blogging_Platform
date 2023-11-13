@@ -50,7 +50,7 @@ class Comment(Post):
     def downvote(self):
         pass
 
-    def show_details(self):
+    def details(self):
         username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
         return(f"""
         Author: {username}

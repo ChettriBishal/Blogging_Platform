@@ -37,8 +37,9 @@ class Blog(Post):
             print(exc)
 
     def remove_content(self):
-        # blog_to_remove = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
         try:
+            if self.blog_id is None:
+                self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
             database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
             return True
         except Exception as exc:
@@ -57,14 +58,13 @@ class Blog(Post):
     def downvote(self):
         pass
 
-    def show_details(self):
-        username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
+    def details(self):
         return (f"""
         Title: {self.title}
-        Author: {username}
+        Author: {self.creator}
+        Created on: {self.creation_date}
         Content: {self.content}
         Upvotes: {self.upvotes}
-        Created on: {self.creation_date}
         """)
 
 
