@@ -47,13 +47,13 @@ def create_blog(active_user):
 
 def edit_blog(active_user):
     # which blog do you want to edit?
-    title, creator = take_input.get_title_creator()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, creator))
+    title = take_input.get_title()
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
     if blog_details is None:
         return Flag.DOES_NOT_EXIST.value
 
     # create blog object
-    current_blog = Blog(*blog_details[1:])
+    current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
 
     if current_blog.creator != active_user.username:
@@ -69,4 +69,31 @@ def edit_blog(active_user):
 
 def remove_blog(active_user):
     # which blog do you want to remove
-    pass
+    title = take_input.get_title()
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
+    if blog_details is None:
+        return Flag.DOES_NOT_EXIST.value
+
+    # create blog object
+    current_blog = Blog(blog_details[1:])
+    current_blog.set_blog_id(blog_details[0])
+
+    if current_blog.creator != active_user.username:
+        raise PermissionError("Only the creator can delete blogs")
+
+    blog_removed = current_blog.remove_content()
+
+    if blog_removed:
+        print("Blog removed successfully!")
+    else:
+        print("Could not remove the blog")
+
+
+if __name__ == "__main__":
+    user_info = ('snow123', '4ac22cda6741c8c6259b69ca423f455f9149c6fa8c8fbec5060ef0a749af81f3', 2, 'snow', '2023-11-09')
+
+    current_user = User(*user_info)
+    # create_blog(current_user)
+    # edit_blog(current_user)
+    remove_blog(current_user)
+    print(current_user.get_details())

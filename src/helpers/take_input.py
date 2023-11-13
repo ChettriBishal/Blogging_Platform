@@ -26,10 +26,9 @@ def get_comment():
     return content
 
 
-def get_title_creator():
+def get_title():
     title = input(prompts.ENTER_BLOG_TITLE)
-    creator = input(prompts.ENTER_CREATOR_NAME)
-    return title, creator
+    return title
 
 
 def get_new_content():

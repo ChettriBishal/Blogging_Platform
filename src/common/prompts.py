@@ -30,8 +30,6 @@ BLOGGER_MENU = f"""
 5. Exit
 """
 
-ENTER_CREATOR_NAME = "Enter the name of the creator: "
-
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
 

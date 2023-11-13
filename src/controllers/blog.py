@@ -29,16 +29,18 @@ class Blog(Post):
     def edit_content(self, new_content):
         # firstly get the blog_id
         try:
-            blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
-            database.query_with_params(Sql.EDIT_BLOG.value, (new_content, blog_id,))
+            if self.blog_id is None:
+                self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
+            database.query_with_params(Sql.EDIT_BLOG.value, (new_content, self.blog_id,))
             return True
         except Exception as exc:
             print(exc)
 
     def remove_content(self):
-        blog_to_remove = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
+        # blog_to_remove = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
         try:
-            database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (blog_to_remove,))
+            database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
+            return True
         except Exception as exc:
             print(exc)
 
