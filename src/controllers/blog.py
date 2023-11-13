@@ -23,6 +23,9 @@ class Blog(Post):
         except Exception as exc:
             print(exc)
 
+    def set_blog_id(self, blog_id):
+        self.blog_id = blog_id
+
     def edit_content(self, new_content):
         # firstly get the blog_id
         try:
@@ -54,7 +57,7 @@ class Blog(Post):
 
     def show_details(self):
         username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
-        return(f"""
+        return (f"""
         Title: {self.title}
         Author: {username}
         Content: {self.content}

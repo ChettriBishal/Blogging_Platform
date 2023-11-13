@@ -24,3 +24,14 @@ def get_blog_post_details():
 def get_comment():
     content = input(prompts.ENTER_COMMENT)
     return content
+
+
+def get_title_creator():
+    title = input(prompts.ENTER_BLOG_TITLE)
+    creator = input(prompts.ENTER_CREATOR_NAME)
+    return title, creator
+
+
+def get_new_content():
+    content = input(prompts.ENTER_NEW_CONTENT)
+    return content

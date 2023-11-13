@@ -21,5 +21,17 @@ HOME_DISPLAY = f"""
 
 Enter your choice: """
 
+BLOGGER_MENU = f"""
+{render.renderText("BLOGGER")}
+1. View blogs
+2. Create a new blog
+3. Edit existing blog
+4. Remove a blog 
+5. Exit
+"""
+
+ENTER_CREATOR_NAME = "Enter the name of the creator: "
+
+ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
 

@@ -147,6 +147,12 @@ class Sql(Enum):
     WHERE title = ? AND creator_id = ?
     """
 
+    GET_BLOG_RECORD = """
+    SELECT * 
+    FROM blogs 
+    WHERE title = ? AND creator_id = ?
+    """
+
     GET_COMMENT_ID = """
     SELECT comment_id 
     FROM comments 
