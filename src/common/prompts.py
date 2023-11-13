@@ -2,6 +2,7 @@ from pyfiglet import Figlet
 
 render = Figlet(font='slant')
 
+ENTER_USERNAME_TO_REMOVE = "Enter the username to remove: "
 ENTER_USERNAME = "Enter your username: "
 ENTER_PASSWORD = "Enter your password: "
 ENTER_EMAIL = "Enter your email address: "

@@ -77,8 +77,10 @@ def admin_menu(active_user):
             print(u1.get_details())
         admin_menu(active_user)
     elif choice == '9':
-        ...
-        # to remove user by username
+        user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
+        status = remove_user_by_username(user_to_remove)
+        if status:
+            print("User removed successfully!")
     elif choice == '10':
         pass
     else:
@@ -94,6 +96,15 @@ def get_users(active_user):
         return users
     except Exception as exc:
         print(exc)
+
+
+def remove_user_by_username(username):
+    try:
+        database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (username,))
+        return True
+    except Exception as exc:
+        print(exc)
+        return False
 
 
 def view_blogs():

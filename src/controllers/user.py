@@ -41,7 +41,7 @@ class User:
 
     def remove_user_by_username(self):
         try:
-            database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, self.username)
+            database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (self.username,))
             return True
         except Exception as exc:
             print(exc)

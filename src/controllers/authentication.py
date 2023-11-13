@@ -47,8 +47,6 @@ class Authentication:
         if validation.validate_username(username) is None:
             return Flag.INVALID_USERNAME.value
 
-        # before getting the password check if user exists
-        print(Sql.GET_USER_BY_USERNAME.value)
         user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence is None:

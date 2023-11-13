@@ -28,7 +28,7 @@ def signup():
     print("---------------SIGN UP---------------")
     auth = Authentication()
     new_user = auth.sign_up()
-    if new_user == -1:
+    if new_user == Flag.INVALID_USERNAME.value:
         print("Invalid username")
         signup()
     elif new_user == Flag.INVALID_PASSWORD.value:
@@ -56,15 +56,13 @@ def signin():
         print("This user does not exist")
         signin()
     elif user_logging_in:
-        # firstly create a user object,
-        # then show menus on the basis of roles
         print("User logged in successfully!!!")
         record = database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
 
         user_logged_in = User(*record[1:])
         user_logged_in.set_user_id(record[0])
-        print(user_logged_in.get_details())
 
+        # change this to log
         print(f"User role for {user_logging_in} -> {user_logged_in.user_role}")
 
         user_logged_in.user_role = int(user_logged_in.user_role)
