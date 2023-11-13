@@ -23,9 +23,5 @@ class Post(ABC):
         pass
 
     @abstractmethod
-    def downvote(self):
-        pass
-
-    @abstractmethod
     def details(self):
         pass

@@ -48,9 +48,6 @@ class Comment(Post):
         else:
             return False
 
-    def downvote(self):
-        pass
-
     def details(self):
         # username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
         return(f"""

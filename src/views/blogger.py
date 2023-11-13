@@ -124,7 +124,6 @@ def remove_blog(active_user):
 
 
 def upvote_blog(active_user):
-    # active user will be upvoting posts
     title = take_input.get_title()
     blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
     if blog_details is None:

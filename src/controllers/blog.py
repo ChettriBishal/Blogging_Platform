@@ -56,9 +56,6 @@ class Blog(Post):
         else:
             return False
 
-    def downvote(self):
-        pass
-
     def details(self):
         return (f"""
         Title: {self.title}
