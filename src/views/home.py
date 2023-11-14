@@ -8,6 +8,8 @@ from src.common.roles import Role
 from src.models import database
 
 from src.views import blogger
+from src.loggers.general_logger import GeneralLogger
+from src.common import filepaths
 
 
 def home_menu():
@@ -42,6 +44,7 @@ def signup():
         signup()
     elif new_user:
         print("User signed up successfully!!")
+        GeneralLogger.info(f"{new_user.username} has signed up", filepaths.USER_LOG_FILE)
         home_menu()
     else:
         print("Try again")
@@ -60,6 +63,8 @@ def signin():
         signin()
     elif user_logging_in:
         print("User logged in successfully!!!")
+        GeneralLogger.info(f"{user_logging_in} has signed in", filepaths.USER_LOG_FILE)
+
         record = database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
 
         user_logged_in = User(*record[1:])

@@ -1,8 +1,6 @@
 from src.common.sql_query import Sql
 from src.models import database
 
-from src.loggers.general_logger import GeneralLogger
-
 
 class User:
     def __init__(self, *user_info):
