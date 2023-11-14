@@ -23,6 +23,12 @@ class Authentication:
 
     def sign_up(self):
         username, passw, email = take_input.get_user_details()
+
+        user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+
+        if user_presence:
+            return Flag.ALREADY_EXISTS.value
+
         if validation.validate_username(username) is None:
             return Flag.INVALID_USERNAME.value  # will return -1 for invalid username and password
 

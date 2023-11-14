@@ -31,6 +31,9 @@ def signup():
     if new_user == Flag.INVALID_USERNAME.value:
         print("Enter a valid username!")
         signup()
+    elif new_user == Flag.ALREADY_EXISTS.value:
+        print("This username already exists!")
+        signup()
     elif new_user == Flag.INVALID_PASSWORD.value:
         print("Enter a strong password!")
         signup()
