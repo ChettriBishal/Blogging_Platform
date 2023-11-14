@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from src.common import prompts
 from src.helpers import take_input, validation
 from src.helpers.admin_only import admin
@@ -10,8 +9,9 @@ from src.controllers.authentication import Authentication
 from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
-
 from src.models import database
+from src.loggers.general_logger import GeneralLogger
+from src.common import filepaths
 
 
 def blogger_menu(active_user):
@@ -22,24 +22,31 @@ def blogger_menu(active_user):
         view_blogs()
         blogger_menu(active_user)
     elif choice == '2':
-        view_one_blog()
+        username = take_input.get_user_for_blog()
+        view_blogs_by_user(username)
         blogger_menu(active_user)
     elif choice == '3':
-        create_blog(active_user)
+        view_one_blog()
         blogger_menu(active_user)
     elif choice == '4':
-        edit_blog(active_user)
+        create_blog(active_user)
         blogger_menu(active_user)
     elif choice == '5':
-        remove_blog(active_user)
+        edit_blog(active_user)
         blogger_menu(active_user)
     elif choice == '6':
-        upvote_blog(active_user)
+        remove_blog(active_user)
         blogger_menu(active_user)
     elif choice == '7':
-        comment_on_blog(active_user)
+        upvote_blog(active_user)
         blogger_menu(active_user)
     elif choice == '8':
+        comment_on_blog(active_user)
+        blogger_menu(active_user)
+    elif choice == '9':
+        change_password(active_user)
+        blogger_menu(active_user)
+    elif choice == '10':
         pass
     else:
         print("Please enter a valid choice!")
@@ -54,37 +61,42 @@ def admin_menu(active_user):
         view_blogs()
         admin_menu(active_user)
     elif choice == '2':
-        view_one_blog()
+        username = take_input.get_user_for_blog()
+        view_blogs_by_user(username)
         admin_menu(active_user)
     elif choice == '3':
-        create_blog(active_user)
+        view_one_blog()
         admin_menu(active_user)
     elif choice == '4':
-        edit_blog(active_user)
+        create_blog(active_user)
         admin_menu(active_user)
     elif choice == '5':
-        remove_blog(active_user)
+        edit_blog(active_user)
         admin_menu(active_user)
     elif choice == '6':
-        upvote_blog(active_user)
+        remove_blog(active_user)
         admin_menu(active_user)
     elif choice == '7':
-        comment_on_blog(active_user)
+        upvote_blog(active_user)
         admin_menu(active_user)
     elif choice == '8':
-        users = get_users(active_user)
-        users = [dict(user.get_details()) for user in users]
-        # for u1 in users:
-        #     print(u1.get_details())
-        display_users(users)
+        comment_on_blog(active_user)
         admin_menu(active_user)
     elif choice == '9':
+        users = get_users(active_user)
+        users = [dict(user.get_details()) for user in users]
+        display_users(users)
+        admin_menu(active_user)
+    elif choice == '10':
         user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
         status = remove_user_by_username(user_to_remove)
         if status:
             print("User removed successfully!")
         admin_menu(active_user)
-    elif choice == '10':
+    elif choice == '11':
+        change_password(active_user)
+        admin_menu(active_user)
+    elif choice == '12':
         pass
     else:
         print("Please enter a valid choice!")
@@ -103,11 +115,12 @@ def get_users(active_user):
 
 def change_password(active_user):
     new_passw = take_input.get_new_password()
-    # validate first
     if validation.validate_password(new_passw):
         hashed_passw = Authentication().hash_password(new_passw)
         if active_user.change_password(hashed_passw):
             print("Password changed successfully!")
+            GeneralLogger.info(f"{active_user.username} changed the password.", filepaths.USER_LOG_FILE)
+
     else:
         print("Enter a strong password!")
         change_password(active_user)
@@ -122,13 +135,14 @@ def display_users(user_list):
             role = 'ADMIN'
         elif role == Role.BLOGGER.value:
             role = 'BLOGGER'
-        # print(f"username: {person['username']} | role: {role} | Email: {person['email']}")
+
         print(f"{person['username']}\t|\t{role}\t|\t{person['email']}")
 
 
 def remove_user_by_username(username):
     try:
         database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (username,))
+        GeneralLogger.info(f"{username} has been removed", filepaths.USER_LOG_FILE)
         return True
     except Exception as exc:
         print(exc)
@@ -138,6 +152,14 @@ def remove_user_by_username(username):
 def view_blogs():
     # this user should be able to view all blogs
     blogs = database.get_items(Sql.GET_ALL_BLOGS.value)
+    blogs = [Blog(blog[1:]) for blog in blogs]
+
+    for blog in blogs:
+        print(blog.details())
+
+
+def view_blogs_by_user(username):
+    blogs = database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
     blogs = [Blog(blog[1:]) for blog in blogs]
 
     for blog in blogs:
@@ -163,22 +185,25 @@ def view_one_blog():
 
 def create_blog(active_user):
     title, content, tag = take_input.get_blog_post_details()
+
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    if blog_details:
+        print(prompts.CHOOSE_ANOTHER_TITLE)
+        return
+
     current_date = datetime.today()
-    # blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
     blog_post_d = (title, content, active_user.username, 0, tag, current_date)
     new_blog = Blog(blog_post_d)
     new_blog.add_content()
-    # new_blog.show_details()
+    print(f"\n{title} is added!")
 
 
 def edit_blog(active_user):
-    # which blog do you want to edit?
     title = take_input.get_title()
     blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
     if blog_details is None:
         return Flag.DOES_NOT_EXIST.value
 
-    # create blog object
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
 
@@ -211,6 +236,7 @@ def remove_blog(active_user):
 
     if blog_removed:
         print("Blog removed successfully!")
+        GeneralLogger.info(f"{title} removed", filepaths.BLOG_LOG_FILE)
     else:
         print("Could not remove the blog")
 
@@ -221,12 +247,9 @@ def upvote_blog(active_user):
     if blog_details is None:
         return Flag.DOES_NOT_EXIST.value
 
-    # create blog object
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
 
-    # if current_blog.creator != active_user.username:
-    #     raise PermissionError("Only the creator can delete blogs")
     upvoted = current_blog.upvote(active_user.user_id)
     if upvoted:
         print(f"{title} is upvoted successfully!")
@@ -250,16 +273,8 @@ def comment_on_blog(active_user):
     status = new_comment.add_content()
     if status:
         print("Comment added successfully!")
+        GeneralLogger.info(f"{active_user.username} commented on {title}", filepaths.BLOG_LOG_FILE)
 
 
 if __name__ == "__main__":
-    user_info = ('snow123', '4ac22cda6741c8c6259b69ca423f455f9149c6fa8c8fbec5060ef0a749af81f3', 2, 'snow', '2023-11-09')
-
-    current_user = User(*user_info)
-    # create_blog(current_user)
-    # edit_blog(current_user)
-    # remove_blog(current_user)
-    print(current_user.get_details())
-    # view_blogs(current_user)
-    # blogger_menu(current_user)
-    view_one_blog()
+    view_blogs_by_user('snow123')

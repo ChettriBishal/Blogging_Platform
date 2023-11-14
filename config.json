@@ -1,0 +1,19 @@
+{
+  "database": {
+    "filepath": "C:\\Users\\bchettri\\Documents\\Blogger_QnA_Platform\\src\\storage\\blogger.db"
+  },
+  "logging": {
+    "user": {
+      "log_level": "info",
+      "log_file": "C:\\Users\\bchettri\\Documents\\Blogger_QnA_Platform\\src\\storage\\user.log"
+    },
+    "blog": {
+      "log_level": "info",
+      "log_file": "C:\\Users\\bchettri\\Documents\\Blogger_QnA_Platform\\src\\storage\\blog.log"
+    },
+    "comment": {
+      "log_level": "info",
+      "log_file": "C:\\Users\\bchettri\\Documents\\Blogger_QnA_Platform\\src\\storage\\comment.log"
+    }
+  }
+}

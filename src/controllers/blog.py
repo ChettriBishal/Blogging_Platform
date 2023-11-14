@@ -2,6 +2,8 @@ from src.controllers.post import Post
 from src.common.sql_query import Sql
 from src.models import database
 from src.controllers.comment import Comment
+from src.loggers.general_logger import GeneralLogger
+from src.common import filepaths
 
 
 class Blog(Post):
@@ -28,7 +30,6 @@ class Blog(Post):
         self.blog_id = blog_id
 
     def edit_content(self, new_content):
-        # firstly get the blog_id
         try:
             if self.blog_id is None:
                 self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
@@ -69,42 +70,17 @@ class Blog(Post):
 
     def get_comments(self):
         all_comments = database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
-
         blog_comments = [Comment(record[1:]) for record in all_comments]
-        # for comment in all_comments:
-
         return blog_comments
 
     def remove_comments(self):
-        # get all those comments which have the same blog_id
         all_comments = database.get_items(Sql.GET_COMMENTS_BY_BLOG_ID.value, (self.blog_id,))
 
         for comment_id in all_comments:
             comment_to_remove = comment_id[0]
             database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
+            GeneralLogger.info(f"Removed comment with id {comment_id[0]}", filepaths.COMMENT_LOG_FILE)
 
 
-if __name__ == "__main__":
-    from src.helpers import take_input
-    from datetime import datetime
 
-    # title, content, tag = take_input.get_blog_post_details()
-    # rn = datetime.today()
-    # blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
-    blog_post_d = ('Study faster', 'just testing', 'test123', 0, 'test', '2023-11-11 18:16:08.792008')
-    # blog_post_d = (title, content, 'snow123', 0, tag, rn)
-    new_blog = Blog(blog_post_d)
-    # new_blog.show_details()
-    # new_blog.add_content()
-    # if new_blog.edit_content("Change to this"):
-    #     print("Edited successfully!")
-    # else:
-    #     print("Failed to edit!")
-    new_blog.blog_id = 6
-    # # new_blog.upvote(2)
-    # comments = new_blog.get_comments()
-    #
-    # for comment in comments:
-    #     print(comment.details())
-    # print(*new_blog.get_comments())
-    new_blog.remove_comments()
+

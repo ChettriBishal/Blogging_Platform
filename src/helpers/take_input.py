@@ -16,7 +16,7 @@ def get_username_password():
 
 def get_new_password():
     passw = input(prompts.ENTER_NEW_PASSWORD)
-    return passw 
+    return passw
 
 
 def get_blog_post_details():
@@ -39,3 +39,7 @@ def get_title():
 def get_new_content():
     content = input(prompts.ENTER_NEW_CONTENT)
     return content
+
+def get_user_for_blog():
+    username = input(prompts.ENTER_USERNAME_FOR_BLOGS)
+    return username
