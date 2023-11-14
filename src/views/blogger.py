@@ -73,14 +73,17 @@ def admin_menu(active_user):
         admin_menu(active_user)
     elif choice == '8':
         users = get_users(active_user)
-        for u1 in users:
-            print(u1.get_details())
+        users = [dict(user.get_details()) for user in users]
+        # for u1 in users:
+        #     print(u1.get_details())
+        display_users(users)
         admin_menu(active_user)
     elif choice == '9':
         user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
         status = remove_user_by_username(user_to_remove)
         if status:
             print("User removed successfully!")
+        admin_menu(active_user)
     elif choice == '10':
         pass
     else:
@@ -96,6 +99,19 @@ def get_users(active_user):
         return users
     except Exception as exc:
         print(exc)
+
+
+def display_users(user_list):
+    print("--------------Users--------------")
+    print(f"\nUsername\t\tRole\t\tEmail")
+    for person in user_list:
+        role = int(person['role'])
+        if role == Role.ADMIN.value:
+            role = 'ADMIN'
+        elif role == Role.BLOGGER.value:
+            role = 'BLOGGER'
+        # print(f"username: {person['username']} | role: {role} | Email: {person['email']}")
+        print(f"{person['username']}\t|\t{role}\t|\t{person['email']}")
 
 
 def remove_user_by_username(username):

@@ -91,7 +91,7 @@ if __name__ == "__main__":
     # title, content, tag = take_input.get_blog_post_details()
     # rn = datetime.today()
     # blog_post_d = ('YUI', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
-    blog_post_d = ('Test2', 'just testing', 'snow123', 0, 'test', '2023-11-11 18:16:08.792008')
+    blog_post_d = ('Study faster', 'just testing', 'test123', 0, 'test', '2023-11-11 18:16:08.792008')
     # blog_post_d = (title, content, 'snow123', 0, tag, rn)
     new_blog = Blog(blog_post_d)
     # new_blog.show_details()
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     #     print("Edited successfully!")
     # else:
     #     print("Failed to edit!")
-    new_blog.blog_id = 2
+    new_blog.blog_id = 6
     # # new_blog.upvote(2)
     # comments = new_blog.get_comments()
     #
