@@ -12,12 +12,12 @@ from src.common.sql_query import Sql
 
 class Authentication:
 
-    def _hash_password(self, password):
+    def hash_password(self, password):
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         return hashed_password
 
     def _check_password(self, password, hashed_password):
-        if self._hash_password(password) == hashed_password:
+        if self.hash_password(password) == hashed_password:
             return True
         return False
 
@@ -32,7 +32,7 @@ class Authentication:
         if validation.validate_email(email) is None:
             return Flag.INVALID_EMAIL.value
 
-        hashed_password = self._hash_password(passw)
+        hashed_password = self.hash_password(passw)
 
         # create user object
         registration_date = datetime.today().strftime('%Y-%m-%d')

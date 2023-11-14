@@ -5,6 +5,7 @@ render = Figlet(font='slant')
 ENTER_USERNAME_TO_REMOVE = "Enter the username to remove: "
 ENTER_USERNAME = "Enter your username: "
 ENTER_PASSWORD = "Enter your password: "
+ENTER_NEW_PASSWORD = "Enter your new password: "
 ENTER_EMAIL = "Enter your email address: "
 
 ENTER_BLOG_TITLE = "Enter the title of the blog post: "

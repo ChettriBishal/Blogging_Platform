@@ -29,13 +29,13 @@ def signup():
     auth = Authentication()
     new_user = auth.sign_up()
     if new_user == Flag.INVALID_USERNAME.value:
-        print("Invalid username")
+        print("Enter a valid username!")
         signup()
     elif new_user == Flag.INVALID_PASSWORD.value:
-        print("Invalid password")
+        print("Enter a strong password!")
         signup()
     elif new_user == Flag.INVALID_EMAIL.value:
-        print("Invalid email")
+        print("Enter a valid email")
         signup()
     elif new_user:
         print("User signed up successfully!!")

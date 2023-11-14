@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from src.common import prompts
-from src.helpers import take_input
+from src.helpers import take_input, validation
 from src.helpers.admin_only import admin
 from src.controllers.blog import Blog
 from src.controllers.comment import Comment
@@ -99,6 +99,18 @@ def get_users(active_user):
         return users
     except Exception as exc:
         print(exc)
+
+
+def change_password(active_user):
+    new_passw = take_input.get_new_password()
+    # validate first
+    if validation.validate_password(new_passw):
+        hashed_passw = Authentication().hash_password(new_passw)
+        if active_user.change_password(hashed_passw):
+            print("Password changed successfully!")
+    else:
+        print("Enter a strong password!")
+        change_password(active_user)
 
 
 def display_users(user_list):
