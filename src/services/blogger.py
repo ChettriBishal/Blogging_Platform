@@ -189,6 +189,11 @@ def remove_user_by_username(username):
 
 def view_blogs():
     blogs = database.get_items(Sql.GET_ALL_BLOGS.value)
+
+    if blogs is None:
+        print(prompts.BLOGS_NOT_FOUND)
+        return
+
     blogs = [Blog(blog[1:]) for blog in blogs]
 
     for blog in blogs:
@@ -197,6 +202,11 @@ def view_blogs():
 
 def view_blogs_by_user(username):
     blogs = database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
+
+    if blogs is None:
+        print(prompts.NO_BLOG_BY_USER.format(username))
+        return
+
     blogs = [Blog(blog[1:]) for blog in blogs]
 
     for blog in blogs:
@@ -288,6 +298,10 @@ def remove_blog(active_user):
 def upvote_blog(active_user):
     title = take_input.get_title()
     blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+
+    if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_NAME.format(title))
+        return Flag.DOES_NOT_EXIST.value
 
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])

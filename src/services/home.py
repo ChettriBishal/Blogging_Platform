@@ -5,7 +5,7 @@ from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
 from src.models import database
-from src.views import blogger
+from src.services import blogger
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
 

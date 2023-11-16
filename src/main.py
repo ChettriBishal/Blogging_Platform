@@ -1,4 +1,4 @@
-from src.views import home
+from src.services import home
 from src.common import filepaths, prompts
 from src.loggers.general_logger import GeneralLogger
 

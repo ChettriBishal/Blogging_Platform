@@ -70,7 +70,7 @@ class Blog(Post):
             return False
 
     def details(self):
-        blog_info = (self.title, self.creator, self.creation_date, self.content, self.upvotes)
+        blog_info = (self.title, self.creator, self.tag_name, self.creation_date, self.content, self.upvotes)
 
         return prompts.BLOG_DETAILS.format(*blog_info)
 

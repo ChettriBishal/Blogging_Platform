@@ -124,7 +124,13 @@ Try again...
 
 USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
 
-BLOG_NOT_FOUND_BLOG_USER = "Can't find `blog {}` written by `{}`!"
+BLOG_NOT_FOUND_BLOG_USER = "Can't find blog `{}` written by `{}`!"
+
+BLOG_NOT_FOUND_NAME = "Can't find blog `{}`"
+
+BLOGS_NOT_FOUND = "No blog found!"
+
+NO_BLOG_BY_USER = "No blog written by user `{}`"
 
 SUCCESSFUL_PASSWORD_CHANGE = "Password changed successfully!"
 
@@ -159,9 +165,12 @@ COULD_NOT_UPVOTE_BLOG = "Could not upvote blog `{}` again!"
 USER_COMMENTED = "`{}` commented on the blog `{}`"
 
 BLOG_DETAILS = """
+---------------------------------------------------------------------------------------------------------
 Title: {}
 
 Author: {}
+
+Tag: {}
 
 Created on: {}
 
@@ -169,4 +178,5 @@ Content: {}
 
 Upvotes: {}
 
+---------------------------------------------------------------------------------------------------------
 """
