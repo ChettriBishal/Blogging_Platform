@@ -71,6 +71,7 @@ class Blog(Post):
     def get_comments(self):
         all_comments = database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
         blog_comments = [Comment(record[1:]) for record in all_comments]
+
         return blog_comments
 
     def remove_comments(self):
