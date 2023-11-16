@@ -28,6 +28,7 @@ class User:
         try:
             self.user_id = database.insert_item(Sql.INSERT_USER.value, self.user_info)
             return True
+
         except Exception as exc:
             print(exc)
             return False
@@ -39,6 +40,7 @@ class User:
         try:
             database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (self.username,))
             return True
+
         except Exception as exc:
             print(exc)
             return False
@@ -47,6 +49,7 @@ class User:
         try:
             database.insert_item(Sql.UPDATE_PASSWORD.value, (new_password, self.username))
             return True
+
         except Exception as exc:
             print(exc)
             return False

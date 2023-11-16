@@ -270,14 +270,12 @@ def remove_blog(active_user):
     blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
     if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
         return Flag.DOES_NOT_EXIST.value
 
     # create blog object
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
-
-    if current_blog.creator != active_user.username:
-        raise PermissionError("Only the creator can delete blogs")
 
     blog_removed = current_blog.remove_content()
 
@@ -292,9 +290,6 @@ def remove_blog(active_user):
 def upvote_blog(active_user):
     title = take_input.get_title()
     blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
-
-    if blog_details is None:
-        return Flag.DOES_NOT_EXIST.value
 
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])

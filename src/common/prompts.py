@@ -85,3 +85,5 @@ COMMENT_ADDED = "Comment has been added successfully!"
 
 COMMENT_NOT_ADDED = "Comment could not be added!"
 
+REMOVED_COMMENT_WITH_ID = "Removed comment with id {}"
+

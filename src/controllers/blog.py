@@ -4,6 +4,7 @@ from src.models import database
 from src.controllers.comment import Comment
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
+from src.common import prompts
 
 
 class Blog(Post):
@@ -23,8 +24,9 @@ class Blog(Post):
     def add_content(self):
         try:
             self.blog_id = database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
+
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
     def set_blog_id(self, blog_id):
         self.blog_id = blog_id
@@ -36,8 +38,9 @@ class Blog(Post):
 
             database.query_with_params(Sql.EDIT_BLOG.value, (new_content, self.blog_id,))
             return True
+
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
     def remove_content(self):
         try:
@@ -47,8 +50,9 @@ class Blog(Post):
             self.remove_comments()
             database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
             return True
+
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
     def upvote(self, user_id):
         upvote_record = database.get_item(Sql.CHECK_BLOG_UPVOTE.value, (user_id, self.blog_id,))
@@ -58,6 +62,7 @@ class Blog(Post):
             database.query_with_params(Sql.ADD_BLOG_UPVOTE.value, (user_id, self.blog_id,))
             database.query_with_params(Sql.UPDATE_BLOG_UPVOTE.value, (self.upvotes, self.blog_id,))
             return True
+
         else:
             return False
 
@@ -82,8 +87,5 @@ class Blog(Post):
         for comment_id in all_comments:
             comment_to_remove = comment_id[0]
             database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
-            GeneralLogger.info(f"Removed comment with id {comment_id[0]}", filepaths.COMMENT_LOG_FILE)
 
-
-
-
+            GeneralLogger.info(prompts.REMOVED_COMMENT_WITH_ID.format(comment_id[0]), filepaths.COMMENT_LOG_FILE)
