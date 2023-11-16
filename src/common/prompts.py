@@ -62,4 +62,9 @@ Enter your choice: """
 
 CHOOSE_ANOTHER_TITLE = "A blog by this title already exists. Please choose another one!"
 
+SYSTEM_START = "The app has started"
+
+SYSTEM_EXIT = "The app has finished running"
+
+ENTER_VALID_CHOICE = "Please enter a valid choice!"
 

@@ -33,6 +33,7 @@ class Blog(Post):
         try:
             if self.blog_id is None:
                 self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
+
             database.query_with_params(Sql.EDIT_BLOG.value, (new_content, self.blog_id,))
             return True
         except Exception as exc:
@@ -51,6 +52,7 @@ class Blog(Post):
 
     def upvote(self, user_id):
         upvote_record = database.get_item(Sql.CHECK_BLOG_UPVOTE.value, (user_id, self.blog_id,))
+
         if upvote_record is None:
             self.upvotes += 1
             database.query_with_params(Sql.ADD_BLOG_UPVOTE.value, (user_id, self.blog_id,))

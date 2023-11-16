@@ -5,7 +5,6 @@ from src.helpers import take_input, validation
 from src.controllers import user
 from src.common.roles import Role
 from src.common.flags import Flag
-
 from src.models import database
 from src.common.sql_query import Sql
 
@@ -43,6 +42,7 @@ class Authentication:
         # create user object
         registration_date = datetime.today().strftime('%Y-%m-%d')
         new_user = user.User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
+
         if new_user.add():
             return new_user
         else:
@@ -50,6 +50,7 @@ class Authentication:
 
     def sign_in(self):
         username, passw = take_input.get_username_password()
+
         if validation.validate_username(username) is None:
             return Flag.INVALID_USERNAME.value
 
@@ -67,31 +68,3 @@ class Authentication:
             return False
 
 
-if __name__ == "__main__":
-    auth = Authentication()
-    usr = auth.sign_up()
-    if usr == -1:
-        print("Invalid username")
-        auth.sign_up()
-    elif usr == Flag.INVALID_PASSWORD.value:
-        print("Invalid password")
-        auth.sign_up()
-    elif usr == Flag.INVALID_EMAIL.value:
-        print("Invalid email")
-        auth.sign_up()
-    elif usr:
-        print("User signed up successfully!!")
-        print(usr.get_details())
-    else:
-        print("Try again")
-        auth.sign_up()
-    usr = auth.sign_in()
-    if usr == Flag.DOES_NOT_EXIST.value:
-        print("User does not exist")
-    elif usr == Flag.INVALID_USERNAME.value:
-        print("Invalid username!")
-    elif usr:
-        print("User signed in successfully!!")
-    else:
-        print("Try again")
-        auth.sign_in()

@@ -1,6 +1,8 @@
 import sqlite3
 
 from src.common.filepaths import BLOGGING_DB
+from src.loggers.general_logger import GeneralLogger
+from src.common import filepaths
 
 
 class DBConnection:
@@ -31,7 +33,7 @@ def get_item(query, data):
             response = cursor.execute(query, data).fetchone()
             return response
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
 
 def get_items(query, data=None):
@@ -43,7 +45,7 @@ def get_items(query, data=None):
                 response = cursor.execute(query, data).fetchall()
             return response
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
 
 def insert_item(query, data):
@@ -53,7 +55,7 @@ def insert_item(query, data):
             cursor.execute(query, data)
             return cursor.lastrowid
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
 
 def remove_item(query, data):
@@ -61,7 +63,7 @@ def remove_item(query, data):
         try:
             cursor.execute(query, data)
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
 
 def single_query(query):
@@ -69,7 +71,7 @@ def single_query(query):
         try:
             cursor.execute(query)
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
 
 def query_with_params(query, data):
@@ -77,4 +79,4 @@ def query_with_params(query, data):
         try:
             cursor.execute(query, data)
         except sqlite3.Error as error:
-            print(error)
+            GeneralLogger.error(error, filepaths.DB_LOG_FILE)

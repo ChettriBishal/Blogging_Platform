@@ -15,7 +15,6 @@ class User:
 
         self.user_info = user_info
         self.user_id = None
-        # db must contain these fields in this order only
 
     def get_details(self):
         return {
@@ -26,7 +25,6 @@ class User:
         }
 
     def add(self):
-        # adding this user object to db
         try:
             self.user_id = database.insert_item(Sql.INSERT_USER.value, self.user_info)
             return True
@@ -61,7 +59,3 @@ class User:
         registration_date: {self.registration_date},
         """
 
-
-if __name__ == "__main__":
-    users = database.get_items(Sql.GET_ALL_USERS.value, None)
-    print(users)

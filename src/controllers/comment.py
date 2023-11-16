@@ -40,6 +40,7 @@ class Comment(Post):
 
     def upvote(self, user_id):
         upvote_record = database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
+
         if upvote_record is None:
             self.upvotes += 1
             database.insert_item(Sql.ADD_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
@@ -49,7 +50,6 @@ class Comment(Post):
             return False
 
     def details(self):
-        # username = database.get_item(Sql.GET_USERNAME_BY_USERID.value, (self.creator,))[0]
         return(f"""
         Author: {self.creator}
         Comment: {self.content}
@@ -57,19 +57,3 @@ class Comment(Post):
         """)
 
 
-if __name__ == "__main__":
-    from src.helpers import take_input
-    from datetime import datetime
-
-    # content = take_input.get_comment()
-    # rn = datetime.today()
-    # comment_d = (1, content, 'snow123', 0, rn)
-    comment_d = (1, "xyz", 'snow123', 0, 'no worries')
-    new_c = Comment(comment_d)
-    # new_blog.add_content()
-    # if new_blog.edit_content("changed this comment as well"):
-    #     print("Edited comment successfully")
-    # else:
-    #     print("Could not edit comment")
-    new_c.comment_id = 1
-    new_c.upvote(3)
