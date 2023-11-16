@@ -2,7 +2,7 @@ import re
 
 
 def validate_username(username):
-    pattern = '[A-z1-9_]+'
+    pattern = '^[a-zA-Z0-9_]+$'
     matcher = re.match(pattern, username)
     return matcher
 

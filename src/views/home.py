@@ -25,7 +25,7 @@ def home_menu():
         exit(0)
 
     else:
-        print("Enter a valid choice!")
+        print(prompts.ENTER_VALID_CHOICE)
 
 
 def signup():
@@ -35,48 +35,48 @@ def signup():
     new_user = auth.sign_up()
 
     if new_user == Flag.INVALID_USERNAME.value:
-        print("Enter a valid username!")
+        print(prompts.ENTER_VALID_USERNAME)
         signup()
 
     elif new_user == Flag.ALREADY_EXISTS.value:
-        print("This username already exists!")
+        print(prompts.USERNAME_ALREADY_EXISTS)
         signup()
 
     elif new_user == Flag.INVALID_PASSWORD.value:
-        print("Enter a strong password!")
+        print(prompts.ENTER_STRONG_PASSWORD)
         signup()
 
     elif new_user == Flag.INVALID_EMAIL.value:
-        print("Enter a valid email")
+        print(prompts.ENTER_VALID_EMAIL)
         signup()
 
     elif new_user:
-        print("User signed up successfully!!")
-        GeneralLogger.info(f"{new_user.username} has signed up", filepaths.USER_LOG_FILE)
+        print(prompts.USER_SIGNED_UP.format(new_user.username))
+        GeneralLogger.info(prompts.USER_SIGNED_UP.format(new_user.username), filepaths.USER_LOG_FILE)
         home_menu()
 
     else:
-        print("Try again")
+        print(prompts.PLEASE_TRY_AGAIN)
         signup()
 
 
 def signin():
-    print("---------------SIGN IN---------------")
+    print(prompts.SIGNIN)
 
     auth = Authentication()
     user_logging_in = auth.sign_in()
 
     if user_logging_in == Flag.INVALID_USERNAME.value:
-        print("Enter a valid username")
+        print(prompts.ENTER_VALID_USERNAME)
         signin()
 
     elif user_logging_in == Flag.DOES_NOT_EXIST.value:
-        print("This user does not exist")
+        print(prompts.USER_DOES_NOT_EXIST)
         signin()
 
     elif user_logging_in:
-        print("User logged in successfully!!!")
-        GeneralLogger.info(f"{user_logging_in} has signed in", filepaths.USER_LOG_FILE)
+        print(prompts.USER_LOGGED_IN.format(user_logging_in))
+        GeneralLogger.info(prompts.USER_LOGGED_IN.format(user_logging_in), filepaths.USER_LOG_FILE)
 
         record = database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
 
@@ -92,5 +92,5 @@ def signin():
             blogger.blogger_menu(user_logged_in)
 
     else:
-        print("Wrong password! Please try again!")
+        print(prompts.WRONG_PASSWORD)
         signin()

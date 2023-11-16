@@ -17,11 +17,14 @@ While choosing a password have the following:
 3. At least one digit
 4. Minimum length of 8 characters
 
-Try again..."""
+Try again...
+"""
 
 ENTER_NEW_PASSWORD = "Enter your new password: "
 
 ENTER_EMAIL = "Enter your email address: "
+
+ENTER_VALID_EMAIL = "Enter a valid email address "
 
 ENTER_BLOG_TITLE = "Enter the title of the blog post: "
 
@@ -30,6 +33,14 @@ ENTER_BLOG_CONTENT = "Enter the post content: "
 ENTER_BLOG_TAG = "Enter the tag for the blog: "
 
 ENTER_COMMENT = "Enter the comment: "
+
+USER_SIGNED_UP = "User with username `{}` has signed up successfully!"
+
+USER_LOGGED_IN = "User with username `{}` has signed in successfully"
+
+USER_DOES_NOT_EXIST = "This user does not exist."
+
+PLEASE_TRY_AGAIN = "Please try again..."
 
 DISPLAY_USER_HEADER = "\nUsername\t\tRole\t\tEmail"
 
@@ -63,6 +74,8 @@ COMMENTS = "--------------Comments--------------"
 
 SIGNUP = "---------------SIGN UP---------------"
 
+SIGNIN = "---------------SIGN IN---------------"
+
 USERS_HEADER = "--------------USERS--------------"
 
 
@@ -93,6 +106,17 @@ SYSTEM_EXIT = "The app has finished running"
 
 ENTER_VALID_CHOICE = "Please enter a valid choice!"
 
+ENTER_VALID_USERNAME = """
+Consider the following while choosing a username: 
+1. It can contain letters (uppercase, lowercase)
+2. It can contain numbers
+3. It can contain underscore
+
+Try again...
+"""
+
+USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
+
 BLOG_NOT_FOUND_BLOG_USER = "Can't find `blog {}` written by `{}`!"
 
 SUCCESSFUL_PASSWORD_CHANGE = "Password changed successfully!"
@@ -108,6 +132,8 @@ USER_WITH_USERNAME_REMOVED = "User with username `{}` has been removed"
 BLOG_ADDED = "\n{} has been added!"
 
 COMMENT_NOT_ADDED = "Comment could not be added!"
+
+WRONG_PASSWORD = "Wrong Password! Please try again..."
 
 BLOG_EDITED = "`{}` was edited successfully!"
 
