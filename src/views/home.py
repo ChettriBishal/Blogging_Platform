@@ -29,7 +29,7 @@ def home_menu():
 
 
 def signup():
-    print("---------------SIGN UP---------------")
+    print(prompts.SIGNUP)
 
     auth = Authentication()
     new_user = auth.sign_up()

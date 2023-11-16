@@ -150,8 +150,8 @@ def change_password(active_user):
         hashed_passw = Authentication().hash_password(new_passw)
 
         if active_user.change_password(hashed_passw):
-            print("Password changed successfully!")
-            GeneralLogger.info(f"{active_user.username} changed the password.", filepaths.USER_LOG_FILE)
+            print(prompts.SUCCESSFUL_PASSWORD_CHANGE)
+            GeneralLogger.info(prompts.USER_CHANGED_PASSWORD.format(active_user.username), filepaths.USER_LOG_FILE)
 
     else:
         print("Enter a strong password!")
@@ -159,7 +159,7 @@ def change_password(active_user):
 
 
 def display_users(user_list):
-    print("--------------Users--------------")
+    print(prompts.USERS_HEADER)
     print(f"\nUsername\t\tRole\t\tEmail")
 
     for person in user_list:
@@ -171,7 +171,7 @@ def display_users(user_list):
         elif role == Role.BLOGGER.value:
             role = 'BLOGGER'
 
-        print(f"{person['username']}\t|\t{role}\t|\t{person['email']}")
+        print(prompts.USER_INFO.format(person['username'], role, person['email']))
 
 
 def remove_user_by_username(username):
@@ -246,6 +246,7 @@ def edit_blog(active_user):
     blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
     if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
         return Flag.DOES_NOT_EXIST.value
 
     current_blog = Blog(blog_details[1:])
@@ -326,6 +327,7 @@ def comment_on_blog(active_user):
     status = new_comment.add_content()
 
     if status:
-        print("Comment added successfully!")
+        print(prompts.COMMENT_ADDED)
         GeneralLogger.info(f"{active_user.username} commented on {title}", filepaths.BLOG_LOG_FILE)
-
+    else:
+        print(prompts.COMMENT_NOT_ADDED)

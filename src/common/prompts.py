@@ -43,6 +43,13 @@ ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
 COMMENTS = "--------------Comments--------------"
 
+SIGNUP = "---------------SIGN UP---------------"
+
+USERS_HEADER = "--------------USERS--------------"
+
+
+USER_INFO = "{}\t|\t{}\t|\t{}"
+
 ADMIN_SPECIFIC = f"""
 {render.renderText("ADMIN")}
 1. View blogs
@@ -67,4 +74,14 @@ SYSTEM_START = "The app has started"
 SYSTEM_EXIT = "The app has finished running"
 
 ENTER_VALID_CHOICE = "Please enter a valid choice!"
+
+BLOG_NOT_FOUND_BLOG_USER = "Can't find `blog {}` written by `{}`!"
+
+SUCCESSFUL_PASSWORD_CHANGE = "Password changed successfully!"
+
+USER_CHANGED_PASSWORD = "`{}` has changed their password!"
+
+COMMENT_ADDED = "Comment has been added successfully!"
+
+COMMENT_NOT_ADDED = "Comment could not be added!"
 
