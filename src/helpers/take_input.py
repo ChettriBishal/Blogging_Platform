@@ -1,9 +1,10 @@
+import pwinput
 from src.common import prompts
 
 
 def get_user_details():
     username = input(prompts.ENTER_USERNAME)
-    passw = input(prompts.ENTER_PASSWORD)
+    passw = pwinput.pwinput(prompts.ENTER_PASSWORD, "*")
     email = input(prompts.ENTER_EMAIL)
 
     return username, passw, email
@@ -11,13 +12,13 @@ def get_user_details():
 
 def get_username_password():
     username = input(prompts.ENTER_USERNAME)
-    passw = input(prompts.ENTER_PASSWORD)
+    passw = pwinput.pwinput(prompts.ENTER_PASSWORD, "*")
 
     return username, passw
 
 
 def get_new_password():
-    passw = input(prompts.ENTER_NEW_PASSWORD)
+    passw = pwinput.pwinput(prompts.ENTER_NEW_PASSWORD, "*")
 
     return passw
 

@@ -44,6 +44,15 @@ PLEASE_TRY_AGAIN = "Please try again..."
 
 DISPLAY_USER_HEADER = "\nUsername\t\tRole\t\tEmail"
 
+USER_INFO = "{}\t|\t{}\t|\t{}"
+
+
+COMMENT_INFO = """
+        Author: {}
+        Comment: {}
+        Written on: {}
+"""
+
 HOME_DISPLAY = f"""
 {render.renderText("BLOGGING & QNA")}
 
@@ -77,9 +86,6 @@ SIGNUP = "---------------SIGN UP---------------"
 SIGNIN = "---------------SIGN IN---------------"
 
 USERS_HEADER = "--------------USERS--------------"
-
-
-USER_INFO = "{}\t|\t{}\t|\t{}"
 
 ADMIN_SPECIFIC = f"""
 {render.renderText("ADMIN")}
@@ -163,4 +169,3 @@ Content: {}
 Upvotes: {}
 
 """
-

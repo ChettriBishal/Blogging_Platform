@@ -29,7 +29,7 @@ class Authentication:
             return Flag.ALREADY_EXISTS.value
 
         if validation.validate_username(username) is None:
-            return Flag.INVALID_USERNAME.value  # will return -1 for invalid username and password
+            return Flag.INVALID_USERNAME.value
 
         if validation.validate_password(passw) is None:
             return Flag.INVALID_PASSWORD.value
@@ -39,7 +39,6 @@ class Authentication:
 
         hashed_password = self.hash_password(passw)
 
-        # create user object
         registration_date = datetime.today().strftime('%Y-%m-%d')
         new_user = user.User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
 

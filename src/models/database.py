@@ -22,6 +22,7 @@ class DBConnection:
             print(f"Exception value: {exc_val}")
             print(f"Exception traceback: {exc_tb}")
             self.connection.close()
+
         else:
             self.connection.commit()
             self.connection.close()
@@ -32,6 +33,7 @@ def get_item(query, data):
         try:
             response = cursor.execute(query, data).fetchone()
             return response
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
@@ -43,7 +45,9 @@ def get_items(query, data=None):
                 response = cursor.execute(query).fetchall()
             else:
                 response = cursor.execute(query, data).fetchall()
+
             return response
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
@@ -54,6 +58,7 @@ def insert_item(query, data):
         try:
             cursor.execute(query, data)
             return cursor.lastrowid
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
@@ -62,6 +67,7 @@ def remove_item(query, data):
     with DBConnection() as cursor:
         try:
             cursor.execute(query, data)
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
@@ -70,6 +76,7 @@ def single_query(query):
     with DBConnection() as cursor:
         try:
             cursor.execute(query)
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
 
@@ -78,5 +85,6 @@ def query_with_params(query, data):
     with DBConnection() as cursor:
         try:
             cursor.execute(query, data)
+
         except sqlite3.Error as error:
             GeneralLogger.error(error, filepaths.DB_LOG_FILE)
