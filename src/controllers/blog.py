@@ -37,6 +37,7 @@ class Blog(Post):
                 self.blog_id = database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
 
             database.query_with_params(Sql.EDIT_BLOG.value, (new_content, self.blog_id,))
+
             return True
 
         except Exception as exc:
@@ -49,6 +50,7 @@ class Blog(Post):
 
             self.remove_comments()
             database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
+
             return True
 
         except Exception as exc:
@@ -61,19 +63,16 @@ class Blog(Post):
             self.upvotes += 1
             database.query_with_params(Sql.ADD_BLOG_UPVOTE.value, (user_id, self.blog_id,))
             database.query_with_params(Sql.UPDATE_BLOG_UPVOTE.value, (self.upvotes, self.blog_id,))
+
             return True
 
         else:
             return False
 
     def details(self):
-        return (f"""
-        Title: {self.title}
-        Author: {self.creator}
-        Created on: {self.creation_date}
-        Content: {self.content}
-        Upvotes: {self.upvotes}
-        """)
+        blog_info = (self.title, self.creator, self.creation_date, self.content, self.upvotes)
+
+        return prompts.BLOG_DETAILS.format(*blog_info)
 
     def get_comments(self):
         all_comments = database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))

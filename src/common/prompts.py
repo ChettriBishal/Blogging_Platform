@@ -3,17 +3,35 @@ from pyfiglet import Figlet
 render = Figlet(font='slant')
 
 ENTER_USERNAME_TO_REMOVE = "Enter the username to remove: "
+
 ENTER_USERNAME = "Enter your username: "
+
 ENTER_USERNAME_FOR_BLOGS = "Enter username to get blogs: "
+
 ENTER_PASSWORD = "Enter your password: "
+
+ENTER_STRONG_PASSWORD = """
+While choosing a password have the following: 
+1. At least one uppercase letter
+2. At least one lowercase letter
+3. At least one digit
+4. Minimum length of 8 characters
+
+Try again..."""
+
 ENTER_NEW_PASSWORD = "Enter your new password: "
+
 ENTER_EMAIL = "Enter your email address: "
 
 ENTER_BLOG_TITLE = "Enter the title of the blog post: "
+
 ENTER_BLOG_CONTENT = "Enter the post content: "
+
 ENTER_BLOG_TAG = "Enter the tag for the blog: "
 
 ENTER_COMMENT = "Enter the comment: "
+
+DISPLAY_USER_HEADER = "\nUsername\t\tRole\t\tEmail"
 
 HOME_DISPLAY = f"""
 {render.renderText("BLOGGING & QNA")}
@@ -83,7 +101,40 @@ USER_CHANGED_PASSWORD = "`{}` has changed their password!"
 
 COMMENT_ADDED = "Comment has been added successfully!"
 
+USER_REMOVED = "User removed successfully!"
+
+USER_WITH_USERNAME_REMOVED = "User with username `{}` has been removed"
+
+BLOG_ADDED = "\n{} has been added!"
+
 COMMENT_NOT_ADDED = "Comment could not be added!"
 
-REMOVED_COMMENT_WITH_ID = "Removed comment with id {}"
+BLOG_EDITED = "`{}` was edited successfully!"
+
+COULD_NOT_EDIT_BLOG = "Could not edit the blog `{}`"
+
+REMOVED_COMMENT_WITH_ID = "Removed comment with id `{}`"
+
+BLOG_REMOVED = "Blog with title `{}` has been removed!"
+
+COULD_NOT_REMOVE_BLOG = "Could not remove the blog!"
+
+UPVOTED_BLOG = "Blog with title `{}` has been upvoted!"
+
+COULD_NOT_UPVOTE_BLOG = "Could not upvote blog `{}` again!"
+
+USER_COMMENTED = "`{}` commented on the blog `{}`"
+
+BLOG_DETAILS = """
+Title: {}
+
+Author: {}
+
+Created on: {}
+
+Content: {}
+
+Upvotes: {}
+
+"""
 

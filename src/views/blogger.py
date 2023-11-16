@@ -116,7 +116,7 @@ def admin_menu(active_user):
         status = remove_user_by_username(user_to_remove)
 
         if status:
-            print("User removed successfully!")
+            print(prompts.USER_REMOVED)
 
         admin_menu(active_user)
 
@@ -128,7 +128,7 @@ def admin_menu(active_user):
         pass
 
     else:
-        print("Please enter a valid choice!")
+        print(prompts.ENTER_VALID_CHOICE)
         admin_menu(active_user)
 
 
@@ -154,13 +154,14 @@ def change_password(active_user):
             GeneralLogger.info(prompts.USER_CHANGED_PASSWORD.format(active_user.username), filepaths.USER_LOG_FILE)
 
     else:
-        print("Enter a strong password!")
+        print(prompts.ENTER_STRONG_PASSWORD)
         change_password(active_user)
 
 
 def display_users(user_list):
     print(prompts.USERS_HEADER)
-    print(f"\nUsername\t\tRole\t\tEmail")
+
+    print(prompts.DISPLAY_USER_HEADER)
 
     for person in user_list:
         role = int(person['role'])
@@ -177,12 +178,12 @@ def display_users(user_list):
 def remove_user_by_username(username):
     try:
         database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (username,))
-        GeneralLogger.info(f"{username} has been removed", filepaths.USER_LOG_FILE)
+        GeneralLogger.info(prompts.USER_WITH_USERNAME_REMOVED.format(username), filepaths.USER_LOG_FILE)
 
         return True
 
     except Exception as exc:
-        print(exc)
+        GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
         return False
 
 
@@ -238,7 +239,7 @@ def create_blog(active_user):
     new_blog = Blog(blog_post_d)
     new_blog.add_content()
 
-    print(f"\n{title} is added!")
+    print(prompts.BLOG_ADDED.format(title))
 
 
 def edit_blog(active_user):
@@ -252,17 +253,14 @@ def edit_blog(active_user):
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
 
-    if current_blog.creator != active_user.username:
-        raise PermissionError("Only the creator can edit blogs")
-
     new_content = take_input.get_new_content()
     edited = current_blog.edit_content(new_content)
 
     if edited:
-        print("Blog edited successfully!")
+        print(prompts.BLOG_EDITED.format(title))
 
     else:
-        print("Could not edit the blog")
+        print(prompts.COULD_NOT_EDIT_BLOG.format(title))
 
 
 def remove_blog(active_user):
@@ -280,11 +278,11 @@ def remove_blog(active_user):
     blog_removed = current_blog.remove_content()
 
     if blog_removed:
-        print("Blog removed successfully!")
-        GeneralLogger.info(f"{title} removed", filepaths.BLOG_LOG_FILE)
+        print(prompts.BLOG_REMOVED.format(title))
+        GeneralLogger.info(prompts.BLOG_REMOVED.format(title), filepaths.BLOG_LOG_FILE)
 
     else:
-        print("Could not remove the blog")
+        print(prompts.COULD_NOT_REMOVE_BLOG)
 
 
 def upvote_blog(active_user):
@@ -297,10 +295,10 @@ def upvote_blog(active_user):
     upvoted = current_blog.upvote(active_user.user_id)
 
     if upvoted:
-        print(f"{title} is upvoted successfully!")
+        print(prompts.UPVOTED_BLOG.format(title))
 
     else:
-        print(f"Could not upvote {title} again!")
+        print(prompts.COULD_NOT_UPVOTE_BLOG.format(title))
 
 
 def comment_on_blog(active_user):
@@ -323,6 +321,6 @@ def comment_on_blog(active_user):
 
     if status:
         print(prompts.COMMENT_ADDED)
-        GeneralLogger.info(f"{active_user.username} commented on {title}", filepaths.BLOG_LOG_FILE)
+        GeneralLogger.info(prompts.USER_COMMENTED.format(active_user.username, title), filepaths.BLOG_LOG_FILE)
     else:
         print(prompts.COMMENT_NOT_ADDED)

@@ -2,6 +2,7 @@ from src.common.sql_query import Sql
 from src.models import database
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
+from src.helpers.get_user_json import user_details
 
 
 class User:
@@ -19,12 +20,7 @@ class User:
         self.user_id = None
 
     def get_details(self):
-        return {
-            'username': self.username,
-            'role': self.user_role,
-            'email': self.email,
-            'registration_date': self.registration_date,
-        }
+        return user_details(self)
 
     def add(self):
         try:
@@ -56,11 +52,4 @@ class User:
             GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
             return False
 
-    def __repr__(self):
-        return f"""
-        username: {self.username},
-        role: {self.user_role},
-        email: {self.email},
-        registration_date: {self.registration_date},
-        """
 
