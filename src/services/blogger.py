@@ -203,6 +203,9 @@ def view_blogs():
 def view_blogs_by_user(username):
     blogs = database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
 
+    if len(blogs) < 1:
+        blogs = None
+
     if blogs is None:
         print(prompts.NO_BLOG_BY_USER.format(username))
         return
@@ -218,6 +221,7 @@ def view_one_blog():
     blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_NAME.format(title))
         return Flag.DOES_NOT_EXIST.value
 
     current_blog = Blog(blog_details[1:])
@@ -320,6 +324,7 @@ def comment_on_blog(active_user):
     blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_NAME.format(title))
         return Flag.DOES_NOT_EXIST.value
 
     current_blog = Blog(blog_details[1:])

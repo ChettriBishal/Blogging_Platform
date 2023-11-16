@@ -126,7 +126,7 @@ USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
 
 BLOG_NOT_FOUND_BLOG_USER = "Can't find blog `{}` written by `{}`!"
 
-BLOG_NOT_FOUND_NAME = "Can't find blog `{}`"
+BLOG_NOT_FOUND_NAME = "Can't find blog `{}`..."
 
 BLOGS_NOT_FOUND = "No blog found!"
 
