@@ -58,7 +58,6 @@ class Authentication:
 
         if user_presence is None:
             return Flag.DOES_NOT_EXIST.value
-            # -1 denotes that user does not exist
 
         password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 

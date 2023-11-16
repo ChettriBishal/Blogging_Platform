@@ -1,5 +1,7 @@
 from src.common.sql_query import Sql
 from src.models import database
+from src.loggers.general_logger import GeneralLogger
+from src.common import filepaths
 
 
 class User:
@@ -30,7 +32,7 @@ class User:
             return True
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
             return False
 
     def set_user_id(self, user_id):
@@ -42,7 +44,7 @@ class User:
             return True
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
             return False
 
     def change_password(self, new_password):
@@ -51,7 +53,7 @@ class User:
             return True
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
             return False
 
     def __repr__(self):
