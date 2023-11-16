@@ -20,3 +20,8 @@ def validate_email(email):
     matcher = re.match(pattern, email)
 
     return matcher
+
+
+def validate_empty_input(text):
+    pattern = r'^\s*$'
+    return re.match(pattern, text) is not None

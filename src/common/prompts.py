@@ -46,6 +46,7 @@ DISPLAY_USER_HEADER = "\nUsername\t\tRole\t\tEmail"
 
 USER_INFO = "{}\t|\t{}\t|\t{}"
 
+EMPTY_INPUT = "Input cannot be empty!"
 
 COMMENT_INFO = """
         Author: {}

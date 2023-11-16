@@ -7,3 +7,4 @@ class Flag(Enum):
     INVALID_PASSWORD = -3
     INVALID_USERNAME = -4
     ALREADY_EXISTS = -5
+    EMPTY_INPUT = -6

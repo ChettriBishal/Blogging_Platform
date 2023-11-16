@@ -1,5 +1,6 @@
 import pwinput
 from src.common import prompts
+from src.helpers import validation
 
 
 def get_user_details():
@@ -25,8 +26,22 @@ def get_new_password():
 
 def get_blog_post_details():
     title = input(prompts.ENTER_BLOG_TITLE)
+
+    if validation.validate_empty_input(title):
+        print(prompts.EMPTY_INPUT)
+        return get_blog_post_details()
+
     content = input(prompts.ENTER_BLOG_CONTENT)
+
+    if validation.validate_empty_input(content):
+        print(prompts.EMPTY_INPUT)
+        return get_blog_post_details()
+
     tag = input(prompts.ENTER_BLOG_TAG)
+
+    if validation.validate_empty_input(tag):
+        print(prompts.EMPTY_INPUT)
+        return get_blog_post_details()
 
     return title, content, tag
 
@@ -34,17 +49,29 @@ def get_blog_post_details():
 def get_comment():
     content = input(prompts.ENTER_COMMENT)
 
+    if validation.validate_empty_input(content):
+        print(prompts.EMPTY_INPUT)
+        return get_comment()
+
     return content
 
 
 def get_title():
     title = input(prompts.ENTER_BLOG_TITLE)
 
+    if validation.validate_empty_input(title):
+        print(prompts.EMPTY_INPUT)
+        return get_title()
+
     return title
 
 
 def get_new_content():
     content = input(prompts.ENTER_NEW_CONTENT)
+
+    if validation.validate_empty_input(content):
+        print(prompts.EMPTY_INPUT)
+        return get_new_content()
 
     return content
 
