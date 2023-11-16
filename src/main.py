@@ -4,7 +4,6 @@ from src.loggers.general_logger import GeneralLogger
 
 if __name__ == "__main__":
     GeneralLogger.info(prompts.SYSTEM_START, filepaths.SYSTEM_LOG_FILE)
-
     try:
         home.home_menu()
 
@@ -13,3 +12,4 @@ if __name__ == "__main__":
 
     finally:
         GeneralLogger.info(prompts.SYSTEM_EXIT, filepaths.SYSTEM_LOG_FILE)
+
