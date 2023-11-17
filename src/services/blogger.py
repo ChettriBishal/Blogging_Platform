@@ -1,8 +1,7 @@
 from datetime import datetime
 
 from src.common import prompts
-from src.helpers import take_input, validation
-from src.helpers.admin_only import admin
+from src.utils.admin_only import admin
 from src.controllers.blog import Blog
 from src.controllers.comment import Comment
 from src.common.sql_query import Sql
@@ -10,7 +9,7 @@ from src.controllers.authentication import Authentication
 from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
-from src.models import database
+from src.utils import database, take_input, validation
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
 

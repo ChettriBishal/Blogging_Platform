@@ -1,5 +1,5 @@
 from src.common.sql_query import Sql
-from src.models import database
+from src.utils import database
 
 database.single_query(Sql.CREATE_USER_TABLE.value)
 

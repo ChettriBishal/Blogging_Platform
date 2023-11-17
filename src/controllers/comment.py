@@ -1,6 +1,6 @@
 from src.controllers.post import Post
 from src.common.sql_query import Sql
-from src.models import database
+from src.utils import database
 from src.common import prompts
 
 

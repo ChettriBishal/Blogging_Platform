@@ -42,9 +42,9 @@ USER_DOES_NOT_EXIST = "This user does not exist."
 
 PLEASE_TRY_AGAIN = "Please try again..."
 
-DISPLAY_USER_HEADER = "\nUsername\t\tRole\t\tEmail"
+DISPLAY_USER_HEADER = "\nUsername\t\t\t\t\tRole\t\t\t\tEmail"
 
-USER_INFO = "{}\t|\t{}\t|\t{}"
+USER_INFO = "{}\t\t\t|\t\t\t{}\t\t\t|{}"
 
 EMPTY_INPUT = "Input cannot be empty!"
 
@@ -80,13 +80,13 @@ Enter your choice: """
 
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
-COMMENTS = "--------------Comments--------------"
+COMMENTS = "\n--------------Comments--------------"
 
-SIGNUP = "---------------SIGN UP---------------"
+SIGNUP = "\n---------------SIGN UP---------------"
 
-SIGNIN = "---------------SIGN IN---------------"
+SIGNIN = "\n---------------SIGN IN---------------"
 
-USERS_HEADER = "--------------USERS--------------"
+USERS_HEADER = "\n--------------USERS--------------"
 
 ADMIN_SPECIFIC = f"""
 {render.renderText("ADMIN")}

@@ -1,11 +1,10 @@
 import hashlib
 from datetime import datetime
 
-from src.helpers import take_input, validation
 from src.controllers import user
 from src.common.roles import Role
 from src.common.flags import Flag
-from src.models import database
+from src.utils import database, take_input, validation
 from src.common.sql_query import Sql
 
 

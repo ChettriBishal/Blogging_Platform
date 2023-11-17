@@ -1,6 +1,6 @@
 import pwinput
 from src.common import prompts
-from src.helpers import validation
+from src.utils import validation
 
 
 def get_user_details():

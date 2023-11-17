@@ -1,8 +1,8 @@
 from src.common.sql_query import Sql
-from src.models import database
+from src.utils import database
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
-from src.helpers.get_user_json import user_details
+from src.utils.get_user_json import user_details
 
 
 class User:
