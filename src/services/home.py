@@ -64,8 +64,7 @@ def signup():
 def signin():
     print(prompts.SIGNIN)
 
-    auth = Authentication()
-    user_logging_in = auth.sign_in()
+    user_logging_in = Authentication().sign_in()
 
     if user_logging_in == Flag.INVALID_USERNAME.value:
         print(prompts.ENTER_VALID_USERNAME)
