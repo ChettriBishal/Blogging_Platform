@@ -2,6 +2,8 @@ from src.controllers.post import Post
 from src.common.sql_query import Sql
 from src.utils import database
 from src.common import prompts
+from src.loggers.general_logger import GeneralLogger
+from src.common.filepaths import COMMENT_LOG_FILE
 
 
 class Comment(Post):
@@ -23,7 +25,7 @@ class Comment(Post):
             return True
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
     def edit_content(self, new_content):
         try:
@@ -32,32 +34,34 @@ class Comment(Post):
             return True
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
     def remove_content(self):
-        comment_to_remove = database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
         try:
+            comment_to_remove = database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
             database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
 
         except Exception as exc:
-            print(exc)
+            GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
     def upvote(self, user_id):
-        upvote_record = database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
+        try:
+            upvote_record = database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
 
-        if upvote_record is None:
-            self.upvotes += 1
-            database.insert_item(Sql.ADD_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
-            database.query_with_params(Sql.UPDATE_COMMENT_UPVOTE.value, (self.upvotes, self.comment_id,))
-            return True
+            if upvote_record is None:
+                self.upvotes += 1
+                database.insert_item(Sql.ADD_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
+                database.query_with_params(Sql.UPDATE_COMMENT_UPVOTE.value, (self.upvotes, self.comment_id,))
 
-        else:
-            return False
+                return True
+
+            else:
+                return False
+
+        except Exception as exc:
+            GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
     def details(self):
         comment_info = (self.creator, self.content, self.creation_date)
 
         return prompts.COMMENT_INFO.format(*comment_info)
-
-
-
