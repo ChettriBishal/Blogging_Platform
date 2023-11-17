@@ -166,7 +166,7 @@ def display_users(user_list):
     table.field_names = ["Username", "Role", "Email"]
 
     for person in user_list:
-        role = int(person['role'])
+        role = int(person.get('role'))
 
         if role == Role.ADMIN.value:
             role = 'ADMIN'
@@ -174,7 +174,7 @@ def display_users(user_list):
         elif role == Role.BLOGGER.value:
             role = 'BLOGGER'
 
-        table.add_row([person['username'], role, person['email']])
+        table.add_row([person.get('username'), role, person.get('email')])
 
     print(table)
 
