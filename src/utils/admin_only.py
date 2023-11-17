@@ -1,5 +1,6 @@
 from functools import wraps
 from src.common.roles import Role
+from src.common.prompts import ONLY_ADMIN
 
 
 def admin(func):
@@ -9,6 +10,6 @@ def admin(func):
         if current_user.user_role == Role.ADMIN.value:
             return func(current_user)
         else:
-            raise PermissionError("Admin privileges required for this operation")
+            raise PermissionError(ONLY_ADMIN)
 
     return wrapper

@@ -138,8 +138,9 @@ def get_users(active_user):
         users = [User(*record[1:]) for record in user_list]
 
         return users
-    except Exception as exc:
-        print(exc)
+
+    except PermissionError as permission_exc:
+        GeneralLogger.info(permission_exc, filepaths.USER_LOG_FILE)
 
 
 def change_password(active_user):
@@ -340,5 +341,6 @@ def comment_on_blog(active_user):
     if status:
         print(prompts.COMMENT_ADDED)
         GeneralLogger.info(prompts.USER_COMMENTED.format(active_user.username, title), filepaths.BLOG_LOG_FILE)
+
     else:
         print(prompts.COMMENT_NOT_ADDED)
