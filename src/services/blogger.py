@@ -117,6 +117,8 @@ def admin_menu(active_user):
 
         if status:
             print(prompts.USER_REMOVED)
+        else:
+            print(prompts.USER_DOES_NOT_EXIST)
 
         admin_menu(active_user)
 
@@ -181,6 +183,11 @@ def display_users(user_list):
 
 def remove_user_by_username(username):
     try:
+        user_status = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+
+        if user_status is None:
+            return False
+
         database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (username,))
         GeneralLogger.info(prompts.USER_WITH_USERNAME_REMOVED.format(username), filepaths.USER_LOG_FILE)
 
