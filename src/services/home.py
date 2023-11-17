@@ -26,6 +26,7 @@ def home_menu():
 
     else:
         print(prompts.ENTER_VALID_CHOICE)
+        home_menu()
 
 
 def signup():
