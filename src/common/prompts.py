@@ -42,11 +42,7 @@ USER_DOES_NOT_EXIST = "This user does not exist."
 
 PLEASE_TRY_AGAIN = "Please try again..."
 
-DISPLAY_USER_HEADER = "\nUsername\t\t\t\t\tRole\t\t\t\tEmail"
-
 ONLY_ADMIN = "Admin privileges required for this operation"
-
-USER_INFO = "{}\t\t\t|\t\t\t{}\t\t\t|{}"
 
 EMPTY_INPUT = "Input cannot be empty!"
 

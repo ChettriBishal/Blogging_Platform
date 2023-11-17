@@ -1,4 +1,5 @@
 from datetime import datetime
+from prettytable import PrettyTable
 
 from src.common import prompts
 from src.utils.admin_only import admin
@@ -160,8 +161,9 @@ def change_password(active_user):
 
 def display_users(user_list):
     print(prompts.USERS_HEADER)
+    table = PrettyTable()
 
-    print(prompts.DISPLAY_USER_HEADER)
+    table.field_names = ["Username", "Role", "Email"]
 
     for person in user_list:
         role = int(person['role'])
@@ -172,7 +174,9 @@ def display_users(user_list):
         elif role == Role.BLOGGER.value:
             role = 'BLOGGER'
 
-        print(prompts.USER_INFO.format(person['username'], role, person['email']))
+        table.add_row([person['username'], role, person['email']])
+
+    print(table)
 
 
 def remove_user_by_username(username):
