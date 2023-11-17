@@ -24,4 +24,5 @@ def validate_email(email):
 
 def validate_empty_input(text):
     pattern = r'^\s*$'
+
     return re.match(pattern, text) is not None

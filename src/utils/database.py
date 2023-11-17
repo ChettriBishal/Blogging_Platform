@@ -43,7 +43,7 @@ def insert_item(query, data):
 
 
 def remove_item(query, data):
-    with DBConnection() as cursor:
+    with blog_db_connection as cursor:
         try:
             cursor.execute(query, data)
 
@@ -52,7 +52,7 @@ def remove_item(query, data):
 
 
 def single_query(query):
-    with DBConnection() as cursor:
+    with blog_db_connection as cursor:
         try:
             cursor.execute(query)
 
@@ -61,7 +61,7 @@ def single_query(query):
 
 
 def query_with_params(query, data):
-    with DBConnection() as cursor:
+    with blog_db_connection as cursor:
         try:
             cursor.execute(query, data)
 
