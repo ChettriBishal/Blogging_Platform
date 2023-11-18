@@ -150,7 +150,7 @@ def change_password(active_user):
     new_passw = take_input.get_new_password()
 
     if validation.validate_password(new_passw):
-        hashed_passw = Authentication().hash_password(new_passw)
+        hashed_passw = Authentication.hash_password(new_passw)
 
         if active_user.change_password(hashed_passw):
             print(prompts.SUCCESSFUL_PASSWORD_CHANGE)

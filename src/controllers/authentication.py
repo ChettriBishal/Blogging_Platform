@@ -10,16 +10,19 @@ from src.common.sql_query import Sql
 
 class Authentication:
 
-    def hash_password(self, password):
+    @classmethod
+    def hash_password(cls, password):
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         return hashed_password
 
-    def _check_password(self, password, hashed_password):
-        if self.hash_password(password) == hashed_password:
+    @classmethod
+    def _check_password(cls, password, hashed_password):
+        if cls.hash_password(password) == hashed_password:
             return True
         return False
 
-    def sign_up(self):
+    @classmethod
+    def sign_up(cls):
         username, passw, email = take_input.get_user_details()
 
         user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
@@ -36,7 +39,7 @@ class Authentication:
         if validation.validate_email(email) is None:
             return Flag.INVALID_EMAIL.value
 
-        hashed_password = self.hash_password(passw)
+        hashed_password = cls.hash_password(passw)
 
         registration_date = datetime.today().strftime('%Y-%m-%d')
         new_user = user.User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
@@ -46,7 +49,8 @@ class Authentication:
         else:
             return False
 
-    def sign_in(self):
+    @classmethod
+    def sign_in(cls):
         username, passw = take_input.get_username_password()
 
         if validation.validate_username(username) is None:
@@ -59,7 +63,7 @@ class Authentication:
 
         password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
-        if self._check_password(passw, password_in_db):
+        if cls._check_password(passw, password_in_db):
             return username
         else:
             return False
