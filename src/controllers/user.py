@@ -2,7 +2,6 @@ from src.common.sql_query import Sql
 from src.utils import database
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
-from src.utils.get_user_json import user_details
 
 
 class User:
@@ -20,7 +19,12 @@ class User:
         self.user_id = None
 
     def get_details(self):
-        return user_details(self)
+        return {
+            'username': self.username,
+            'role': self.user_role,
+            'email': self.email,
+            'registration_date': self.registration_date,
+        }
 
     def add(self):
         try:
