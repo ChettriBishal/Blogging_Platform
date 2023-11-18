@@ -85,7 +85,7 @@ def signin():
         user_logged_in.user_role = int(user_logged_in.user_role)
 
         if user_logged_in.user_role == Role.ADMIN.value:
-            blogger.admin_menu(user_logged_in)
+            blogger.admin_choice_menu(user_logged_in)
 
         elif user_logged_in.user_role == Role.BLOGGER.value:
             blogger.blogger_menu(user_logged_in)

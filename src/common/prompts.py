@@ -53,7 +53,7 @@ COMMENT_INFO = """
 """
 
 HOME_DISPLAY = f"""
-{render.renderText("BLOGGING & QNA")}
+{render.renderText("BLOGGING PLATFORM")}
 
 1. Sign Up
 2. Sign In
@@ -76,6 +76,16 @@ BLOGGER_MENU = f"""
 
 Enter your choice: """
 
+ADMIN_SPECIFIC = f"""
+{render.renderText("ADMIN")}
+1. Remove a blog 
+2. List all users
+3. Remove user by username
+4. Change Password
+5. Exit
+
+Enter your choice: """
+
 ENTER_NEW_CONTENT = "Enter the new content for the blog: "
 
 COMMENTS = "\n--------------Comments--------------"
@@ -86,20 +96,11 @@ SIGNIN = "\n---------------SIGN IN---------------"
 
 USERS_HEADER = "\n--------------USERS--------------"
 
-ADMIN_SPECIFIC = f"""
+ADMIN_CHOICE_PROMPT = f"""
 {render.renderText("ADMIN")}
-1. View blogs
-2. View blogs by a user
-3. View a single blog
-4. Create a new blog
-5. Edit existing blog
-6. Remove a blog 
-7. Upvote a blog
-8. Comment on a blog
-9. List all users
-10. Remove user by username
-11. Change Password
-12. Exit
+1. Sign In as Admin
+2. Sign In as a Blogger
+3. Exit
 
 Enter your choice: """
 
@@ -129,6 +130,8 @@ BLOG_NOT_FOUND_NAME = "Can't find blog `{}`..."
 BLOGS_NOT_FOUND = "No blog found!"
 
 NO_BLOG_BY_USER = "No blog written by user `{}`"
+
+NO_BLOG_OF_TAG_NAME = "No blog found under tag name `{}`"
 
 SUCCESSFUL_PASSWORD_CHANGE = "Password changed successfully!"
 

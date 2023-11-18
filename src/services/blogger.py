@@ -65,53 +65,38 @@ def blogger_menu(active_user):
         blogger_menu(active_user)
 
 
+def admin_choice_menu(active_user):
+    choice = input(prompts.ADMIN_CHOICE_PROMPT)
+    if choice == '1':
+        admin_menu(active_user)
+        admin_choice_menu(active_user)
+    elif choice == '2':
+        blogger_menu(active_user)
+        admin_choice_menu(active_user)
+    elif choice == '3':
+        pass
+    else:
+        print(prompts.ENTER_VALID_CHOICE)
+        admin_choice_menu(active_user)
+
+
 def admin_menu(active_user):
     menu_prompt = prompts.ADMIN_SPECIFIC
 
     choice = input(menu_prompt)
 
     if choice == '1':
-        view_blogs()
-        admin_menu(active_user)
-
-    elif choice == '2':
-        username = take_input.get_user_for_blog()
-
-        view_blogs_by_user(username)
-        admin_menu(active_user)
-
-    elif choice == '3':
-        view_one_blog()
-        admin_menu(active_user)
-
-    elif choice == '4':
-        create_blog(active_user)
-        admin_menu(active_user)
-
-    elif choice == '5':
-        edit_blog(active_user)
-        admin_menu(active_user)
-
-    elif choice == '6':
         remove_blog(active_user)
         admin_menu(active_user)
 
-    elif choice == '7':
-        upvote_blog(active_user)
-        admin_menu(active_user)
-
-    elif choice == '8':
-        comment_on_blog(active_user)
-        admin_menu(active_user)
-
-    elif choice == '9':
+    elif choice == '2':
         users = get_users(active_user)
         users = [dict(user.get_details()) for user in users]
 
         display_users(users)
         admin_menu(active_user)
 
-    elif choice == '10':
+    elif choice == '3':
         user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
         status = remove_user_by_username(user_to_remove)
 
@@ -122,11 +107,11 @@ def admin_menu(active_user):
 
         admin_menu(active_user)
 
-    elif choice == '11':
+    elif choice == '4':
         change_password(active_user)
         admin_menu(active_user)
 
-    elif choice == '12':
+    elif choice == '5':
         pass
 
     else:
@@ -219,6 +204,22 @@ def view_blogs_by_user(username):
 
     if blogs is None:
         print(prompts.NO_BLOG_BY_USER.format(username))
+        return
+
+    blogs = [Blog(blog[1:]) for blog in blogs]
+
+    for blog in blogs:
+        print(blog.details())
+
+
+def view_blogs_by_tag_name(tag_name):
+    blogs = database.get_items(Sql.GET_BLOGS_BY_TAG_NAME.value, (tag_name,))
+
+    if len(blogs) < 1:
+        blogs = None
+
+    if blogs is None:
+        print(prompts.NO_BLOG_OF_TAG_NAME.format(tag_name))
         return
 
     blogs = [Blog(blog[1:]) for blog in blogs]
