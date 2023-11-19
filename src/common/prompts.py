@@ -32,6 +32,8 @@ ENTER_BLOG_CONTENT = "Enter the post content: "
 
 ENTER_BLOG_TAG = "Enter the tag for the blog: "
 
+ENTER_TAG_FOR_BLOGS = "Enter tag to search for blogs: "
+
 ENTER_COMMENT = "Enter the comment: "
 
 USER_SIGNED_UP = "User with username `{}` has signed up successfully!"
@@ -65,14 +67,15 @@ BLOGGER_MENU = f"""
 {render.renderText("BLOGGER")}
 1. View blogs
 2. View blogs by a user
-3. View a single blog
-4. Create a new blog
-5. Edit existing blog
-6. Remove a blog 
-7. Upvote a blog
-8. Comment on a blog
-9. Change password
-10. Exit
+3. View blogs by a tag
+4. View a single blog
+5. Create a new blog
+6. Edit existing blog
+7. Remove a blog 
+8. Upvote a blog
+9. Comment on a blog
+10. Change password
+11. Exit
 
 Enter your choice: """
 

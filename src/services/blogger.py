@@ -30,34 +30,39 @@ def blogger_menu(active_user):
         blogger_menu(active_user)
 
     elif choice == '3':
-        view_one_blog()
+        tag_name = take_input.get_tag_name()
+        view_blogs_by_tag_name(tag_name)
         blogger_menu(active_user)
 
     elif choice == '4':
-        create_blog(active_user)
+        view_one_blog()
         blogger_menu(active_user)
 
     elif choice == '5':
-        edit_blog(active_user)
+        create_blog(active_user)
         blogger_menu(active_user)
 
     elif choice == '6':
-        remove_blog(active_user)
+        edit_blog(active_user)
         blogger_menu(active_user)
 
     elif choice == '7':
-        upvote_blog(active_user)
+        remove_blog(active_user)
         blogger_menu(active_user)
 
     elif choice == '8':
-        comment_on_blog(active_user)
+        upvote_blog(active_user)
         blogger_menu(active_user)
 
     elif choice == '9':
-        change_password(active_user)
+        comment_on_blog(active_user)
         blogger_menu(active_user)
 
     elif choice == '10':
+        change_password(active_user)
+        blogger_menu(active_user)
+
+    elif choice == '11':
         pass
 
     else:

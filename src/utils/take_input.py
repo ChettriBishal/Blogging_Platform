@@ -80,3 +80,13 @@ def get_user_for_blog():
     username = input(prompts.ENTER_USERNAME_FOR_BLOGS)
 
     return username
+
+
+def get_tag_name():
+    tag_name = input(prompts.ENTER_TAG_FOR_BLOGS)
+
+    if validation.validate_empty_input(tag_name):
+        print(prompts.EMPTY_INPUT)
+        return get_tag_name()
+
+    return tag_name
