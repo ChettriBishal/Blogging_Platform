@@ -207,6 +207,11 @@ class Sql(Enum):
     WHERE blog_id = ?
     """
 
+    REMOVE_BLOG_BY_TITLE = """
+    DELETE FROM blogs 
+    WHERE title = ?
+    """
+
     REMOVE_COMMENT_BY_ID = """
     DELETE FROM comments 
     WHERE comment_id = ?

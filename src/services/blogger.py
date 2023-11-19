@@ -91,7 +91,7 @@ def admin_menu(active_user):
     choice = input(menu_prompt)
 
     if choice == '1':
-        remove_blog(active_user)
+        admin_remove_blog(active_user)
         admin_menu(active_user)
 
     elif choice == '2':
@@ -307,6 +307,30 @@ def remove_blog(active_user):
     current_blog.set_blog_id(blog_details[0])
 
     blog_removed = current_blog.remove_content()
+
+    if blog_removed:
+        print(prompts.BLOG_REMOVED.format(title))
+        GeneralLogger.info(prompts.BLOG_REMOVED.format(title), filepaths.BLOG_LOG_FILE)
+
+    else:
+        print(prompts.COULD_NOT_REMOVE_BLOG)
+
+
+@admin
+def admin_remove_blog(active_user):
+    """ Admin can remove any blog """
+
+    title = take_input.get_title()
+    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+
+    if blog_details is None:
+        print(prompts.BLOG_NOT_FOUND_NAME.format(title, ))
+        return Flag.DOES_NOT_EXIST.value
+
+    current_blog = Blog(blog_details[1:])
+    current_blog.set_blog_id(blog_details[0])
+
+    blog_removed = current_blog.remove_content_by_title()
 
     if blog_removed:
         print(prompts.BLOG_REMOVED.format(title))

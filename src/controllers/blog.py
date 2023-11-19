@@ -88,3 +88,16 @@ class Blog(Post):
             database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
 
             GeneralLogger.info(prompts.REMOVED_COMMENT_WITH_ID.format(comment_id[0]), filepaths.COMMENT_LOG_FILE)
+
+    def remove_content_by_title(self):
+        try:
+            if self.blog_id is None:
+                self.blog_id = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (self.title,))
+
+            self.remove_comments()
+            database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
+
+            return True
+
+        except Exception as exc:
+            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
