@@ -1,5 +1,5 @@
 from src.common.sql_query import Sql
-from src.utils import database
+from src.controllers.database import Database
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
 
@@ -28,7 +28,7 @@ class User:
 
     def add(self):
         try:
-            self.user_id = database.insert_item(Sql.INSERT_USER.value, self.user_info)
+            self.user_id = Database.insert_item(Sql.INSERT_USER.value, self.user_info)
             return True
 
         except Exception as exc:
@@ -40,7 +40,7 @@ class User:
 
     def remove_user_by_username(self):
         try:
-            database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (self.username,))
+            Database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (self.username,))
             return True
 
         except Exception as exc:
@@ -49,7 +49,7 @@ class User:
 
     def change_password(self, new_password):
         try:
-            database.insert_item(Sql.UPDATE_PASSWORD.value, (new_password, self.username))
+            Database.insert_item(Sql.UPDATE_PASSWORD.value, (new_password, self.username))
             return True
 
         except Exception as exc:

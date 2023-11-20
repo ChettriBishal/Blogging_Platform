@@ -128,7 +128,7 @@ USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
 
 BLOG_NOT_FOUND_BLOG_USER = "Can't find blog `{}` written by `{}`!"
 
-ADMIN_CANT_REMOVE_ITSELF = "Admin cannot remove its account!"
+ADMIN_CANT_BE_REMOVED = "Admin accounts can't be removed!"
 
 BLOG_NOT_FOUND_NAME = "Can't find blog `{}`..."
 

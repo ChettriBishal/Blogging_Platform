@@ -4,7 +4,8 @@ from datetime import datetime
 from src.controllers import user
 from src.common.roles import Role
 from src.common.flags import Flag
-from src.utils import database, take_input, validation
+from src.utils import take_input, validation
+from src.controllers.database import Database
 from src.common.sql_query import Sql
 
 
@@ -25,7 +26,7 @@ class Authentication:
     def sign_up(cls):
         username, passw, email = take_input.get_user_details()
 
-        user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+        user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence:
             return Flag.ALREADY_EXISTS.value
@@ -56,12 +57,12 @@ class Authentication:
         if validation.validate_username(username) is None:
             return Flag.INVALID_USERNAME.value
 
-        user_presence = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+        user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
         if user_presence is None:
             return Flag.DOES_NOT_EXIST.value
 
-        password_in_db = database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
+        password_in_db = Database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
         if cls._check_password(passw, password_in_db):
             return username

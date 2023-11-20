@@ -8,3 +8,4 @@ class Flag(Enum):
     INVALID_USERNAME = -4
     ALREADY_EXISTS = -5
     EMPTY_INPUT = -6
+    INVALID_OPERATION = -7

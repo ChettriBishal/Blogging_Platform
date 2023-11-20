@@ -10,9 +10,10 @@ from src.controllers.authentication import Authentication
 from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
-from src.utils import database, take_input, validation
+from src.utils import take_input, validation
+from src.controllers.database import Database
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths
+from src.common import filepaths, flags
 
 
 def blogger_menu(active_user):
@@ -103,14 +104,12 @@ def admin_menu(active_user):
 
     elif choice == '3':
         user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
-        if user_to_remove == active_user.username:
-            print(prompts.ADMIN_CANT_REMOVE_ITSELF)
-            admin_menu(active_user)
-            return
 
         status = remove_user_by_username(user_to_remove)
 
-        if status:
+        if status == Flag.INVALID_OPERATION.value:
+            pass
+        elif status:
             print(prompts.USER_REMOVED)
         else:
             print(prompts.USER_DOES_NOT_EXIST)
@@ -132,7 +131,7 @@ def admin_menu(active_user):
 @admin
 def get_users(active_user):
     try:
-        user_list = database.get_items(Sql.GET_ALL_USERS.value)
+        user_list = Database.get_items(Sql.GET_ALL_USERS.value)
         users = [User(*record[1:]) for record in user_list]
 
         return users
@@ -178,12 +177,20 @@ def display_users(user_list):
 
 def remove_user_by_username(username):
     try:
-        user_status = database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+        user_status = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
-        if user_status is None:
+        if not user_status:
             return False
 
-        database.remove_item(Sql.REMOVE_USER_BY_USERNAME.value, (username,))
+        user_to_remove = User(*user_status[1:])
+        user_to_remove.user_role = int(user_to_remove.user_role)
+
+        if user_to_remove.user_role == Role.ADMIN.value:
+            print(prompts.ADMIN_CANT_BE_REMOVED)
+            return Flag.INVALID_OPERATION.value
+
+        user_to_remove.remove_user_by_username()
+
         GeneralLogger.info(prompts.USER_WITH_USERNAME_REMOVED.format(username), filepaths.USER_LOG_FILE)
 
         return True
@@ -194,7 +201,7 @@ def remove_user_by_username(username):
 
 
 def view_blogs():
-    blogs = database.get_items(Sql.GET_ALL_BLOGS.value)
+    blogs = Database.get_items(Sql.GET_ALL_BLOGS.value)
 
     if blogs is None:
         print(prompts.BLOGS_NOT_FOUND)
@@ -207,7 +214,7 @@ def view_blogs():
 
 
 def view_blogs_by_user(username):
-    blogs = database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
+    blogs = Database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
 
     if len(blogs) < 1:
         blogs = None
@@ -223,7 +230,7 @@ def view_blogs_by_user(username):
 
 
 def view_blogs_by_tag_name(tag_name):
-    blogs = database.get_items(Sql.GET_BLOGS_BY_TAG_NAME.value, (tag_name,))
+    blogs = Database.get_items(Sql.GET_BLOGS_BY_TAG_NAME.value, (tag_name,))
 
     if len(blogs) < 1:
         blogs = None
@@ -240,7 +247,7 @@ def view_blogs_by_tag_name(tag_name):
 
 def view_one_blog():
     title = input(prompts.ENTER_BLOG_TITLE)
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_NAME.format(title))
@@ -263,7 +270,7 @@ def view_one_blog():
 
 def create_blog(active_user):
     title, content, tag = take_input.get_blog_post_details()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details:
         print(prompts.CHOOSE_ANOTHER_TITLE)
@@ -280,7 +287,7 @@ def create_blog(active_user):
 
 def edit_blog(active_user):
     title = take_input.get_title()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
@@ -301,7 +308,7 @@ def edit_blog(active_user):
 
 def remove_blog(active_user):
     title = take_input.get_title()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
@@ -326,7 +333,7 @@ def admin_remove_blog(active_user):
     """ Admin can remove any blog """
 
     title = take_input.get_title()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_NAME.format(title, ))
@@ -347,7 +354,7 @@ def admin_remove_blog(active_user):
 
 def upvote_blog(active_user):
     title = take_input.get_title()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_NAME.format(title))
@@ -367,7 +374,7 @@ def upvote_blog(active_user):
 
 def comment_on_blog(active_user):
     title = take_input.get_title()
-    blog_details = database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
+    blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
         print(prompts.BLOG_NOT_FOUND_NAME.format(title))

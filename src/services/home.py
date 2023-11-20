@@ -4,7 +4,7 @@ from src.controllers.authentication import Authentication
 from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
-from src.utils import database
+from src.controllers.database import Database
 from src.services import blogger
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
@@ -77,7 +77,7 @@ def signin():
         print(prompts.USER_LOGGED_IN.format(user_logging_in))
         GeneralLogger.info(prompts.USER_LOGGED_IN.format(user_logging_in), filepaths.USER_LOG_FILE)
 
-        record = database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
+        record = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (user_logging_in,))
 
         user_logged_in = User(*record[1:])
         user_logged_in.set_user_id(record[0])
