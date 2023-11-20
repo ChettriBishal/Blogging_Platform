@@ -128,6 +128,8 @@ USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
 
 BLOG_NOT_FOUND_BLOG_USER = "Can't find blog `{}` written by `{}`!"
 
+ADMIN_CANT_REMOVE_ITSELF = "Admin cannot remove its account!"
+
 BLOG_NOT_FOUND_NAME = "Can't find blog `{}`..."
 
 BLOGS_NOT_FOUND = "No blog found!"

@@ -103,6 +103,11 @@ def admin_menu(active_user):
 
     elif choice == '3':
         user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
+        if user_to_remove == active_user.username:
+            print(prompts.ADMIN_CANT_REMOVE_ITSELF)
+            admin_menu(active_user)
+            return
+
         status = remove_user_by_username(user_to_remove)
 
         if status:
