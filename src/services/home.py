@@ -4,10 +4,11 @@ from src.controllers.authentication import Authentication
 from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
-from src.controllers.database import Database
+from src.models.database import Database
 from src.services import blogger
 from src.loggers.general_logger import GeneralLogger
 from src.common import filepaths
+from src.utils import take_input
 
 
 def home_menu():
@@ -63,7 +64,9 @@ def signup():
 def signin():
     print(prompts.SIGNIN)
 
-    user_logging_in = Authentication.sign_in()
+    username, passw = take_input.get_username_password()
+
+    user_logging_in = Authentication.sign_in(username, passw)
 
     if user_logging_in == Flag.INVALID_USERNAME.value:
         print(prompts.ENTER_VALID_USERNAME)

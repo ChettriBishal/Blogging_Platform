@@ -5,7 +5,7 @@ from src.controllers import user
 from src.common.roles import Role
 from src.common.flags import Flag
 from src.utils import take_input, validation
-from src.controllers.database import Database
+from src.models.database import Database
 from src.common.sql_query import Sql
 
 
@@ -51,8 +51,8 @@ class Authentication:
             return False
 
     @classmethod
-    def sign_in(cls):
-        username, passw = take_input.get_username_password()
+    def sign_in(cls, *args):
+        username, passw = args
 
         if validation.validate_username(username) is None:
             return Flag.INVALID_USERNAME.value

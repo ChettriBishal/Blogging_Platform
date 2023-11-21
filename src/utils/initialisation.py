@@ -1,5 +1,5 @@
 from src.common.sql_query import Sql
-from src.controllers.database import Database
+from src.models.database import Database
 
 
 def initialize():

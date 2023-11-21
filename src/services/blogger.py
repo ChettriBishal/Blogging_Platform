@@ -11,9 +11,9 @@ from src.controllers.user import User
 from src.common.flags import Flag
 from src.common.roles import Role
 from src.utils import take_input, validation
-from src.controllers.database import Database
+from src.models.database import Database
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths, flags
+from src.common import filepaths
 
 
 def blogger_menu(active_user):
