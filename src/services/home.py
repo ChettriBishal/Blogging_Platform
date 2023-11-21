@@ -33,7 +33,9 @@ def home_menu():
 def signup():
     print(prompts.SIGNUP)
 
-    new_user = Authentication.sign_up()
+    user_details = take_input.get_user_details()
+
+    new_user = Authentication.sign_up(user_details)
 
     if new_user == Flag.INVALID_USERNAME.value:
         print(prompts.ENTER_VALID_USERNAME)
