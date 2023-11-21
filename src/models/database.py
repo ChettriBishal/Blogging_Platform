@@ -1,7 +1,7 @@
 import sqlite3
 
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths
+from src.config import filepaths
 from src.models.db_connection import DBConnection
 
 

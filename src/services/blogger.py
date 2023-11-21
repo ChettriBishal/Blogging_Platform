@@ -1,131 +1,19 @@
 from datetime import datetime
 from prettytable import PrettyTable
 
-from src.common import prompts
+from src.config import prompts
 from src.utils.admin_only import admin
 from src.controllers.blog import Blog
 from src.controllers.comment import Comment
-from src.common.sql_query import Sql
+from src.config.sql_query import Sql
 from src.controllers.authentication import Authentication
 from src.controllers.user import User
-from src.common.flags import Flag
-from src.common.roles import Role
+from src.config.flags import Flag
+from src.config.roles import Role
 from src.utils import take_input, validation
 from src.models.database import Database
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths
-
-
-def blogger_menu(active_user):
-    menu_prompt = prompts.BLOGGER_MENU
-
-    choice = input(menu_prompt)
-
-    if choice == '1':
-        view_blogs()
-        blogger_menu(active_user)
-
-    elif choice == '2':
-        username = take_input.get_user_for_blog()
-        view_blogs_by_user(username)
-        blogger_menu(active_user)
-
-    elif choice == '3':
-        tag_name = take_input.get_tag_name()
-        view_blogs_by_tag_name(tag_name)
-        blogger_menu(active_user)
-
-    elif choice == '4':
-        view_one_blog()
-        blogger_menu(active_user)
-
-    elif choice == '5':
-        create_blog(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '6':
-        edit_blog(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '7':
-        remove_blog(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '8':
-        upvote_blog(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '9':
-        comment_on_blog(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '10':
-        change_password(active_user)
-        blogger_menu(active_user)
-
-    elif choice == '11':
-        pass
-
-    else:
-        print(prompts.ENTER_VALID_CHOICE)
-        blogger_menu(active_user)
-
-
-def admin_choice_menu(active_user):
-    choice = input(prompts.ADMIN_CHOICE_PROMPT)
-    if choice == '1':
-        admin_menu(active_user)
-        admin_choice_menu(active_user)
-    elif choice == '2':
-        blogger_menu(active_user)
-        admin_choice_menu(active_user)
-    elif choice == '3':
-        pass
-    else:
-        print(prompts.ENTER_VALID_CHOICE)
-        admin_choice_menu(active_user)
-
-
-def admin_menu(active_user):
-    menu_prompt = prompts.ADMIN_SPECIFIC
-
-    choice = input(menu_prompt)
-
-    if choice == '1':
-        admin_remove_blog(active_user)
-        admin_menu(active_user)
-
-    elif choice == '2':
-        users = get_users(active_user)
-        users = [dict(user.get_details()) for user in users]
-
-        display_users(users)
-        admin_menu(active_user)
-
-    elif choice == '3':
-        user_to_remove = input(prompts.ENTER_USERNAME_TO_REMOVE)
-
-        status = remove_user_by_username(user_to_remove)
-
-        if status == Flag.INVALID_OPERATION.value:
-            pass
-        elif status:
-            print(prompts.USER_REMOVED)
-        else:
-            print(prompts.USER_DOES_NOT_EXIST)
-
-        admin_menu(active_user)
-
-    elif choice == '4':
-        change_password(active_user)
-        admin_menu(active_user)
-
-    elif choice == '5':
-        pass
-
-    else:
-        print(prompts.ENTER_VALID_CHOICE)
-        admin_menu(active_user)
+from src.config import filepaths
 
 
 @admin

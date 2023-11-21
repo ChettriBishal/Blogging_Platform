@@ -1,4 +1,4 @@
-from src.common.sql_query import Sql
+from src.config.sql_query import Sql
 from src.models.database import Database
 
 

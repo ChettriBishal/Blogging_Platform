@@ -1,6 +1,6 @@
 from functools import wraps
-from src.common.roles import Role
-from src.common.prompts import ONLY_ADMIN
+from src.config.roles import Role
+from src.config.prompts import ONLY_ADMIN
 
 
 def admin(func):

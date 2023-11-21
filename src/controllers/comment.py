@@ -1,9 +1,9 @@
 from src.controllers.post import Post
-from src.common.sql_query import Sql
+from src.config.sql_query import Sql
 from src.models.database import Database
-from src.common import prompts
+from src.config import prompts
 from src.loggers.general_logger import GeneralLogger
-from src.common.filepaths import COMMENT_LOG_FILE
+from src.config.filepaths import COMMENT_LOG_FILE
 
 
 class Comment(Post):

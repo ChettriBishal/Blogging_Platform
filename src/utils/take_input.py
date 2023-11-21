@@ -1,5 +1,5 @@
 import pwinput
-from src.common import prompts
+from src.config import prompts
 from src.utils import validation
 
 

@@ -1,5 +1,5 @@
 import logging
-from src.common.filepaths import APP_LOG_FILE
+from src.config.filepaths import APP_LOG_FILE
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s",

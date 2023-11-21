@@ -1,7 +1,7 @@
-from src.common.sql_query import Sql
+from src.config.sql_query import Sql
 from src.models.database import Database
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths
+from src.config import filepaths
 
 
 class User:

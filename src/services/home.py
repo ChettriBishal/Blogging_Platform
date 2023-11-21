@@ -1,33 +1,15 @@
-from src.common import prompts
-from src.common.sql_query import Sql
+from src.config import prompts
+from src.config.sql_query import Sql
 from src.controllers.authentication import Authentication
 from src.controllers.user import User
-from src.common.flags import Flag
-from src.common.roles import Role
+from src.config.flags import Flag
+from src.config.roles import Role
 from src.models.database import Database
-from src.services import blogger
 from src.loggers.general_logger import GeneralLogger
-from src.common import filepaths
+from src.config import filepaths
 from src.utils import take_input
-
-
-def home_menu():
-    choice = input(prompts.HOME_DISPLAY)
-
-    if choice == '1':
-        signup()
-        home_menu()
-
-    elif choice == '2':
-        signin()
-        home_menu()
-
-    elif choice == '3':
-        exit(0)
-
-    else:
-        print(prompts.ENTER_VALID_CHOICE)
-        home_menu()
+from src.views.admin import admin_choice_menu
+from src.views.blogger import blogger_menu
 
 
 def signup():
@@ -56,11 +38,9 @@ def signup():
     elif new_user:
         print(prompts.USER_SIGNED_UP.format(new_user.username))
         GeneralLogger.info(prompts.USER_SIGNED_UP.format(new_user.username), filepaths.USER_LOG_FILE)
-        home_menu()
 
     else:
         print(prompts.PLEASE_TRY_AGAIN)
-        signup()
 
 
 def signin():
@@ -90,10 +70,10 @@ def signin():
         user_logged_in.user_role = int(user_logged_in.user_role)
 
         if user_logged_in.user_role == Role.ADMIN.value:
-            blogger.admin_choice_menu(user_logged_in)
+            admin_choice_menu(user_logged_in)
 
         elif user_logged_in.user_role == Role.BLOGGER.value:
-            blogger.blogger_menu(user_logged_in)
+            blogger_menu(user_logged_in)
 
     else:
         print(prompts.WRONG_PASSWORD)
