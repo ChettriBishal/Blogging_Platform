@@ -1,2 +1,0 @@
-class TestSignUp:
-    pass

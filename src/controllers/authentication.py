@@ -23,7 +23,7 @@ class Authentication:
         return False
 
     @classmethod
-    def sign_up(cls, user_info):
+    def sign_up(cls, *user_info):
         username, passw, email = user_info
 
         user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
