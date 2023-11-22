@@ -2,10 +2,10 @@ import re
 
 
 def validate_username(username):
-    pattern = '^[a-zA-Z0-9_]+$'
+    pattern = '^(?=.*[a-zA-Z])[a-zA-Z0-9_]+$'
     matcher = re.match(pattern, username)
 
-    return matcher
+    return bool(matcher)
 
 
 def validate_password(password):

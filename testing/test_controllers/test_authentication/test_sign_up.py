@@ -19,3 +19,5 @@ class TestSignUp:
 
     def test_weak_password(self):
         self.check_sign_up(-3, "valid123", "testmail@gmail.com", "1231")
+
+

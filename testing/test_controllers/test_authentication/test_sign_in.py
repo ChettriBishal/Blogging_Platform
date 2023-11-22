@@ -23,3 +23,7 @@ class TestSignIn:
     @pytest.mark.usefixtures("setup")
     def test_user_wrong_password(self):
         self.check_sign_in(False, 'snow123', 'WrongPassword123')
+
+    @pytest.mark.usefixtures("setup")
+    def test_user_right_credentials(self):
+        self.check_sign_in('temp9', 'temp9', 'Temp123#123')

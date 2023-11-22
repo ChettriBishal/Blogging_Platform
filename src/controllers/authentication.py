@@ -31,13 +31,13 @@ class Authentication:
         if user_presence:
             return Flag.ALREADY_EXISTS.value
 
-        if validation.validate_username(username) is None:
+        if not validation.validate_username(username):
             return Flag.INVALID_USERNAME.value
 
-        if validation.validate_password(passw) is None:
+        if not validation.validate_password(passw):
             return Flag.INVALID_PASSWORD.value
 
-        if validation.validate_email(email) is None:
+        if not validation.validate_email(email):
             return Flag.INVALID_EMAIL.value
 
         hashed_password = cls.hash_password(passw)
