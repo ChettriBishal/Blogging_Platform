@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime
 
-from src.controllers import user
+from src.controllers.user import User
 from src.config.roles import Role
 from src.config.flags import Flag
 from src.utils import validation
@@ -27,7 +27,7 @@ class Authentication:
         username, passw, email = user_info
 
         user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
-
+        print(user_presence)  # remove this
         if user_presence:
             return Flag.ALREADY_EXISTS.value
 
@@ -43,7 +43,7 @@ class Authentication:
         hashed_password = cls.hash_password(passw)
 
         registration_date = datetime.today().strftime('%Y-%m-%d')
-        new_user = user.User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
+        new_user = User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
 
         if new_user.add():
             return new_user

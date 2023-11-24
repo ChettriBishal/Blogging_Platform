@@ -4,7 +4,7 @@ from src.controllers.authentication import Authentication
 
 class TestSignIn:
 
-    @pytest.fixture()
+    @pytest.fixture(autouse=True)
     def setup(self):
         print("\nSetting up the sign in tests")
 
@@ -12,18 +12,14 @@ class TestSignIn:
         val_received = Authentication.sign_in(*args)
         assert val_received == expected_val
 
-    @pytest.mark.usefixtures("setup")
     def test_empty_input(self):
-        self.check_sign_in(-4, '', '')
+        self.check_sign_in(-1, '', '')
 
-    @pytest.mark.usefixtures("setup")
     def test_user_does_not_exist(self):
         self.check_sign_in(-1, 'boogeyman', 'Random#2121')
 
-    @pytest.mark.usefixtures("setup")
     def test_user_wrong_password(self):
         self.check_sign_in(False, 'snow123', 'WrongPassword123')
 
-    @pytest.mark.usefixtures("setup")
     def test_user_right_credentials(self):
         self.check_sign_in('temp9', 'temp9', 'Temp123#123')
