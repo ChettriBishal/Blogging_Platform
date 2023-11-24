@@ -1,5 +1,4 @@
 import pytest
-import re
 
 from src.utils.validation import validate_username
 
@@ -12,8 +11,10 @@ class TestUsername:
     def test_empty_input(self):
         self.check_username('', False)
 
-    def test_invalid_text(self):
+    def test_invalid_input(self):
         self.check_username('2##12', False)
+        self.check_username('123@user', False)
+        self.check_username('user.ok', False)
 
     def test_number_input(self):
         self.check_username('1231231', False)
@@ -28,5 +29,4 @@ class TestUsername:
                                  ("_test_1_2", True)
                              ])
     def test_valid_input(self, username, result):
-        print(f"testing `{username}`")
         self.check_username(username, result)

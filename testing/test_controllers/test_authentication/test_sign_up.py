@@ -1,5 +1,6 @@
-from unittest.mock import patch, MagicMock, Mock
 import pytest
+from unittest.mock import patch, MagicMock, Mock
+from src.config.flags import Flag
 from src.controllers.authentication import Authentication, User
 
 
@@ -23,8 +24,11 @@ class TestSignUp:
     def test_empty_input(self):
         self.check_sign_up(-4, "", "", "")
 
-    def test_invalid_username(self):
-        self.check_sign_up(-4, "%%&&@!", "Random123#123", "testmail@gmail.com")
+    def test_invalid_username(self, mocker):
+        mocker.patch('controllers.authentication.validation.validate_username', return_value=None)
+        result = Authentication.sign_in('invalid_username', 'some_password')
+
+        assert result == Flag.INVALID_USERNAME.value
 
     def test_weak_password(self):
         self.check_sign_up(-3, "random123", "1231", "testmail@gmail.com")
@@ -43,7 +47,7 @@ class TestSignUp:
         mock_database.get_item.assert_called_once()
 
     @pytest.mark.parametrize("username,password,email", [("##", "Random123#123", "testing@gmail.com")])
-    def test_sign_up_failed(self, monkeypatch, mock_database, mock_validation, username, password, email):
+    def test_sign_up_failed(self, monkeypatch, mock_database, username, password, email):
         mock_user = Mock(spec=User)
         _instance = mock_user.return_value
 
