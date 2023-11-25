@@ -1,6 +1,6 @@
 import pytest
-from unittest.mock import patch
-from src.controllers.blog import Blog, Comment, Database, Sql, GeneralLogger, filepaths
+from unittest.mock import patch, call
+from src.controllers.blog import Blog, Comment, Sql, filepaths
 from src.config import prompts
 
 
@@ -158,14 +158,46 @@ class TestBlog:
 
         mock_database.get_items.assert_called_once_with(Sql.GET_COMMENT_BY_BLOG_ID.value, (22,))
 
-    def test_remove_comments_positive(self):
-        pass
+    def test_remove_comments(self, mock_database, blog_instance, mock_logger):
+        blog_instance.blog_id = 22
+        mock_database.get_items.return_value = [(50,), (60,), (70,)]
 
-    def test_remove_comments_negative(self):
-        pass
+        blog_instance.remove_comments()
+        mock_database.get_items.assert_called_once_with(Sql.GET_COMMENTS_BY_BLOG_ID.value, (22,))
+        mock_database.remove_item.assert_has_calls([
+            call(Sql.REMOVE_COMMENT_BY_ID.value, (50,)),
+            call(Sql.REMOVE_COMMENT_BY_ID.value, (60,)),
+            call(Sql.REMOVE_COMMENT_BY_ID.value, (70,))
+        ])
 
-    def test_remove_content_by_title_positive(self):
-        pass
+        mock_logger.info.assert_has_calls([
+            call(prompts.REMOVED_COMMENT_WITH_ID.format(50), filepaths.COMMENT_LOG_FILE),
+            call(prompts.REMOVED_COMMENT_WITH_ID.format(60), filepaths.COMMENT_LOG_FILE),
+            call(prompts.REMOVED_COMMENT_WITH_ID.format(70), filepaths.COMMENT_LOG_FILE)
+        ], any_order=True)
+        mock_database.remove_item.assert_called()
 
-    def test_remove_content_by_title_negative(self):
-        pass
+    @patch('src.controllers.blog.Blog.remove_comments')
+    def test_remove_content_by_title_positive(self, mock_remove_comments, mock_database, blog_instance, mock_logger):
+        blog_instance.blog_id = 42
+        mock_database.get_item.return_value = 42
+        mock_remove_comments.return_value = None
+
+        result = blog_instance.remove_content_by_title()
+
+        assert result is True
+        mock_remove_comments.assert_called_once()
+        mock_database.remove_item.assert_called_once_with(Sql.REMOVE_BLOG_BY_ID.value, (42,))
+        mock_logger.error.assert_not_called()
+
+    @patch('src.controllers.blog.Blog.remove_comments')
+    def test_remove_content_by_title_negative(self, mock_remove_comments, mock_database, blog_instance, mock_logger):
+        mock_database.get_item.return_value = None
+        mock_remove_comments.return_value = None
+
+        result = blog_instance.remove_content_by_title()
+
+        assert result is True
+        mock_database.get_item.assert_called_once_with(Sql.GET_BLOG_RECORD_BY_TITLE.value, ("Test Title",))
+        mock_remove_comments.assert_called_once()
+        mock_logger.error.assert_not_called()
