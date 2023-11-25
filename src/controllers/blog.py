@@ -24,6 +24,9 @@ class Blog(Post):
     def add_content(self):
         try:
             self.blog_id = Database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
+            if self.blog_id:
+                return True
+            return False
 
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
@@ -76,9 +79,11 @@ class Blog(Post):
 
     def get_comments(self):
         all_comments = Database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
-        blog_comments = [Comment(record[1:]) for record in all_comments]
-
-        return blog_comments
+        if all_comments:
+            blog_comments = [Comment(record[1:]) for record in all_comments]
+            return blog_comments
+        else:
+            return None
 
     def remove_comments(self):
         all_comments = Database.get_items(Sql.GET_COMMENTS_BY_BLOG_ID.value, (self.blog_id,))

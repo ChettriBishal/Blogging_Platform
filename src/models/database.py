@@ -31,6 +31,7 @@ class Database:
 
             except sqlite3.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                return None
 
     @classmethod
     def insert_item(cls, query, data):
@@ -42,6 +43,7 @@ class Database:
 
             except sqlite3.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                return None
 
     @classmethod
     def remove_item(cls, query, data):
@@ -51,6 +53,7 @@ class Database:
 
             except sqlite3.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                return None
 
     @classmethod
     def single_query(cls, query):
@@ -60,6 +63,7 @@ class Database:
 
             except sqlite3.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                return None
 
     @classmethod
     def query_with_params(cls, query, data):
@@ -69,3 +73,4 @@ class Database:
 
             except sqlite3.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                return None

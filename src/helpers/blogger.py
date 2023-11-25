@@ -148,10 +148,11 @@ def view_one_blog():
 
     blog_comments = current_blog.get_comments()
 
-    print(prompts.COMMENTS)
+    if blog_comments:
+        print(prompts.COMMENTS)
 
-    for record in blog_comments:
-        print(record.details())
+        for record in blog_comments:
+            print(record.details())
 
     return True
 
@@ -168,9 +169,9 @@ def create_blog(active_user):
     blog_post_d = (title, content, active_user.username, 0, tag, current_date)
 
     new_blog = Blog(blog_post_d)
-    new_blog.add_content()
-
-    print(prompts.BLOG_ADDED.format(title))
+    blog_added = new_blog.add_content()
+    if blog_added:
+        print(prompts.BLOG_ADDED.format(title))
 
 
 def edit_blog(active_user):
