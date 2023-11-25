@@ -1,8 +1,8 @@
 from src.config import prompts
 from src.config.flags import Flag
 from src.views.blogger import blogger_menu
-from src.services.blogger import (admin_remove_blog,
-                                  get_users, display_users, remove_user_by_username, change_password)
+from src.helpers.blogger import (admin_remove_blog,
+                                 get_users, display_users, remove_user_by_username, change_password)
 
 
 def admin_choice_menu(active_user):

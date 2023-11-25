@@ -1,7 +1,7 @@
 from src.config import prompts
 from src.utils import take_input
-from src.services.blogger import (view_blogs, view_one_blog, view_blogs_by_user, view_blogs_by_tag_name, create_blog,
-                                  edit_blog, remove_blog, upvote_blog, comment_on_blog, change_password)
+from src.helpers.blogger import (view_blogs, view_one_blog, view_blogs_by_user, view_blogs_by_tag_name, create_blog,
+                                 edit_blog, remove_blog, upvote_blog, comment_on_blog, change_password)
 
 
 def blogger_menu(active_user):

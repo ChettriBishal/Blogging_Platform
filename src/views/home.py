@@ -1,5 +1,5 @@
 from src.config import prompts
-from src.services.home import signup, signin
+from src.helpers.home import signup, signin
 
 
 class Home:
