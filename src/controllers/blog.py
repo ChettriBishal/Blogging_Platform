@@ -26,7 +26,7 @@ class Blog(Post):
             self.blog_id = Database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
             if self.blog_id:
                 return True
-            return False
+            # return False
 
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
@@ -95,14 +95,10 @@ class Blog(Post):
             GeneralLogger.info(prompts.REMOVED_COMMENT_WITH_ID.format(comment_id[0]), filepaths.COMMENT_LOG_FILE)
 
     def remove_content_by_title(self):
-        try:
-            if self.blog_id is None:
-                self.blog_id = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (self.title,))
+        if self.blog_id is None:
+            self.blog_id = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (self.title,))
 
-            self.remove_comments()
-            Database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
+        self.remove_comments()
+        Database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (self.blog_id,))
 
-            return True
-
-        except Exception as exc:
-            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
+        return True

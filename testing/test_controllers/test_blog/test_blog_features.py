@@ -32,6 +32,12 @@ class TestBlog:
     def blog_instance(self, blog_info):
         return Blog(blog_info)
 
+    def test_set_blog_id(self, blog_instance):
+        blog_id = 42
+        blog_instance.set_blog_id(blog_id)
+
+        assert blog_instance.blog_id == blog_id
+
     def test_add_content_positive(self, mock_database, mock_logger, blog_instance, blog_info):
         mock_database.insert_item.return_value = 1
 
@@ -50,7 +56,7 @@ class TestBlog:
 
         result = blog_instance.add_content()
 
-        assert (result is not 1)
+        assert (result is None)
 
         assert not (blog_instance.blog_id == 1)
         mock_database.insert_item.assert_called_once_with(Sql.INSERT_BLOG.value, blog_info)
@@ -88,8 +94,6 @@ class TestBlog:
         blog_instance.remove_comments.assert_called_once()
         mock_database.remove_item.assert_called_once_with(Sql.REMOVE_BLOG_BY_ID.value, (42,))
         mock_logger.error.assert_not_called()
-
-        pass
 
     @patch('src.controllers.blog.Blog.remove_comments')
     def test_remove_content_negative(self, monkeypatch, blog_instance, mock_database, mock_logger):
@@ -194,10 +198,9 @@ class TestBlog:
     def test_remove_content_by_title_negative(self, mock_remove_comments, mock_database, blog_instance, mock_logger):
         mock_database.get_item.return_value = None
         mock_remove_comments.return_value = None
-
         result = blog_instance.remove_content_by_title()
 
-        assert result is True
+        assert (result is True)
         mock_database.get_item.assert_called_once_with(Sql.GET_BLOG_RECORD_BY_TITLE.value, ("Test Title",))
         mock_remove_comments.assert_called_once()
         mock_logger.error.assert_not_called()

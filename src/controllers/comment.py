@@ -22,7 +22,8 @@ class Comment(Post):
     def add_content(self):
         try:
             self.comment_id = Database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
-            return True
+            if self.comment_id:
+                return True
 
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
@@ -40,6 +41,7 @@ class Comment(Post):
         try:
             comment_to_remove = Database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
             Database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
+            return True
 
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
