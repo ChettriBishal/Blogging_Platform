@@ -1,5 +1,4 @@
 import pytest
-from unittest.mock import patch, call
 from src.controllers.comment import Comment, Sql
 from src.config import prompts
 
