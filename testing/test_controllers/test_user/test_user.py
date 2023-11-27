@@ -1,6 +1,5 @@
 import pytest
-from src.controllers.user import User, Sql, Database
-from src.config import prompts
+from src.controllers.user import User, Sql
 
 
 class TestUser:
