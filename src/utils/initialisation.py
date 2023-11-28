@@ -12,3 +12,5 @@ def initialize():
     Database.single_query(Sql.CREATE_BLOG_UPVOTES_TABLE.value)
 
     Database.single_query(Sql.CREATE_COMMENT_UPVOTES_TABLE.value)
+
+    return True
