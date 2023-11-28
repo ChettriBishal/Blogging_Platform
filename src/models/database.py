@@ -6,6 +6,7 @@ from src.models.db_connection import DBConnection
 
 
 class Database:
+    """Contains methods for accessing the database"""
     blog_db_connection = DBConnection()
 
     @classmethod
