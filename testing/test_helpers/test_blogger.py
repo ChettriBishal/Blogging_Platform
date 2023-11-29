@@ -251,3 +251,38 @@ class TestBlogger:
         captured = capsys.readouterr()
 
         assert prompts.CHOOSE_ANOTHER_TITLE in captured.out
+
+    @pytest.mark.parametrize("edited, expected_output", [
+        (True, prompts.BLOG_EDITED.format('test_title')),
+        (False, prompts.COULD_NOT_EDIT_BLOG.format('test_title'))
+    ])
+    def test_edit_blog(self, edited, expected_output, capsys, mocker, mock_user, mock_database, mock_blog):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mocker.patch.object(take_input, 'get_new_content', return_value='test_content')
+        mock_database.get_item.return_value = [101, 'test_title', 'test_author', 'test_date']
+
+        blog_instance = mock_blog()
+        mocker.patch.object(blog_instance, 'set_blog_id')
+        blog_instance.set_blog_id.return_value = True
+
+        mocker.patch.object(blog_instance, 'edit_content', return_value=edited)
+
+        blogger.edit_blog(mock_user)
+
+        captured = capsys.readouterr()
+        assert expected_output in captured.out
+
+    def test_edit_blog_not_found(self, capsys, mocker, mock_user, mock_database):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = None
+
+        mock_user.username = 'einstein'
+
+        result = blogger.edit_blog(mock_user)
+
+        captured = capsys.readouterr()
+
+        assert result == Flag.DOES_NOT_EXIST.value
+        assert prompts.BLOG_NOT_FOUND_BLOG_USER.format('test_title', mock_user.username) in captured.out
+
+
