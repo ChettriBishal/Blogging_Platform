@@ -18,6 +18,7 @@ from src.config import filepaths
 
 @admin
 def get_users(active_user):
+    """To get all the users in the platform"""
     try:
         user_list = Database.get_items(Sql.GET_ALL_USERS.value)
         users = [User(*record[1:]) for record in user_list]
@@ -29,6 +30,7 @@ def get_users(active_user):
 
 
 def change_password(active_user):
+    """To change the password: performed by the active user"""
     new_passw = take_input.get_new_password()
 
     if validation.validate_password(new_passw):
@@ -44,6 +46,7 @@ def change_password(active_user):
 
 
 def display_users(user_list):
+    """To display the users of the platform"""
     print(prompts.USERS_HEADER)
     table = PrettyTable()
 

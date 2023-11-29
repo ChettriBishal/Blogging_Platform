@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, Mock
 
 from src.helpers import blogger
-from src.helpers.blogger import User, Database, prompts
+from src.helpers.blogger import User, Database, prompts, GeneralLogger, Role, Flag, filepaths
 
 
 class TestBlogger:
@@ -45,6 +45,7 @@ class TestBlogger:
         mock_user.user_role = 1
 
         users = blogger.get_users(mock_user)
+        assert users is None
         mock_logger.info.assert_called()
 
     def test_change_password_valid(self, capsys, mocker, mock_user, mock_logger):
@@ -61,7 +62,7 @@ class TestBlogger:
         assert captured.out.rstrip() == prompts.SUCCESSFUL_PASSWORD_CHANGE
         mock_logger.info.assert_called()
 
-    def test_change_password_invalid(self, capsys, mocker, mock_user, mock_logger):
+    def test_change_password_invalid_first(self, capsys, mocker, mock_user, mock_logger):
         mocker.patch('src.helpers.blogger.validation.validate_password', return_value=False)
         mocker.patch('src.helpers.blogger.take_input', return_value='new_password')
 
@@ -74,7 +75,67 @@ class TestBlogger:
             captured = capsys.readouterr()
 
             assert captured.out.strip() == (
-                        prompts.ENTER_STRONG_PASSWORD.strip() + '\n' * 2 +
-                        prompts.SUCCESSFUL_PASSWORD_CHANGE.strip()
+                    prompts.ENTER_STRONG_PASSWORD.strip() + '\n' * 2 +
+                    prompts.SUCCESSFUL_PASSWORD_CHANGE.strip()
             )
             mock_logger.info.assert_called()
+
+    def test_display_users(self, capsys):
+        pass
+
+    @pytest.mark.parametrize("user_status, expected_output, expected_return", [
+        (None, "", False),  # User not found
+        ((1, 'test_user_2', 'password', Role.BLOGGER.value, 'test_mail_2', '2023-11-08'), "", True),
+    ])
+    def test_remove_user_by_username_empty_and_blogger(self, mocker, mock_user, mock_logger, user_status,
+                                                       expected_output,
+                                                       expected_return):
+        mocker.patch.object(Database, 'get_item', return_value=user_status)
+
+        mocker.patch.object(GeneralLogger, 'info')
+
+        if user_status:
+            mock_user.user_role = user_status[3]
+            mocker.patch('src.helpers.blogger.User', return_value=mock_user)
+            mocker.patch.object(mock_user, 'remove_user_by_username', return_value=True)
+
+            result = blogger.remove_user_by_username('test_user_2')
+
+            assert (result == expected_return)
+
+            if result:
+                mock_logger.info.assert_called_once_with(prompts.USER_WITH_USERNAME_REMOVED.format('test_user_2'),
+                                                         filepaths.USER_LOG_FILE)
+
+        else:
+            result = blogger.remove_user_by_username('test_user')
+            assert result is False
+
+    @pytest.mark.parametrize("user_status, expected_output, expected_return", [
+        ((1, 'test_user_1', 'password', Role.ADMIN.value, 'test_mail', '2023-11-09'),
+         prompts.ADMIN_CANT_BE_REMOVED + '\n', Flag.INVALID_OPERATION.value),
+    ])
+    def test_remove_user_by_username_admin(self, capsys, mocker, mock_user, mock_logger, user_status, expected_output,
+                                           expected_return):
+        mocker.patch.object(Database, 'get_item', return_value=user_status)
+
+        mocker.patch.object(GeneralLogger, 'info')
+
+        mock_user.user_role = user_status[3]
+        mocker.patch('src.helpers.blogger.User', return_value=mock_user)
+        mocker.patch.object(mock_user, 'remove_user_by_username', return_value=True)
+
+        result = blogger.remove_user_by_username('test_user_2')
+        captured = capsys.readouterr()
+
+        assert captured.out == expected_output
+
+        assert (result == expected_return)
+
+    def test_remove_user_by_username_exception(self, mock_database, mock_logger):
+        mock_database.get_item.side_effect = Exception("Something went wrong")
+
+        result = blogger.remove_user_by_username('bishal')
+
+        assert result is False
+        mock_logger.error.assert_called_once()
