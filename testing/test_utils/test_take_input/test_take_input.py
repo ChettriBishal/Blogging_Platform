@@ -60,18 +60,3 @@ class TestInput:
 
         result = take_input.get_user_for_blog()
         assert result == 'test_user'
-
-    # def test_get_blog_post_details_recursive(self, capsys, monkeypatch, mocker):
-    #     # Mocking input function to simulate empty title on the first call
-    #     # and non-empty title on the second call
-    #     inputs = ['', 'test_content', 'test_tag']
-    #     monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
-    #
-    #     result = take_input.get_blog_post_details()
-    #
-    #     # Assertions for the first call with empty title
-    #     assert result is None  # The first call returns None because of recursion
-    #     assert prompts.EMPTY_INPUT in capsys.readouterr().out  # Check if EMPTY_INPUT is printed
-    #
-    #     # Assertions for the second call with a non-empty title
-    #     assert result == ('test_title', 'test_content', 'test_tag')

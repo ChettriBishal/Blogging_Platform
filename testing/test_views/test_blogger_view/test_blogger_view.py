@@ -1,0 +1,2 @@
+class TestBloggerView:
+    pass
