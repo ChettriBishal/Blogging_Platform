@@ -211,10 +211,11 @@ class TestBlogger:
         # 'Comment2')])
         mocker.patch.object(mock_blog_instance, 'get_comments',
                             return_value=[mock_comment_instance, mock_comment_instance])
-        blogger.view_one_blog()
+        result = blogger.view_one_blog()
 
         capsys.readouterr()
 
+        assert result is True
         mock_blog_instance.details.assert_called()
         mock_comment_instance.details.assert_called()
 
