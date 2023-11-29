@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, Mock, MagicMock
 
 from src.helpers import blogger
-from src.helpers.blogger import User, Blog, Database, prompts, GeneralLogger, Role, Flag, filepaths, take_input
+from src.helpers.blogger import User, Blog, Comment, Database, prompts, GeneralLogger, Role, Flag, filepaths, take_input
 
 
 class TestBlogger:
@@ -19,6 +19,13 @@ class TestBlogger:
         _instance = Blog_m.return_value
         mocker.patch('src.helpers.blogger.Blog', return_value=_instance)
         return Blog_m
+
+    @pytest.fixture
+    def mock_comment(self, mocker):
+        Comment_m = Mock(spec=Comment)
+        _instance = Comment_m.return_value
+        mocker.patch('src.helpers.blogger.Comment', return_value=_instance)
+        return Comment_m
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
@@ -383,6 +390,44 @@ class TestBlogger:
         mock_user.username = 'einstein'
 
         result = blogger.upvote_blog(mock_user)
+
+        captured = capsys.readouterr()
+
+        assert result == Flag.DOES_NOT_EXIST.value
+        assert prompts.BLOG_NOT_FOUND_NAME.format('test_title') in captured.out
+
+    @pytest.mark.parametrize("comment_added, expected_output", [
+        (True, prompts.COMMENT_ADDED),
+        (False, prompts.COMMENT_NOT_ADDED)
+    ])
+    def test_comment_on_blog(self, comment_added, expected_output, capsys, mocker, mock_database,
+                             mock_user, mock_blog, mock_comment):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mocker.patch.object(take_input, 'get_comment', return_value='test_comment')
+        mock_database.get_item.return_value = [101, 'test_title', 'test_author', 'test_date']
+
+        blog_instance = mock_blog()
+        blog_instance.set_blog_id.return_value = True
+
+        comment_instance = mock_comment()
+        mocker.patch.object(comment_instance, 'add_content', return_value=comment_added)
+        # or: comment_instance.add_content.return_value = comment_added
+        mock_user.user_role = 2
+        mock_user.user_name = 'edward'
+
+        blogger.comment_on_blog(mock_user)
+
+        captured = capsys.readouterr()
+
+        assert captured.out.strip() == expected_output
+
+    def test_comment_on_blog_not_found(self, capsys, mocker, mock_user, mock_database):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = None
+
+        mock_user.username = 'einstein'
+
+        result = blogger.comment_on_blog(mock_user)
 
         captured = capsys.readouterr()
 
