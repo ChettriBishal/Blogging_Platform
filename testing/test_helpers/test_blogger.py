@@ -356,3 +356,35 @@ class TestBlogger:
 
         assert result == Flag.DOES_NOT_EXIST.value
         assert prompts.BLOG_NOT_FOUND_NAME.format('test_title') in captured.out
+
+    @pytest.mark.parametrize("upvoted, expected_output", [
+        (True, prompts.UPVOTED_BLOG.format('test_title')),
+        (False, prompts.COULD_NOT_UPVOTE_BLOG.format('test_title'))
+    ])
+    def test_upvote_blog(self, upvoted, expected_output, capsys, mocker, mock_user, mock_database, mock_blog,
+                         mock_logger):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = [101, 'test_title', 'test_author', 'test_date']
+
+        blog_instance = mock_blog()
+
+        mocker.patch.object(blog_instance, 'upvote', return_value=upvoted)
+
+        mock_user.username = 'snowden'
+        blogger.upvote_blog(mock_user)
+
+        captured = capsys.readouterr()
+        assert expected_output in captured.out
+
+    def test_upvote_blog_not_found(self, capsys, mocker, mock_user, mock_database):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = None
+
+        mock_user.username = 'einstein'
+
+        result = blogger.upvote_blog(mock_user)
+
+        captured = capsys.readouterr()
+
+        assert result == Flag.DOES_NOT_EXIST.value
+        assert prompts.BLOG_NOT_FOUND_NAME.format('test_title') in captured.out
