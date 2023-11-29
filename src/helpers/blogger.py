@@ -137,7 +137,8 @@ def view_blogs_by_tag_name(tag_name):
 
 
 def view_one_blog():
-    title = input(prompts.ENTER_BLOG_TITLE)
+    """View a particular blog by its name"""
+    title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
     if blog_details is None:
@@ -150,7 +151,6 @@ def view_one_blog():
     print(current_blog.details())
 
     blog_comments = current_blog.get_comments()
-
     if blog_comments:
         print(prompts.COMMENTS)
 

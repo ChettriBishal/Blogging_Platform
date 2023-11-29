@@ -1,8 +1,8 @@
 import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, MagicMock
 
 from src.helpers import blogger
-from src.helpers.blogger import User, Blog, Database, prompts, GeneralLogger, Role, Flag, filepaths
+from src.helpers.blogger import User, Blog, Database, prompts, GeneralLogger, Role, Flag, filepaths, take_input
 
 
 class TestBlogger:
@@ -196,3 +196,36 @@ class TestBlogger:
         captured = capsys.readouterr()
 
         assert prompts.NO_BLOG_OF_TAG_NAME.format('dummy_tag') in captured.out
+
+    def test_view_one_blog(self, capsys, mocker, monkeypatch, mock_blog, mock_database):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = [(101, 'Snowden', 'Content', 'Creator', 4, 'adventure', '2023-12-12')]
+
+        mock_blog_instance = mock_blog.return_value
+
+        mock_comment = Mock()
+        mock_comment_instance = mock_comment.return_value
+        mock_comment.get_details.return_value = True
+
+        # alternative:  monkeypatch.setattr(mock_blog_instance, 'get_comments', lambda _: [(1, 'Comment1'), (2,
+        # 'Comment2')])
+        mocker.patch.object(mock_blog_instance, 'get_comments',
+                            return_value=[mock_comment_instance, mock_comment_instance])
+        blogger.view_one_blog()
+
+        capsys.readouterr()
+
+        mock_blog_instance.details.assert_called()
+        mock_comment_instance.details.assert_called()
+
+    def test_view_one_blog_not_found(self, capsys, mocker, mock_database):
+        mocker.patch.object(take_input, 'get_title', return_value='test_title')
+        mock_database.get_item.return_value = None
+
+        result = blogger.view_one_blog()
+
+        captured = capsys.readouterr()
+
+        assert prompts.BLOG_NOT_FOUND_NAME.format('test_title') in captured.out
+        assert result == Flag.DOES_NOT_EXIST.value
+
