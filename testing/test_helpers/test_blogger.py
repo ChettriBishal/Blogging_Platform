@@ -17,7 +17,7 @@ class TestBlogger:
     def mock_blog(self, mocker):
         Blog_m = Mock(spec=Blog)
         _instance = Blog_m.return_value
-        mocker.patch('src.helpers.blogger.Blog', return_value= _instance)
+        mocker.patch('src.helpers.blogger.Blog', return_value=_instance)
         return Blog_m
 
     @pytest.fixture(autouse=True)
@@ -147,8 +147,6 @@ class TestBlogger:
         assert result is False
         mock_logger.error.assert_called_once()
 
-
-
     def test_view_blogs_1(self, mock_database):
 
         pass
@@ -172,3 +170,29 @@ class TestBlogger:
 
         assert prompts.BLOGS_NOT_FOUND in captured.out
 
+    def test_view_blogs_by_user_or_tag_positive(self, capsys, mock_database, mock_blog):
+        mock_database.get_items.return_value = [('TestBlog1', 'TestContent'), ('TestBlog2', 'TestContent')]
+
+        blogger.view_blogs_by_user('dummy_user')
+        blogger.view_blogs_by_tag_name('dummy_tag')
+
+        capsys.readouterr()
+
+        mock_blog_instance = mock_blog.return_value
+        mock_blog_instance.details.assert_called()
+
+    def test_view_blogs_by_user_not_found(self, capsys, mock_database):
+        mock_database.get_items.return_value = []
+
+        blogger.view_blogs_by_user('dummy_user')
+        captured = capsys.readouterr()
+
+        assert prompts.NO_BLOG_BY_USER.format('dummy_user') in captured.out
+
+    def test_view_blogs_by_tag_not_found(self, capsys, mock_database):
+        mock_database.get_items.return_value = []
+
+        blogger.view_blogs_by_tag_name('dummy_tag')
+        captured = capsys.readouterr()
+
+        assert prompts.NO_BLOG_OF_TAG_NAME.format('dummy_tag') in captured.out

@@ -116,7 +116,6 @@ def view_blogs_by_user(username):
         return
 
     blogs = [Blog(blog[1:]) for blog in blogs]
-    print("reached here")
     for blog in blogs:
         print(blog.details())
 
