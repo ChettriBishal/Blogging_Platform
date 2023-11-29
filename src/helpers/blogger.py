@@ -92,6 +92,7 @@ def remove_user_by_username(username):
 
 
 def view_blogs():
+    """To view all the blogs posted so far"""
     blogs = Database.get_items(Sql.GET_ALL_BLOGS.value)
 
     if blogs is None:
@@ -115,7 +116,7 @@ def view_blogs_by_user(username):
         return
 
     blogs = [Blog(blog[1:]) for blog in blogs]
-
+    print("reached here")
     for blog in blogs:
         print(blog.details())
 

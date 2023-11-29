@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, Mock
 
 from src.helpers import blogger
-from src.helpers.blogger import User, Database, prompts, GeneralLogger, Role, Flag, filepaths
+from src.helpers.blogger import User, Blog, Database, prompts, GeneralLogger, Role, Flag, filepaths
 
 
 class TestBlogger:
@@ -12,6 +12,13 @@ class TestBlogger:
         _instance = mock_user_class.return_value
         mocker.patch('src.helpers.blogger.User', return_value=_instance)
         return mock_user_class()
+
+    @pytest.fixture
+    def mock_blog(self, mocker):
+        Blog_m = Mock(spec=Blog)
+        _instance = Blog_m.return_value
+        mocker.patch('src.helpers.blogger.Blog', return_value= _instance)
+        return Blog_m
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
@@ -139,3 +146,29 @@ class TestBlogger:
 
         assert result is False
         mock_logger.error.assert_called_once()
+
+
+
+    def test_view_blogs_1(self, mock_database):
+
+        pass
+
+    def test_view_blogs(self, capsys, mocker, mock_blog):
+        mocker.patch.object(Database, 'get_items', return_value=[(1, 'Blog Title', 'Blog Content')])
+
+        blogger.view_blogs()
+
+        # Capture the printed output
+        capsys.readouterr()
+
+        mock_blog_instance = mock_blog.return_value
+        mock_blog_instance.details.assert_called_once()
+
+    def test_view_blogs_negative(self, capsys, mock_database):
+        mock_database.get_items.return_value = None
+
+        blogger.view_blogs()
+        captured = capsys.readouterr()
+
+        assert prompts.BLOGS_NOT_FOUND in captured.out
+
