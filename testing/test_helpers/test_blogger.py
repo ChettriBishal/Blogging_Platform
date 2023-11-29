@@ -230,3 +230,24 @@ class TestBlogger:
         assert prompts.BLOG_NOT_FOUND_NAME.format('test_title') in captured.out
         assert result == Flag.DOES_NOT_EXIST.value
 
+    def test_create_blog(self, capsys, mocker, mock_database, mock_user, mock_blog):
+        mocker.patch.object(take_input, 'get_blog_post_details', return_value=('test_title', 'test_content', 'test'))
+        mock_database.get_item.return_value = False  # assuming this is a new entry
+        blog_instance = mock_blog()
+        blog_instance.add_content.return_value = True  # added the blog successfully
+
+        mock_user.username = 'test_user'
+        blogger.create_blog(mock_user)
+        captured = capsys.readouterr()
+
+        assert prompts.BLOG_ADDED.format('test_title') in captured.out
+
+    def test_create_blog_negative(self, mocker, mock_user, capsys, mock_database):
+        mocker.patch.object(take_input, 'get_blog_post_details', return_value=('test_title', 'test_content', 'test'))
+        mock_database.get_item.return_value = True  # there's an existing entry by that name
+
+        blogger.create_blog(mock_user)
+
+        captured = capsys.readouterr()
+
+        assert prompts.CHOOSE_ANOTHER_TITLE in captured.out
