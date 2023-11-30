@@ -27,7 +27,7 @@ class Authentication:
         username, passw, email = user_info
 
         user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
-        print(user_presence)  # remove this
+
         if user_presence:
             return Flag.ALREADY_EXISTS.value
 

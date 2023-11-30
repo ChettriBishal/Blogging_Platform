@@ -104,7 +104,7 @@ class TestHome:
 
         user_status = iter(test_data)
 
-        mock_take_input.get_username_password.return_value =[{'snowden', 'password'}]
+        mock_take_input.get_username_password.return_value = [{'snowden', 'password'}]
         monkeypatch.setattr(mock_authentication, 'sign_in', lambda _: next(user_status))
         _instance = mock_user.return_value
         _instance.set_user_id.return_value = True
