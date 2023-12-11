@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock, Mock
+from unittest.mock import patch, Mock
 from src.config.flags import Flag
 from src.controllers.authentication import Authentication, User
 
