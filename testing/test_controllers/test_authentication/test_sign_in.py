@@ -1,7 +1,6 @@
 import pytest
 from src.controllers.authentication import Authentication
-from unittest.mock import Mock, patch
-from src.controllers import authentication
+from unittest.mock import patch
 from src.config.flags import Flag
 
 
