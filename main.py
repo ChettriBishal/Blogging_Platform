@@ -2,6 +2,7 @@ from src.config import filepaths, prompts
 from src.loggers.general_logger import GeneralLogger
 from src.utils.initialisation import initialize
 from src.views.home import Home
+from src.models.db_connection import DBConnection
 
 if __name__ == "__main__":
     GeneralLogger.info(prompts.SYSTEM_START, filepaths.SYSTEM_LOG_FILE)
@@ -15,3 +16,4 @@ if __name__ == "__main__":
 
     finally:
         GeneralLogger.info(prompts.SYSTEM_EXIT, filepaths.SYSTEM_LOG_FILE)
+        DBConnection().close()
