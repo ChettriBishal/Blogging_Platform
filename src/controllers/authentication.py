@@ -16,6 +16,7 @@ class Authentication:
     """
     Class containing various methods for authenticating a user to the system
     """
+
     @classmethod
     def hash_password(cls, password: str) -> str:
         """
@@ -65,7 +66,7 @@ class Authentication:
             return False
 
     @classmethod
-    def sign_in(cls, *args: Tuple) -> Union[tuple , bool , str]:
+    def sign_in(cls, *args: Tuple) -> Union[tuple, bool, str]:
         """
         Method to allow user entry to the system
         """
