@@ -1,8 +1,14 @@
+"""This module is used to create the tables if not present"""
+
+from typing import Union
 from src.config.sql_query import Sql
 from src.models.database import Database
 
 
-def initialize():
+def initialize() -> Union[bool, None]:
+    """
+    Invoke all the methods to create the tables
+    """
     Database.single_query(Sql.CREATE_USER_TABLE.value)
 
     Database.single_query(Sql.CREATE_BLOG_TABLE.value)

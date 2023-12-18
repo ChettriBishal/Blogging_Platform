@@ -1,3 +1,5 @@
+"""This module defines various methods to take user inputs"""
+
 import pwinput
 from src.config import prompts
 from src.utils import validation
