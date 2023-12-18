@@ -1,3 +1,5 @@
+"""This module helps the user to enter to the platform"""
+
 from src.config import prompts
 from src.config.sql_query import Sql
 from src.controllers.authentication import Authentication
@@ -12,7 +14,10 @@ from src.views.admin import admin_choice_menu
 from src.views.blogger import blogger_menu
 
 
-def signup():
+def signup() -> None:
+    """
+    This function allows users to sign up to the platform
+    """
     print(prompts.SIGNUP)
 
     user_details = take_input.get_user_details()
@@ -43,7 +48,10 @@ def signup():
         print(prompts.PLEASE_TRY_AGAIN)
 
 
-def signin():
+def signin() -> None:
+    """
+    This function allows users to sign in to the platform
+    """
     print(prompts.SIGNIN)
 
     user_details = take_input.get_username_password()
