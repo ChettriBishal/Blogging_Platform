@@ -1,3 +1,6 @@
+"""This module contains the various operations on a comment"""
+
+from typing import Union, Tuple
 from src.controllers.post import Post
 from src.config.sql_query import Sql
 from src.models.database import Database
@@ -7,7 +10,10 @@ from src.config.filepaths import COMMENT_LOG_FILE
 
 
 class Comment(Post):
-    def __init__(self, comment_info):
+    """
+    Class containing various methods associated with a comment object
+    """
+    def __init__(self, comment_info: Tuple) -> None:
         (
             # comment_id will be auto incremented
             self.blog_id,
@@ -19,7 +25,10 @@ class Comment(Post):
         self.comment_id = None
         self.comment_info = comment_info
 
-    def add_content(self):
+    def add_content(self) -> Union[bool, None]:
+        """
+        Method to add new comment content
+        """
         try:
             self.comment_id = Database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
             if self.comment_id:
@@ -28,7 +37,10 @@ class Comment(Post):
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
-    def edit_content(self, new_content):
+    def edit_content(self, new_content: str) -> Union[bool, None]:
+        """
+        Method to edit content of the comment
+        """
         try:
             comment_id = Database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator,))[0]
             Database.query_with_params(Sql.EDIT_COMMENT.value, (new_content, comment_id,))
@@ -37,7 +49,10 @@ class Comment(Post):
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
-    def remove_content(self):
+    def remove_content(self) -> Union[bool, None]:
+        """
+        Method to remove content of the comment
+        """
         try:
             comment_to_remove = Database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
             Database.remove_item(Sql.REMOVE_COMMENT_BY_ID.value, (comment_to_remove,))
@@ -46,7 +61,10 @@ class Comment(Post):
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
-    def upvote(self, user_id):
+    def upvote(self, user_id: str) -> Union[bool, None]:
+        """
+        Method to upvote the comment
+        """
         try:
             upvote_record = Database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
 
@@ -63,7 +81,10 @@ class Comment(Post):
         except Exception as exc:
             GeneralLogger.error(exc, COMMENT_LOG_FILE)
 
-    def details(self):
+    def details(self) -> str:
+        """
+        Method to get details of the comment
+        """
         comment_info = (self.creator, self.content, self.creation_date)
 
         return prompts.COMMENT_INFO.format(*comment_info)

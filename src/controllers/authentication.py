@@ -16,26 +16,28 @@ class Authentication:
     """
     Class containing various methods for authenticating a user to the system
     """
-
     @classmethod
     def hash_password(cls, password: str) -> str:
-        """Method for hashing the password entered by the user"""
-
+        """
+        Method for hashing the password entered by the user
+        """
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         return hashed_password
 
     @classmethod
     def _check_password(cls, password: str, hashed_password: str) -> bool:
-        """Method for validating the password against the stored password"""
-
+        """
+        Method for validating the password against the stored password
+        """
         if cls.hash_password(password) == hashed_password:
             return True
         return False
 
     @classmethod
     def sign_up(cls, *user_info: Tuple) -> Union[User, bool, int]:
-        """Method which allows a user to register to the system"""
-
+        """
+        Method which allows a user to register to the system
+        """
         username, passw, email = user_info
 
         user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
@@ -63,9 +65,10 @@ class Authentication:
             return False
 
     @classmethod
-    def sign_in(cls, *args: Tuple) -> Union[str, int, bool]:
-        """Method to allow user entry to the system"""
-
+    def sign_in(cls, *args: Tuple) -> Union[tuple , bool , str]:
+        """
+        Method to allow user entry to the system
+        """
         username, passw = args
 
         if validation.validate_username(username) is None:
