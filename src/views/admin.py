@@ -1,9 +1,9 @@
 """This module contains the menu choices for admin"""
 
-from src.config import prompts
-from src.config.flags import Flag
-from src.views.blogger import blogger_menu
-from src.helpers.blogger import (admin_remove_blog,
+from config import prompts
+from config.flags import Flag
+from views.blogger import blogger_menu
+from helpers.blogger import (admin_remove_blog,
                                  get_users, display_users, remove_user_by_username, change_password)
 
 

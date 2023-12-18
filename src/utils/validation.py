@@ -1,7 +1,7 @@
 """This module is for validating the inputs entered by the user"""
 
 import re
-from typing import Optional
+from typing import Optional, Union
 
 
 def validate_username(username: str) -> bool:
@@ -34,7 +34,7 @@ def validate_email(email) -> Optional[re.Match]:
     return matcher
 
 
-def validate_empty_input(text) -> Optional[re.Match, bool]:
+def validate_empty_input(text) -> Union[re.Match, bool]:
     """
     This function checks for empty input entered by the user
     """

@@ -2,9 +2,9 @@
 
 from typing import Optional
 from functools import wraps
-from src.config.roles import Role
-from src.config.prompts import ONLY_ADMIN
-from src.controllers.user import User
+from config.roles import Role
+from config.prompts import ONLY_ADMIN
+from controllers.user import User
 
 
 def admin(func):

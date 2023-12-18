@@ -1,7 +1,7 @@
 """This module contains various choices for the home menu"""
 
-from src.config import prompts
-from src.helpers.home import signup, signin
+from config import prompts
+from helpers.home import signup, signin
 
 
 class Home:

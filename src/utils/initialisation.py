@@ -1,8 +1,8 @@
 """This module is used to create the tables if not present"""
 
 from typing import Union
-from src.config.sql_query import Sql
-from src.models.database import Database
+from config.sql_query import Sql
+from models.database import Database
 
 
 def initialize() -> Union[bool, None]:

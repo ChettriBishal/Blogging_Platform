@@ -4,19 +4,19 @@ from datetime import datetime
 from prettytable import PrettyTable
 from typing import List, Union
 
-from src.config import prompts
-from src.utils.admin_only import admin
-from src.controllers.blog import Blog
-from src.controllers.comment import Comment
-from src.config.sql_query import Sql
-from src.controllers.authentication import Authentication
-from src.controllers.user import User
-from src.config.flags import Flag
-from src.config.roles import Role
-from src.utils import take_input, validation
-from src.models.database import Database
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
+from config import prompts
+from utils.admin_only import admin
+from controllers.blog import Blog
+from controllers.comment import Comment
+from config.sql_query import Sql
+from controllers.authentication import Authentication
+from controllers.user import User
+from config.flags import Flag
+from config.roles import Role
+from utils import take_input, validation
+from models.database import Database
+from loggers.general_logger import GeneralLogger
+from config import filepaths
 
 
 @admin

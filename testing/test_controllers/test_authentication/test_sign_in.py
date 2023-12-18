@@ -1,7 +1,7 @@
 import pytest
-from src.controllers.authentication import Authentication
+from controllers.authentication import Authentication
 from unittest.mock import patch
-from src.config.flags import Flag
+from config.flags import Flag
 
 
 class TestSignIn:
@@ -12,9 +12,9 @@ class TestSignIn:
 
     @pytest.fixture
     def mock_database(self, mocker):
-        with patch('src.controllers.authentication.Database') as mock_db:
+        with patch('controllers.authentication.Database') as mock_db:
             yield mock_db
-        # return mocker.patch('src.controllers.authentication.Database')
+        # return mocker.patch('controllers.authentication.Database')
 
     def check_sign_in(self, expected_val, *args):
         val_received = Authentication.sign_in(*args)

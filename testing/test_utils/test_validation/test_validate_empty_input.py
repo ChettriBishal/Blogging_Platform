@@ -1,5 +1,5 @@
 import pytest
-from src.utils.validation import validate_empty_input
+from utils.validation import validate_empty_input
 
 
 class TestEmptyInput:

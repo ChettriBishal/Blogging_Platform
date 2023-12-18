@@ -2,7 +2,7 @@
 
 import logging
 from typing import Any, Union
-from src.config.filepaths import APP_LOG_FILE
+from config.filepaths import APP_LOG_FILE
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s",

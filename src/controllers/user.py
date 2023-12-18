@@ -1,10 +1,10 @@
 """This module contains the various operations performed on a user"""
 
 from typing import Dict
-from src.config.sql_query import Sql
-from src.models.database import Database
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
+from config.sql_query import Sql
+from models.database import Database
+from loggers.general_logger import GeneralLogger
+from config import filepaths
 
 
 class User:

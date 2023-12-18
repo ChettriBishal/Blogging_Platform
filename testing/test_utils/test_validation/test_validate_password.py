@@ -1,6 +1,6 @@
 import pytest
 
-from src.utils.validation import validate_password
+from utils.validation import validate_password
 
 
 class TestPassword:

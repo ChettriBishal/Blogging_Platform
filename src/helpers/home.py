@@ -1,17 +1,17 @@
 """This module helps the user to enter to the platform"""
 
-from src.config import prompts
-from src.config.sql_query import Sql
-from src.controllers.authentication import Authentication
-from src.controllers.user import User
-from src.config.flags import Flag
-from src.config.roles import Role
-from src.models.database import Database
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
-from src.utils import take_input
-from src.views.admin import admin_choice_menu
-from src.views.blogger import blogger_menu
+from config import prompts
+from config.sql_query import Sql
+from controllers.authentication import Authentication
+from controllers.user import User
+from config.flags import Flag
+from config.roles import Role
+from models.database import Database
+from loggers.general_logger import GeneralLogger
+from config import filepaths
+from utils import take_input
+from views.admin import admin_choice_menu
+from views.blogger import blogger_menu
 
 
 def signup() -> None:

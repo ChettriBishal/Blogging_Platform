@@ -2,8 +2,8 @@
 
 import pwinput
 from typing import Tuple
-from src.config import prompts
-from src.utils import validation
+from config import prompts
+from utils import validation
 
 
 def get_user_details() -> Tuple:

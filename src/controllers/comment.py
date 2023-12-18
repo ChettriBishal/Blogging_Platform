@@ -1,12 +1,12 @@
 """This module contains the various operations on a comment"""
 
 from typing import Union, Tuple
-from src.controllers.post import Post
-from src.config.sql_query import Sql
-from src.models.database import Database
-from src.config import prompts
-from src.loggers.general_logger import GeneralLogger
-from src.config.filepaths import COMMENT_LOG_FILE
+from controllers.post import Post
+from config.sql_query import Sql
+from models.database import Database
+from config import prompts
+from loggers.general_logger import GeneralLogger
+from config.filepaths import COMMENT_LOG_FILE
 
 
 class Comment(Post):

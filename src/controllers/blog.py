@@ -1,13 +1,13 @@
 """This module contains various operations performed on a blog"""
 
 from typing import Union, Tuple, List
-from src.controllers.post import Post
-from src.config.sql_query import Sql
-from src.models.database import Database
-from src.controllers.comment import Comment
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
-from src.config import prompts
+from controllers.post import Post
+from config.sql_query import Sql
+from models.database import Database
+from controllers.comment import Comment
+from loggers.general_logger import GeneralLogger
+from config import filepaths
+from config import prompts
 
 
 class Blog(Post):

@@ -2,7 +2,7 @@
 
 import sqlite3
 
-from src.config.filepaths import BLOGGING_DB
+from config.filepaths import BLOGGING_DB
 
 
 class DBConnection:

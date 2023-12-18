@@ -1,12 +1,12 @@
 import pytest
-from src.utils import take_input
+from utils import take_input
 
 
 class TestInput:
 
     @pytest.fixture
     def mocker_validation(self, mocker):
-        return mocker.patch('src.utils.take_input.validation')
+        return mocker.patch('utils.take_input.validation')
 
     def test_get_user_details(self, monkeypatch, mocker):
         input_details = iter(['test_username', 'test_email'])

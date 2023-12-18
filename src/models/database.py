@@ -3,9 +3,9 @@
 import sqlite3
 from typing import Any, Optional, Tuple, List
 
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
-from src.models.db_connection import DBConnection
+from loggers.general_logger import GeneralLogger
+from config import filepaths
+from models.db_connection import DBConnection
 
 
 class Database:

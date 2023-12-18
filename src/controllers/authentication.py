@@ -4,12 +4,12 @@ import hashlib
 from datetime import datetime
 from typing import Tuple, Union
 
-from src.controllers.user import User
-from src.config.roles import Role
-from src.config.flags import Flag
-from src.utils import validation
-from src.models.database import Database
-from src.config.sql_query import Sql
+from controllers.user import User
+from config.roles import Role
+from config.flags import Flag
+from utils import validation
+from models.database import Database
+from config.sql_query import Sql
 
 
 class Authentication:
