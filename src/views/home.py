@@ -1,11 +1,16 @@
+"""This module contains various choices for the home menu"""
+
 from src.config import prompts
 from src.helpers.home import signup, signin
 
 
 class Home:
+    """
+    Class containing the home menu which allows users to either signup or signin
+    """
 
     @classmethod
-    def home_menu(cls):
+    def home_menu(cls) -> None:
         choice = input(prompts.HOME_DISPLAY)
         if choice == '1':
             signup()
