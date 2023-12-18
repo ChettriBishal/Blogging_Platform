@@ -1,6 +1,7 @@
 """This module defines the general logger which will be used to logging across different files"""
 
 import logging
+from typing import Any, Union
 from src.config.filepaths import APP_LOG_FILE
 
 logging.basicConfig(
@@ -34,7 +35,7 @@ class GeneralLogger:
         cls.logger.addHandler(file_handler)
 
     @classmethod
-    def debug(cls, message: str, file_name: str) -> None:
+    def debug(cls, message: Union[str, Any], file_name: str) -> None:
         """
         This function allows `debug` logging level
         """
@@ -43,7 +44,7 @@ class GeneralLogger:
         cls.logger.debug(message)
 
     @classmethod
-    def info(cls, message: str, file_name: str) -> None:
+    def info(cls, message: Union[str, Any], file_name: str) -> None:
         """
         This function allows `info` logging level
         """
@@ -52,7 +53,7 @@ class GeneralLogger:
         cls.logger.info(message)
 
     @classmethod
-    def warning(cls, message: str, file_name: str) -> None:
+    def warning(cls, message: Union[str, Any], file_name: str) -> None:
         """
         This function allows `warning` logging level
         """
@@ -61,7 +62,7 @@ class GeneralLogger:
         cls.logger.warning(message)
 
     @classmethod
-    def error(cls, message: str, file_name: str) -> None:
+    def error(cls, message: Union[str, Any], file_name: str) -> None:
         """
         This function allows `error` logging level
         """
@@ -70,7 +71,7 @@ class GeneralLogger:
         cls.logger.error(message)
 
     @classmethod
-    def critical(cls, message: str, file_name: str) -> None:
+    def critical(cls, message: Union[str, Any], file_name: str) -> None:
         """
         This function allows `critical` logging level
         """
