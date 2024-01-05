@@ -1,6 +1,6 @@
 import pytest
 
-from src.utils.validation import validate_email
+from utils.validation import validate_email
 
 
 class TestEmail:

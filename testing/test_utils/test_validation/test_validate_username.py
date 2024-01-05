@@ -1,6 +1,6 @@
 import pytest
 
-from src.utils.validation import validate_username
+from utils.validation import validate_username
 
 
 class TestUsername:

@@ -1,15 +1,15 @@
 import pytest
 from unittest.mock import patch, Mock
-from src.config.flags import Flag
-from src.controllers.authentication import Authentication, User
+from config.flags import Flag
+from controllers.authentication import Authentication, User
 
 
 class TestSignUp:
     @pytest.fixture
     def mock_database(self, mocker):
-        with patch('src.controllers.authentication.Database') as mock_db:
+        with patch('controllers.authentication.Database') as mock_db:
             yield mock_db
-        # return mocker.patch('src.controllers.authentication.Database')
+        # return mocker.patch('controllers.authentication.Database')
 
     @pytest.fixture
     def mock_validation(self, mocker):
@@ -40,7 +40,7 @@ class TestSignUp:
         mock_database.get_item.return_value = False
         monkeypatch.setattr(mock_user, 'add', lambda: True)
 
-        with patch('src.controllers.authentication.User', return_value=_instance):
+        with patch('controllers.authentication.User', return_value=_instance):
             res = Authentication.sign_up(username, password, email)
 
         assert res == _instance
@@ -55,7 +55,7 @@ class TestSignUp:
 
         monkeypatch.setattr(mock_user, 'add', lambda: False)
 
-        with patch('src.controllers.authentication.User', return_value=_instance):
+        with patch('controllers.authentication.User', return_value=_instance):
             res = Authentication.sign_up(username, password, email)
 
         assert not (res == _instance)

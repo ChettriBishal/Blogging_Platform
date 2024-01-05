@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock
-from src.helpers.home import Flag, prompts, signup, signin, filepaths
+from helpers.home import Flag, prompts, signup, signin, filepaths
 
 
 class TestHome:
@@ -10,19 +10,19 @@ class TestHome:
 
     @pytest.fixture(autouse=True)
     def mock_take_input(self, mocker):
-        return mocker.patch('src.helpers.home.take_input')
+        return mocker.patch('helpers.home.take_input')
 
     @pytest.fixture
     def mock_authentication(self, mocker):
-        return mocker.patch('src.helpers.home.Authentication')
+        return mocker.patch('helpers.home.Authentication')
 
     @pytest.fixture
     def mock_user(self, mocker):
-        return mocker.patch('src.helpers.home.User')
+        return mocker.patch('helpers.home.User')
 
     @pytest.fixture
     def mock_database(self, mocker):
-        return mocker.patch('src.helpers.home.Database')
+        return mocker.patch('helpers.home.Database')
 
     @pytest.mark.parametrize("test_data", [
         (
@@ -46,9 +46,9 @@ class TestHome:
         assert line_obtained[-2] == prompts.USER_SIGNED_UP.format('snowden')
 
     @patch('builtins.print')
-    @patch('src.helpers.home.take_input.get_user_details')
-    @patch('src.helpers.home.Authentication.sign_up')
-    @patch('src.helpers.home.GeneralLogger.info')
+    @patch('helpers.home.take_input.get_user_details')
+    @patch('helpers.home.Authentication.sign_up')
+    @patch('helpers.home.GeneralLogger.info')
     def test_signup_successful(self, mock_info, mock_sign_up, mock_get_user_details, mock_print):
         mock_get_user_details.return_value = [{'username': 'test_user', 'password': 'test_password',
                                                'email': 'test@example.com'}]
@@ -79,9 +79,9 @@ class TestHome:
 
         # mock the admin and blogger menu call
 
-        patch_admin_menu = patch('src.helpers.home.admin_choice_menu', return_value=True)
+        patch_admin_menu = patch('helpers.home.admin_choice_menu', return_value=True)
         patch_admin_menu.start()
-        patch_blogger_menu = patch('src.helpers.home.blogger_menu', return_value=True)
+        patch_blogger_menu = patch('helpers.home.blogger_menu', return_value=True)
         patch_blogger_menu.start()
 
         signin()
@@ -111,9 +111,9 @@ class TestHome:
 
         # mock the admin and blogger menu call
 
-        patch_admin_menu = patch('src.helpers.home.admin_choice_menu', return_value=True)
+        patch_admin_menu = patch('helpers.home.admin_choice_menu', return_value=True)
         patch_admin_menu.start()
-        patch_blogger_menu = patch('src.helpers.home.blogger_menu', return_value=True)
+        patch_blogger_menu = patch('helpers.home.blogger_menu', return_value=True)
         patch_blogger_menu.start()
 
         signin()

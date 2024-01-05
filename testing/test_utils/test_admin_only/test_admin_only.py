@@ -1,6 +1,6 @@
-from src.utils.admin_only import admin
-from src.config.prompts import ONLY_ADMIN
-from src.config.roles import Role
+from utils.admin_only import admin
+from config.prompts import ONLY_ADMIN
+from config.roles import Role
 
 
 class TempUser:

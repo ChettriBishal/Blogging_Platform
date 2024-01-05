@@ -1,14 +1,20 @@
-from src.controllers.post import Post
-from src.config.sql_query import Sql
-from src.models.database import Database
-from src.controllers.comment import Comment
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
-from src.config import prompts
+"""This module contains various operations performed on a blog"""
+
+from typing import Union, Tuple, List
+from controllers.post import Post
+from config.sql_query import Sql
+from models.database import Database
+from controllers.comment import Comment
+from loggers.general_logger import GeneralLogger
+from config import filepaths
+from config import prompts
 
 
 class Blog(Post):
-    def __init__(self, blog_info):
+    """
+    Class containing various methods possible on a blog
+    """
+    def __init__(self, blog_info: Tuple) -> None:
         (
             # blog_id will be auto-incremented
             self.title,
@@ -21,7 +27,10 @@ class Blog(Post):
         self.blog_id = None
         self.blog_info = blog_info
 
-    def add_content(self):
+    def add_content(self) -> Union[bool, None]:
+        """
+        Method to add a new content
+        """
         try:
             self.blog_id = Database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
             if self.blog_id:
@@ -31,10 +40,16 @@ class Blog(Post):
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
-    def set_blog_id(self, blog_id):
+    def set_blog_id(self, blog_id: str) -> None:
+        """
+        Method to set the blog id to a blog object
+        """
         self.blog_id = blog_id
 
-    def edit_content(self, new_content):
+    def edit_content(self, new_content: str) -> Union[bool, None]:
+        """
+        Method to edit the blog content associated to a blog object
+        """
         try:
             if self.blog_id is None:
                 self.blog_id = Database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator,))[0]
@@ -46,7 +61,10 @@ class Blog(Post):
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
-    def remove_content(self):
+    def remove_content(self) -> Union[bool, None]:
+        """
+        Method to remove the content associated with a blog object
+        """
         try:
             if self.blog_id is None:
                 self.blog_id = Database.get_item(Sql.GET_BLOG_ID.value, (self.title, self.creator))
@@ -59,7 +77,10 @@ class Blog(Post):
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
 
-    def upvote(self, user_id):
+    def upvote(self, user_id: str) -> bool:
+        """
+        Method which allows user to upvote a blog
+        """
         upvote_record = Database.get_item(Sql.CHECK_BLOG_UPVOTE.value, (user_id, self.blog_id,))
 
         if upvote_record is None:
@@ -72,12 +93,18 @@ class Blog(Post):
         else:
             return False
 
-    def details(self):
+    def details(self) -> str:
+        """
+        Method to return the details of the blog
+        """
         blog_info = (self.title, self.creator, self.tag_name, self.creation_date, self.content, self.upvotes)
 
         return prompts.BLOG_DETAILS.format(*blog_info)
 
-    def get_comments(self):
+    def get_comments(self) -> Union[List[Comment], None]:
+        """
+        Method to get the comments present in the blog
+        """
         all_comments = Database.get_items(Sql.GET_COMMENT_BY_BLOG_ID.value, (self.blog_id,))
         if all_comments:
             blog_comments = [Comment(record[1:]) for record in all_comments]
@@ -85,7 +112,10 @@ class Blog(Post):
         else:
             return None
 
-    def remove_comments(self):
+    def remove_comments(self) -> None:
+        """
+        Method to remove all the comments present in the blog
+        """
         all_comments = Database.get_items(Sql.GET_COMMENTS_BY_BLOG_ID.value, (self.blog_id,))
 
         for comment_id in all_comments:
@@ -94,7 +124,10 @@ class Blog(Post):
 
             GeneralLogger.info(prompts.REMOVED_COMMENT_WITH_ID.format(comment_id[0]), filepaths.COMMENT_LOG_FILE)
 
-    def remove_content_by_title(self):
+    def remove_content_by_title(self) -> bool:
+        """
+        Method to remove the blog content by the title name
+        """
         if self.blog_id is None:
             self.blog_id = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (self.title,))
 

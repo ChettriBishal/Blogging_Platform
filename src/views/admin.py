@@ -1,11 +1,18 @@
-from src.config import prompts
-from src.config.flags import Flag
-from src.views.blogger import blogger_menu
-from src.helpers.blogger import (admin_remove_blog,
+"""This module contains the menu choices for admin"""
+
+from config import prompts
+from config.flags import Flag
+from views.blogger import blogger_menu
+from helpers.blogger import (admin_remove_blog,
                                  get_users, display_users, remove_user_by_username, change_password)
 
 
-def admin_choice_menu(active_user):
+def admin_choice_menu(active_user) -> None:
+    """
+    To allow admin to choose his login method
+    :param active_user: User
+    :return: None
+    """
     choice = input(prompts.ADMIN_CHOICE_PROMPT)
     if choice == '1':
         admin_menu(active_user)
@@ -20,7 +27,12 @@ def admin_choice_menu(active_user):
         admin_choice_menu(active_user)
 
 
-def admin_menu(active_user):
+def admin_menu(active_user) -> None:
+    """
+    To allow admin to choose various operations
+    :param active_user: User
+    :return: None
+    """
     menu_prompt = prompts.ADMIN_SPECIFIC
 
     choice = input(menu_prompt)

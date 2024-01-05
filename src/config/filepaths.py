@@ -1,6 +1,10 @@
 import os
 
-project_root = "C:\\Users\\bchettri\\Documents\\Blogger_QnA_Platform\\src"
+project_root = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
 
 BLOGGING_DB = os.path.join(project_root, 'storage', 'blogger.db')
 

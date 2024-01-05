@@ -1,15 +1,15 @@
 import pytest
-from src.views.home import Home
+from views.home import Home
 
 
 class TestHomeView:
     @pytest.fixture
     def mock_signup(self, mocker):
-        return mocker.patch('src.views.home.signup', return_value=True)
+        return mocker.patch('views.home.signup', return_value=True)
 
     @pytest.fixture
     def mock_signin(self, mocker):
-        return mocker.patch('src.views.home.signin', return_value=True)
+        return mocker.patch('views.home.signin', return_value=True)
 
     @pytest.mark.parametrize("options", [('1', '2', '3')])
     def test_home_menu(self, options, monkeypatch, mock_signup, mock_signin):

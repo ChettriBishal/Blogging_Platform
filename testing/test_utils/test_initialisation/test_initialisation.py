@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from src.utils.initialisation import Database, initialize
+from utils.initialisation import Database, initialize
 
 
 class TestInitialisation:

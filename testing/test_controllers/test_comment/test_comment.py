@@ -1,20 +1,20 @@
 import pytest
-from src.controllers.comment import Comment, Sql
-from src.config import prompts
+from controllers.comment import Comment, Sql
+from config import prompts
 
 
 class TestComment:
     @pytest.fixture(autouse=True)
     def mock_database(self, mocker):
-        return mocker.patch('src.controllers.comment.Database')
+        return mocker.patch('controllers.comment.Database')
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
-        return mocker.patch('src.controllers.comment.GeneralLogger')
+        return mocker.patch('controllers.comment.GeneralLogger')
 
     @pytest.fixture
     def Comment(self, mocker):
-        return mocker.patch('src.controllers.comment.Comment')
+        return mocker.patch('controllers.comment.Comment')
 
     @pytest.fixture
     def comment_info_start(self):

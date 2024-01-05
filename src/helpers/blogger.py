@@ -1,24 +1,29 @@
+"""This module defines the various operations that a blogger can perform"""
+
 from datetime import datetime
 from prettytable import PrettyTable
+from typing import List, Union
 
-from src.config import prompts
-from src.utils.admin_only import admin
-from src.controllers.blog import Blog
-from src.controllers.comment import Comment
-from src.config.sql_query import Sql
-from src.controllers.authentication import Authentication
-from src.controllers.user import User
-from src.config.flags import Flag
-from src.config.roles import Role
-from src.utils import take_input, validation
-from src.models.database import Database
-from src.loggers.general_logger import GeneralLogger
-from src.config import filepaths
+from config import prompts
+from utils.admin_only import admin
+from controllers.blog import Blog
+from controllers.comment import Comment
+from config.sql_query import Sql
+from controllers.authentication import Authentication
+from controllers.user import User
+from config.flags import Flag
+from config.roles import Role
+from utils import take_input, validation
+from models.database import Database
+from loggers.general_logger import GeneralLogger
+from config import filepaths
 
 
 @admin
-def get_users(active_user):
-    """To get all the users in the platform"""
+def get_users(active_user: User) -> Union[List[User], None]:
+    """
+    To get all the users in the platform
+    """
     try:
         user_list = Database.get_items(Sql.GET_ALL_USERS.value)
         users = [User(*record[1:]) for record in user_list]
@@ -29,8 +34,10 @@ def get_users(active_user):
         GeneralLogger.info(permission_exc, filepaths.USER_LOG_FILE)
 
 
-def change_password(active_user):
-    """To change the password: performed by the active user"""
+def change_password(active_user: User) -> None:
+    """
+    To change the password: performed by the active user
+    """
     new_passw = take_input.get_new_password()
 
     if validation.validate_password(new_passw):
@@ -45,8 +52,10 @@ def change_password(active_user):
         change_password(active_user)
 
 
-def display_users(user_list):
-    """To display the users of the platform"""
+def display_users(user_list: List) -> None:
+    """
+    To display the users of the platform
+    """
     print(prompts.USERS_HEADER)
     table = PrettyTable()
 
@@ -66,7 +75,10 @@ def display_users(user_list):
     print(table)
 
 
-def remove_user_by_username(username):
+def remove_user_by_username(username: str) -> Union[bool, int, None]:
+    """
+    To remove a user by username
+    """
     try:
         user_status = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
 
@@ -91,8 +103,10 @@ def remove_user_by_username(username):
         return False
 
 
-def view_blogs():
-    """To view all the blogs posted so far"""
+def view_blogs() -> None:
+    """
+    To view all the blogs posted so far
+    """
     blogs = Database.get_items(Sql.GET_ALL_BLOGS.value)
 
     if blogs is None:
@@ -105,7 +119,10 @@ def view_blogs():
         print(blog.details())
 
 
-def view_blogs_by_user(username):
+def view_blogs_by_user(username: str) -> None:
+    """
+    To view blogs by a particular user using his username
+    """
     blogs = Database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, (username,))
 
     if len(blogs) < 1:
@@ -120,7 +137,10 @@ def view_blogs_by_user(username):
         print(blog.details())
 
 
-def view_blogs_by_tag_name(tag_name):
+def view_blogs_by_tag_name(tag_name: str) -> None:
+    """
+    To view blogs filtered by the tag name
+    """
     blogs = Database.get_items(Sql.GET_BLOGS_BY_TAG_NAME.value, (tag_name,))
 
     if len(blogs) < 1:
@@ -136,8 +156,10 @@ def view_blogs_by_tag_name(tag_name):
         print(blog.details())
 
 
-def view_one_blog():
-    """View a particular blog by its name"""
+def view_one_blog() -> bool:
+    """
+    View a particular blog by its name
+    """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
@@ -160,7 +182,10 @@ def view_one_blog():
     return True
 
 
-def create_blog(active_user):
+def create_blog(active_user: User) -> None:
+    """
+    This function allows the user to create a new blog
+    """
     title, content, tag = take_input.get_blog_post_details()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
@@ -177,7 +202,10 @@ def create_blog(active_user):
         print(prompts.BLOG_ADDED.format(title))
 
 
-def edit_blog(active_user):
+def edit_blog(active_user: User) -> None:
+    """
+    This function allows the user to edit his blog if it exists
+    """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
@@ -198,7 +226,10 @@ def edit_blog(active_user):
         print(prompts.COULD_NOT_EDIT_BLOG.format(title))
 
 
-def remove_blog(active_user):
+def remove_blog(active_user: User) -> None:
+    """
+    This function allows the user to remove his blog
+    """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
 
@@ -221,8 +252,10 @@ def remove_blog(active_user):
 
 
 @admin
-def admin_remove_blog(active_user):
-    """ Admin can remove any blog """
+def admin_remove_blog(active_user: User) -> None:
+    """
+    This function allows the admin to remove any blog
+    """
 
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
@@ -244,7 +277,10 @@ def admin_remove_blog(active_user):
         print(prompts.COULD_NOT_REMOVE_BLOG)
 
 
-def upvote_blog(active_user):
+def upvote_blog(active_user: User) -> None:
+    """
+    This function allows the user to upvote any blog that exists.
+    """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 
@@ -264,7 +300,10 @@ def upvote_blog(active_user):
         print(prompts.COULD_NOT_UPVOTE_BLOG.format(title))
 
 
-def comment_on_blog(active_user):
+def comment_on_blog(active_user: User) -> None:
+    """
+    This function allows the user to comment on a blog that exists.
+    """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
 

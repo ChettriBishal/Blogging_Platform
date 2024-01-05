@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
-from src.views.admin import admin_choice_menu, admin_menu, prompts, remove_user_by_username
+from views.admin import admin_choice_menu, admin_menu, prompts, remove_user_by_username
 
 
 class TestAdminView:
@@ -21,11 +21,11 @@ class TestAdminView:
 
     @pytest.fixture
     def mock_admin_menu(self, mocker):
-        return mocker.patch('src.views.admin.admin_menu')
+        return mocker.patch('views.admin.admin_menu')
 
     @pytest.fixture
     def mock_blogger_menu(self, mocker):
-        return mocker.patch('src.views.admin.blogger_menu')
+        return mocker.patch('views.admin.blogger_menu')
 
     @pytest.mark.parametrize("choices", [('1', '2', '4', '3')])
     def test_admin_choice_menu(self, capsys, choices, monkeypatch, mock_user, mock_admin_menu, mock_blogger_menu):
@@ -51,8 +51,8 @@ class TestAdminView:
     #     # Mock the input function
     #     with patch('builtins.input', side_effect=['1', '2', '3', 'invalid']):
     #         # Mock the admin_menu and blogger_menu functions
-    #         with patch('src.views.admin.admin_menu') as mock_admin_menu, patch(
-    #                 'src.views.admin.blogger_menu') as mock_blogger_menu:
+    #         with patch('views.admin.admin_menu') as mock_admin_menu, patch(
+    #                 'views.admin.blogger_menu') as mock_blogger_menu:
     #             # Call the function to be tested
     #             admin_choice_menu(mock_user)
     #
@@ -64,10 +64,10 @@ class TestAdminView:
     def test_admin_menu_choice_1_4(self, capsys, mock_user, monkeypatch, choices):
         choice = iter(choices)
 
-        patch_admin_remove_blog = patch('src.views.admin.admin_remove_blog')
+        patch_admin_remove_blog = patch('views.admin.admin_remove_blog')
         mock_admin_remove_blog = patch_admin_remove_blog.start()
 
-        patch_change_password = patch('src.views.admin.change_password')
+        patch_change_password = patch('views.admin.change_password')
         mock_change_password = patch_change_password.start()
 
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
@@ -81,7 +81,7 @@ class TestAdminView:
     def test_admin_menu_choice_2(self, capsys, mock_user, monkeypatch, choices):
         choice = iter(choices)
 
-        patch_get_users = patch('src.views.admin.get_users')
+        patch_get_users = patch('views.admin.get_users')
         mock_get_users = patch_get_users.start()
 
         mocked_users = [
@@ -91,10 +91,10 @@ class TestAdminView:
 
         mock_get_users.return_value = mocked_users
 
-        patch_change_password = patch('src.views.admin.change_password')
+        patch_change_password = patch('views.admin.change_password')
         patch_change_password.start()
 
-        patch_display_users = patch('src.views.admin.display_users')
+        patch_display_users = patch('views.admin.display_users')
         mock_display_users = patch_display_users.start()
 
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
@@ -113,7 +113,7 @@ class TestAdminView:
 
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        patch_remove_user_by_username = patch('src.views.admin.remove_user_by_username')
+        patch_remove_user_by_username = patch('views.admin.remove_user_by_username')
         mock_remove_user_by_username = patch_remove_user_by_username.start()
         mock_remove_user_by_username.return_value = True
 

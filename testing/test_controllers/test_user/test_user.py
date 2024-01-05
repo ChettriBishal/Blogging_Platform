@@ -1,15 +1,15 @@
 import pytest
-from src.controllers.user import User, Sql
+from controllers.user import User, Sql
 
 
 class TestUser:
     @pytest.fixture(autouse=True)
     def mock_database(self, mocker):
-        return mocker.patch('src.controllers.user.Database')
+        return mocker.patch('controllers.user.Database')
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
-        return mocker.patch('src.controllers.user.GeneralLogger')
+        return mocker.patch('controllers.user.GeneralLogger')
 
     @pytest.fixture
     def user_info_start(self):
