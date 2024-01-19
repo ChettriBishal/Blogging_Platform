@@ -1,7 +1,7 @@
 from flask import Flask
 from resources.user import blp as UserRoute
 from resources.blog import blp as BlogRoute
-from resources.blogger import blp as BloggerOperationRoute
+from resources.comment import blp as CommentRoute
 from flask_smorest import Api
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ api = Api(app)
 
 api.register_blueprint(UserRoute)
 api.register_blueprint(BlogRoute)
-api.register_blueprint(BloggerOperationRoute)
+api.register_blueprint(CommentRoute)
 
 if __name__ == "__main__":
     app.run(debug=True)
