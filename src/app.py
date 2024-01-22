@@ -4,6 +4,10 @@ from resources.blog import blp as BlogRoute
 from resources.comment import blp as CommentRoute
 from flask_smorest import Api
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 app = Flask(__name__)
 app.app_context().push()
 

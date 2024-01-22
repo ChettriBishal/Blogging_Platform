@@ -1,6 +1,7 @@
 """This module defines how db connection is created"""
-
+import os
 import sqlite3
+import mysql.connector
 
 from config.filepaths import BLOGGING_DB
 
@@ -15,7 +16,7 @@ class DBConnection:
         if not cls._instance:
             cls._instance = super().__new__(cls)
             cls._instance.connection = None
-            cls._instance.host = BLOGGING_DB
+            cls._instance.host = os.getenv('DB_NAME')
             cls._instance.cursor = None
 
         return cls._instance
@@ -24,7 +25,14 @@ class DBConnection:
         """
         Setup operations when context manager is opened
         """
-        self.connection = sqlite3.connect(self.host)
+        # self.connection = sqlite3.connect(self.host)
+
+        self.connection = mysql.connector.connect(
+            host='localhost',
+            user=os.getenv('DB_USERNAME'),
+            password=os.getenv('DB_PASSWORD'),
+            database=os.getenv('DB_NAME')
+        )
         self.cursor = self.connection.cursor()
         return self.connection
 

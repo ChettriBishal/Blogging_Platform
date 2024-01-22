@@ -9,6 +9,9 @@ bcrypt = "*"
 pyfiglet = "*"
 pwinput = "*"
 prettytable = "*"
+mysql = "*"
+python-dotenv = "*"
+mysql-connector-python = "*"
 
 [dev-packages]
 
