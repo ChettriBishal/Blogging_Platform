@@ -9,7 +9,7 @@ from config.roles import Role
 from config.flags import Flag
 from utils import validation
 from models.database import Database
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 
 
 class Authentication:
@@ -46,22 +46,24 @@ class Authentication:
         if user_presence:
             return Flag.ALREADY_EXISTS.value
 
-        if not validation.validate_username(username):
-            return Flag.INVALID_USERNAME.value
-
-        if not validation.validate_password(passw):
-            return Flag.INVALID_PASSWORD.value
-
-        if not validation.validate_email(email):
-            return Flag.INVALID_EMAIL.value
+        # if not validation.validate_username(username):
+        #     return Flag.INVALID_USERNAME.value
+        #
+        # if not validation.validate_password(passw):
+        #     return Flag.INVALID_PASSWORD.value
+        #
+        # if not validation.validate_email(email):
+        #     return Flag.INVALID_EMAIL.value
 
         hashed_password = cls.hash_password(passw)
-
+        print(f"Below hashed password!!\n")
         registration_date = datetime.today().strftime('%Y-%m-%d')
         new_user = User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
-
+        print(new_user.username)
+        # return {"Message": "Added successfully"}
         if new_user.add():
             return new_user
+            # return True
         else:
             return False
 
@@ -83,6 +85,6 @@ class Authentication:
         password_in_db = Database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
 
         if cls._check_password(passw, password_in_db):
-            return username
+            return True
         else:
             return False

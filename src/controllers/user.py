@@ -1,7 +1,7 @@
 """This module contains the various operations performed on a user"""
 
 from typing import Dict
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 from models.database import Database
 from loggers.general_logger import GeneralLogger
 from config import filepaths

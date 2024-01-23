@@ -1,7 +1,7 @@
 """This module is used to create the tables if not present"""
 
 from typing import Union
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 from models.database import Database
 
 

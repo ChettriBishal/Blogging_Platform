@@ -117,7 +117,7 @@ class Sql(Enum):
     GET_USER_BY_USERNAME = """
     SELECT * 
     FROM users
-    WHERE username = %s
+    WHERE username = %s;
     """
 
     GET_USERID_BY_USERNAME = """

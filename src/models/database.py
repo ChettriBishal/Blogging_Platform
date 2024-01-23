@@ -1,6 +1,6 @@
 """This module defines the various database operations"""
 
-import sqlite3
+import mysql.connector
 from typing import Any, Optional, Tuple, List
 
 from loggers.general_logger import GeneralLogger
@@ -19,13 +19,15 @@ class Database:
         """
         This method fetches a single item from the database
         """
+
         with cls.blog_db_connection as cursor:
             try:
-                response = cursor.execute(query, data).fetchone()
+                cursor.execute(query, data)
+                response = cursor.fetchone()
                 return response
 
-            except sqlite3.Error as error:
-                GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+            except mysql.connector.Error as error:
+                GeneralLogger.error(str(error), filepaths.DB_LOG_FILE)
 
     @classmethod
     def get_items(cls, query: str, data=None) -> Optional[List]:
@@ -35,14 +37,16 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 if data is None:
-                    response = cursor.execute(query).fetchall()
+                    cursor.execute_query()
                 else:
-                    response = cursor.execute(query, data).fetchall()
+                    cursor.execute_query(data)
 
+                response = cursor.execute(query, data).fetchall()
                 return response
 
-            except sqlite3.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                cursor.rollback()
                 return None
 
     @classmethod
@@ -50,14 +54,15 @@ class Database:
         """
         This method allows data to be inserted into the database
         """
-        with cls.blog_db_connection as connection:
-            cursor = connection.cursor()
+        with cls.blog_db_connection as cursor:
             try:
                 cursor.execute(query, data)
+                cls.blog_db_connection.connection.commit()
                 return cursor.lastrowid
 
-            except sqlite3.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                cursor.rollback()
                 return None
 
     @classmethod
@@ -68,9 +73,11 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 cursor.execute(query, data)
+                cursor.commit()
 
-            except sqlite3.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                cursor.rollback()
                 return None
 
     @classmethod
@@ -81,9 +88,11 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 cursor.execute(query)
+                cls.blog_db_connection.connection.commit()
 
-            except sqlite3.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                cursor.rollback()
                 return None
 
     @classmethod
@@ -94,7 +103,9 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 cursor.execute(query, data)
+                cls.blog_db_connection.connection.commit()
 
-            except sqlite3.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
+                cursor.rollback()
                 return None

@@ -8,7 +8,7 @@ from config import prompts
 from utils.admin_only import admin
 from controllers.blog import Blog
 from controllers.comment import Comment
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 from controllers.authentication import Authentication
 from controllers.user import User
 from config.flags import Flag

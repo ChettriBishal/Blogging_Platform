@@ -1,9 +1,7 @@
 """This module defines how db connection is created"""
 import os
-import sqlite3
+# import sqlite3
 import mysql.connector
-
-from config.filepaths import BLOGGING_DB
 
 
 class DBConnection:
@@ -21,7 +19,7 @@ class DBConnection:
 
         return cls._instance
 
-    def __enter__(self) -> sqlite3.Connection:
+    def __enter__(self):
         """
         Setup operations when context manager is opened
         """
@@ -34,7 +32,7 @@ class DBConnection:
             database=os.getenv('DB_NAME')
         )
         self.cursor = self.connection.cursor()
-        return self.connection
+        return self.cursor
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """
@@ -47,6 +45,7 @@ class DBConnection:
 
         else:
             self.connection.commit()
+            self.connection.close()
 
     def close(self) -> None:
         """
@@ -54,3 +53,21 @@ class DBConnection:
         """
         if self.connection:
             self.connection.close()
+
+# class DBConnection:
+#     def __init__(self):
+#         self.connection = mysql.connector.connect(
+#             host='localhost',
+#             user=os.getenv('DB_USERNAME'),
+#             password=os.getenv('DB_PASSWORD'),
+#             database=os.getenv('DB_NAME')
+#         )
+#
+#     def __enter__(self):
+#         return self.connection
+#
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         if exc_type or exc_tb or exc_val:
+#             return False
+#         self.connection.commit()
+#         self.connection.close()

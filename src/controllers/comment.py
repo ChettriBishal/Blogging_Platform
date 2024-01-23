@@ -2,7 +2,7 @@
 
 from typing import Union, Tuple
 from controllers.post import Post
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 from models.database import Database
 from config import prompts
 from loggers.general_logger import GeneralLogger

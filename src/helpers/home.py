@@ -1,7 +1,7 @@
 """This module helps the user to enter to the platform"""
 
 from config import prompts
-from config.sql_query import Sql
+from config.sql_query_mysql import Sql
 from controllers.authentication import Authentication
 from controllers.user import User
 from config.flags import Flag
