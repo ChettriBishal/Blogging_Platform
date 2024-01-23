@@ -1,6 +1,5 @@
 """This module defines how db connection is created"""
 import os
-# import sqlite3
 import mysql.connector
 
 
