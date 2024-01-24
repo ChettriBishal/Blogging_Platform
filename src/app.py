@@ -1,5 +1,5 @@
 from flask import Flask
-from resources.user import blp as UserRoute
+from resources.users.user import blp as UserRoute
 from resources.blog import blp as BlogRoute
 from resources.comment import blp as CommentRoute
 from flask_smorest import Api
@@ -29,11 +29,6 @@ jwt = JWTManager(app)
 api.register_blueprint(UserRoute)
 api.register_blueprint(BlogRoute)
 api.register_blueprint(CommentRoute)
-
-from enum import Enum
-from flask.json.provider import DefaultJSONProvider, JSONProvider
-from werkzeug.exceptions import HTTPException
-
 
 # class CustomJSONEncoder(DefaultJSONProvider):
 #     def default(self, obj):

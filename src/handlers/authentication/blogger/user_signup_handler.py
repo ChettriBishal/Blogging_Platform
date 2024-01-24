@@ -10,7 +10,7 @@ from config.sql_query_mysql import Sql
 from utils.authentication.hash_password_util import HashPassword
 
 
-class BloggerSignUpHandler:
+class UserSignUpHandler:
     @staticmethod
     def check_user_presence(user_info) -> bool:
         """This checks if user by username or/email is already present in the platform"""

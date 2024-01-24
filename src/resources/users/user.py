@@ -2,39 +2,36 @@ import requests
 from flask.views import MethodView
 from config.flags import Flag
 from flask import jsonify
+from controllers.user import User
 
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
 
 from flask_smorest import Blueprint, abort
 from schemas.authentication_schema import SignUpSchema, LoginSchema
-from controllers.authentication import Authentication
-from controllers.user import User
+from controllers.authentication.blogger.user_login_controller import UserLogin
+from controllers.authentication.blogger.user_signup_controller import UserSignUp
+
 
 blp = Blueprint("User", __name__, description="User operations")
 
 
 @blp.route('/signup')
-class UserSignUp(MethodView):
+class UserSignUpRoute(MethodView):
     @blp.arguments(SignUpSchema)
     def post(self, user_data):
-        auth_val = Authentication.sign_up(user_data['username'], user_data['password'], user_data['email'])
-        print(f"Auth val = {auth_val}")
+        auth_val = UserSignUp.sign_up(user_data['username'], user_data['password'], user_data['email'])
 
         if auth_val == Flag.ALREADY_EXISTS.value:
-            print("Is it entering in this if loop")
-            # return {"message": "User already exists"}, 409
-            # message = 'User already exists'
-            # print(message)
             abort(409, message="Already exists")
         elif isinstance(auth_val, User):
             return {"message": "Blogger registered successfully!"}, 201
 
 
 @blp.route('/login')
-class UserLogin(MethodView):
+class UserLoginRoute(MethodView):
     @blp.arguments(LoginSchema)
     def post(self, user_data):
-        auth_val = Authentication.sign_in(user_data['username'], user_data['password'])
+        auth_val = UserLogin.sign_in(user_data['username'], user_data['password'])
         if auth_val == Flag.INVALID_USERNAME.value:
             abort(400, message="Invalid username")
         elif auth_val == Flag.DOES_NOT_EXIST.value:
@@ -49,7 +46,7 @@ class UserLogin(MethodView):
 
 
 @blp.route('/logout')
-class UserLogout(MethodView):
+class UserLogoutRoute(MethodView):
     def post(self):
         return {"message": "Signed out successfully"}
 

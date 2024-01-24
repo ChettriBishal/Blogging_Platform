@@ -8,7 +8,7 @@ from config.roles import Role
 from config.flags import Flag
 from utils import validation
 
-from handlers.authentication.blogger.blogger_signup_handler import BloggerSignUpHandler
+from handlers.authentication.blogger.user_signup_handler import UserSignUpHandler
 
 
 class UserSignUp:
@@ -16,13 +16,13 @@ class UserSignUp:
     Class allowing user to signup as a blogger into the platform
     """
 
-    @classmethod
-    def sign_up(cls, *user_info: Tuple) -> Union[User, bool, int]:
+    @staticmethod
+    def sign_up(*user_info: Tuple) -> Union[User, bool, int]:
         """
         Method which allows a user to register to the system
         """
         username, password, email = user_info
-        user_presence = BloggerSignUpHandler.check_user_presence(user_info)
+        user_presence = UserSignUpHandler.check_user_presence(user_info)
 
         if user_presence:
             return Flag.ALREADY_EXISTS.value
@@ -36,6 +36,6 @@ class UserSignUp:
         if not validation.validate_email(email):
             return Flag.INVALID_EMAIL.value
 
-        new_user = BloggerSignUpHandler.register_user(user_info)
+        new_user = UserSignUpHandler.register_user(user_info)
 
         return new_user
