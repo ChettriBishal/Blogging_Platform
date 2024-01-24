@@ -7,9 +7,8 @@ from controllers.user import User
 from config.roles import Role
 from config.flags import Flag
 from utils import validation
-from models.database import Database
-from config.sql_query_mysql import Sql
-from utils.authentication.hash_password_util import HashPassword
+
+from handlers.authentication.blogger.blogger_signup_handler import BloggerSignUpHandler
 
 
 class BloggerSignUp:
@@ -22,26 +21,21 @@ class BloggerSignUp:
         """
         Method which allows a user to register to the system
         """
-        username, passw, email = user_info
-
-        user_presence = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (username,))
+        username, password, email = user_info
+        user_presence = BloggerSignUpHandler.check_user_presence(user_info)
 
         if user_presence:
             return Flag.ALREADY_EXISTS.value
 
-        # if not validation.validate_username(username):
-        #     return Flag.INVALID_USERNAME.value
-        #
-        # if not validation.validate_password(passw):
-        #     return Flag.INVALID_PASSWORD.value
-        #
-        # if not validation.validate_email(email):
-        #     return Flag.INVALID_EMAIL.value
+        if not validation.validate_username(username):
+            return Flag.INVALID_USERNAME.value
 
-        hashed_password = HashPassword.hash_password(passw)
-        registration_date = datetime.today().strftime('%Y-%m-%d')
-        new_user = User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
-        if new_user.add():
-            return new_user
-        else:
-            return False
+        if not validation.validate_password(password):
+            return Flag.INVALID_PASSWORD.value
+
+        if not validation.validate_email(email):
+            return Flag.INVALID_EMAIL.value
+
+        new_user = BloggerSignUpHandler.register_user(user_info)
+
+        return new_user
