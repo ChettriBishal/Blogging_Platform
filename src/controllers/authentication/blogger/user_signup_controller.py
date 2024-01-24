@@ -11,7 +11,7 @@ from utils import validation
 from handlers.authentication.blogger.blogger_signup_handler import BloggerSignUpHandler
 
 
-class BloggerSignUp:
+class UserSignUp:
     """
     Class allowing user to signup as a blogger into the platform
     """
