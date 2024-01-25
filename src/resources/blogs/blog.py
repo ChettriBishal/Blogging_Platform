@@ -1,6 +1,7 @@
 import requests
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from controllers.blog import Blog
 
 blp = Blueprint('Blog', __name__, description='Operations on blogs')
 
@@ -15,3 +16,5 @@ class GetAllBlogs(MethodView):
 class GetSpecificBlog(MethodView):
     def get(self, blogId):
         return {"message": f"Showing blog {blogId}"}
+
+

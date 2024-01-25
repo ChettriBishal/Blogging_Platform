@@ -10,40 +10,40 @@ class TestBlogger:
     def mock_user(self, mocker):
         mock_user_class = Mock(spec=User)
         _instance = mock_user_class.return_value
-        mocker.patch('helpers.blogger.User', return_value=_instance)
+        mocker.patch('helpers.user.User', return_value=_instance)
         return mock_user_class()
 
     @pytest.fixture
     def mock_blog(self, mocker):
         Blog_m = Mock(spec=Blog)
         _instance = Blog_m.return_value
-        mocker.patch('helpers.blogger.Blog', return_value=_instance)
+        mocker.patch('helpers.user.Blog', return_value=_instance)
         return Blog_m
 
     @pytest.fixture
     def mock_comment(self, mocker):
         Comment_m = Mock(spec=Comment)
         _instance = Comment_m.return_value
-        mocker.patch('helpers.blogger.Comment', return_value=_instance)
+        mocker.patch('helpers.user.Comment', return_value=_instance)
         return Comment_m
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
-        return mocker.patch('helpers.blogger.GeneralLogger')
+        return mocker.patch('helpers.user.GeneralLogger')
 
     @pytest.fixture
     def mock_database(self, mocker):
-        return mocker.patch('helpers.blogger.Database')
+        return mocker.patch('helpers.user.Database')
 
     @pytest.fixture
     def mock_validation(self, mocker):
-        return mocker.patch('helpers.blogger.validation')
+        return mocker.patch('helpers.user.validation')
 
     def test_get_users_returns_list_of_users(self, mocker, mock_user):
         # Mock the database access to return predefined data
         mock_user = Mock(spec=User)
         _instance = mock_user.return_value
-        mocker.patch('helpers.blogger.User', return_value=_instance)
+        mocker.patch('helpers.user.User', return_value=_instance)
         mock_user.user_role = 1
 
         mocker.patch.object(Database, 'get_items', return_value=[(1, 'Edward', 'Snowden'), (2, 'Jane', 'Doe')])
@@ -63,8 +63,8 @@ class TestBlogger:
         mock_logger.info.assert_called()
 
     def test_change_password_valid(self, capsys, mocker, mock_user, mock_logger):
-        mocker.patch('helpers.blogger.validation.validate_password', return_value=True)
-        mocker.patch('helpers.blogger.take_input', return_value='new_password')
+        mocker.patch('helpers.user.validation.validate_password', return_value=True)
+        mocker.patch('helpers.user.take_input', return_value='new_password')
 
         from helpers.blogger import Authentication
         mocker.patch.object(Authentication, 'hash_password', return_value='hashed_password')
@@ -77,14 +77,14 @@ class TestBlogger:
         mock_logger.info.assert_called()
 
     def test_change_password_invalid_first(self, capsys, mocker, mock_user, mock_logger):
-        mocker.patch('helpers.blogger.validation.validate_password', return_value=False)
-        mocker.patch('helpers.blogger.take_input', return_value='new_password')
+        mocker.patch('helpers.user.validation.validate_password', return_value=False)
+        mocker.patch('helpers.user.take_input', return_value='new_password')
 
         mock_user.user_role = 2
         from helpers.blogger import Authentication
         mocker.patch.object(Authentication, 'hash_password', return_value='hashed_password')
 
-        with patch('helpers.blogger.validation.validate_password', side_effect=[False, True]):
+        with patch('helpers.user.validation.validate_password', side_effect=[False, True]):
             blogger.change_password(mock_user)
             captured = capsys.readouterr()
 
@@ -110,7 +110,7 @@ class TestBlogger:
 
         if user_status:
             mock_user.user_role = user_status[3]
-            mocker.patch('helpers.blogger.User', return_value=mock_user)
+            mocker.patch('helpers.user.User', return_value=mock_user)
             mocker.patch.object(mock_user, 'remove_user_by_username', return_value=True)
 
             result = blogger.remove_user_by_username('test_user_2')
@@ -136,7 +136,7 @@ class TestBlogger:
         mocker.patch.object(GeneralLogger, 'info')
 
         mock_user.user_role = user_status[3]
-        mocker.patch('helpers.blogger.User', return_value=mock_user)
+        mocker.patch('helpers.user.User', return_value=mock_user)
         mocker.patch.object(mock_user, 'remove_user_by_username', return_value=True)
 
         result = blogger.remove_user_by_username('test_user_2')

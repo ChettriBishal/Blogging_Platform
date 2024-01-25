@@ -8,12 +8,12 @@ from config.roles import Role
 from config.flags import Flag
 from utils import validation
 
-from handlers.authentication.blogger.user_signup_handler import UserSignUpHandler
+from handlers.authentication.user.user_signup_handler import UserSignUpHandler
 
 
 class UserSignUp:
     """
-    Class allowing user to signup as a blogger into the platform
+    Class allowing user to signup as a user into the platform
     """
 
     @staticmethod

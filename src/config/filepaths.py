@@ -6,7 +6,7 @@ project_root = os.path.dirname(
     )
 )
 
-BLOGGING_DB = os.path.join(project_root, 'storage', 'blogger.db')
+BLOGGING_DB = os.path.join(project_root, 'storage', 'user.db')
 
 USER_LOG_FILE = os.path.join(project_root, 'storage', 'user.log')
 

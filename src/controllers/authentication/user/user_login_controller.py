@@ -9,7 +9,7 @@ from utils import validation
 from models.database import Database
 from config.sql_query_mysql import Sql
 
-from handlers.authentication.blogger.user_login_handler import UserLoginHandler
+from handlers.authentication.user.user_login_handler import UserLoginHandler
 
 
 class UserLogin:

@@ -1,4 +1,4 @@
-"""This module contains various methods that a blogger can perform"""
+"""This module contains various methods that a user can perform"""
 
 from config import prompts
 from utils import take_input
@@ -8,7 +8,7 @@ from helpers.blogger import (view_blogs, view_one_blog, view_blogs_by_user, view
 
 def blogger_menu(active_user) -> None:
     """
-    To allow blogger to choose among various operations.
+    To allow user to choose among various operations.
     :param active_user: User
     :return: None
     """

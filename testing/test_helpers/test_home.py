@@ -77,7 +77,7 @@ class TestHome:
         _instance.set_user_id.return_value = True
         _instance.user_role = user_role
 
-        # mock the admin and blogger menu call
+        # mock the admin and user menu call
 
         patch_admin_menu = patch('helpers.home.admin_choice_menu', return_value=True)
         patch_admin_menu.start()
@@ -109,7 +109,7 @@ class TestHome:
         _instance = mock_user.return_value
         _instance.set_user_id.return_value = True
 
-        # mock the admin and blogger menu call
+        # mock the admin and user menu call
 
         patch_admin_menu = patch('helpers.home.admin_choice_menu', return_value=True)
         patch_admin_menu.start()

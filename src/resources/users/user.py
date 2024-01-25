@@ -8,9 +8,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token, get_jw
 
 from flask_smorest import Blueprint, abort
 from schemas.authentication_schema import SignUpSchema, LoginSchema
-from controllers.authentication.blogger.user_login_controller import UserLogin
-from controllers.authentication.blogger.user_signup_controller import UserSignUp
-
+from controllers.authentication.user.user_login_controller import UserLogin
+from controllers.authentication.user.user_signup_controller import UserSignUp
 
 blp = Blueprint("User", __name__, description="User operations")
 
@@ -39,8 +38,10 @@ class UserLoginRoute(MethodView):
         elif not auth_val:
             abort(401, message="Wrong password")
         elif auth_val:
-            access_token = create_access_token(identity=user_data['username'], fresh=True, additional_claims={"username": user_data['username']})
-            refresh_token = create_refresh_token(identity=user_data['username'], additional_claims={"username": user_data['username']})
+            access_token = create_access_token(identity=user_data['username'], fresh=True,
+                                               additional_claims={"username": user_data['username']})
+            refresh_token = create_refresh_token(identity=user_data['username'],
+                                                 additional_claims={"username": user_data['username']})
             return {"access_token": access_token, "refresh_token": refresh_token}, 200
         abort(404, message="User not found")
 
@@ -63,14 +64,4 @@ class GetUserDataFromId(MethodView):
         return {"message": f"User details of {userId}"}
 
 
-@blp.route('/users/<string:userId>/blogs')
-class GetUserBlogsFromId(MethodView):
-    def get(self, userId):
-        return {"message": f"{userId} Watch Imitation Game"}
 
-
-@blp.route('/users/<string:userId>/blogs')
-class GetUserBlogById(MethodView):
-    def get(self, userId):
-        blogId = requests.args.get('blogId')
-        return {"message": f"Blog with id {blogId} by userId {userId}"}

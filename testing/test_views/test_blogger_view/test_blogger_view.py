@@ -7,7 +7,7 @@ from views.blogger import prompts
 class TestBloggerView:
     @pytest.fixture
     def mock_take_input(self, mocker):
-        return mocker.patch('views.blogger.take_input')
+        return mocker.patch('views.user.take_input')
 
     @pytest.fixture(autouse=True)
     def mock_user(self):
@@ -18,7 +18,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.view_blogs') as mock_view_blogs:
+        with patch('views.user.view_blogs') as mock_view_blogs:
             mock_view_blogs.return_value = True  # only for testing
             blogger_menu(mock_user)
 
@@ -31,7 +31,7 @@ class TestBloggerView:
 
         mock_take_input.get_user_for_blog.return_value = 'test_user'
 
-        with patch('views.blogger.view_blogs_by_user') as mock_view_blogs_by_user:
+        with patch('views.user.view_blogs_by_user') as mock_view_blogs_by_user:
             mock_view_blogs_by_user.return_value = True
             blogger_menu(mock_user)
 
@@ -44,7 +44,7 @@ class TestBloggerView:
 
         mock_take_input.get_tag_name.return_value = 'test_tag'
 
-        with patch('views.blogger.view_blogs_by_tag_name') as mock_view_blogs_by_tag_name:
+        with patch('views.user.view_blogs_by_tag_name') as mock_view_blogs_by_tag_name:
             mock_view_blogs_by_tag_name.return_value = True
             blogger_menu(mock_user)
 
@@ -55,7 +55,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.view_one_blog') as mock_view_one_blog:
+        with patch('views.user.view_one_blog') as mock_view_one_blog:
             mock_view_one_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -66,7 +66,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.create_blog') as mock_create_blog:
+        with patch('views.user.create_blog') as mock_create_blog:
             mock_create_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -77,7 +77,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.edit_blog') as edit_blog:
+        with patch('views.user.edit_blog') as edit_blog:
             edit_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -88,7 +88,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.remove_blog') as mock_remove_blog:
+        with patch('views.user.remove_blog') as mock_remove_blog:
             mock_remove_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -99,7 +99,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.upvote_blog') as mock_upvote_blog:
+        with patch('views.user.upvote_blog') as mock_upvote_blog:
             mock_upvote_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -110,7 +110,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.comment_on_blog') as mock_comment_on_blog:
+        with patch('views.user.comment_on_blog') as mock_comment_on_blog:
             mock_comment_on_blog.return_value = True
             blogger_menu(mock_user)
 
@@ -121,7 +121,7 @@ class TestBloggerView:
         choice = iter(choices)
         monkeypatch.setattr('builtins.input', lambda _: next(choice))
 
-        with patch('views.blogger.change_password') as mock_change_password:
+        with patch('views.user.change_password') as mock_change_password:
             mock_change_password.return_value = True
             blogger_menu(mock_user)
 

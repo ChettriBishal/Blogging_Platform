@@ -1,4 +1,4 @@
-"""This module defines the various operations that a blogger can perform"""
+"""This module defines the various operations that a user can perform"""
 
 from datetime import datetime
 from prettytable import PrettyTable

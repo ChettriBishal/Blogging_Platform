@@ -12,7 +12,7 @@ from utils.authentication.check_password_util import CheckPassword
 
 class UserLoginHandler:
     @staticmethod
-    def check_user_presence(userinfo):
+    def check_user_presence(userinfo) -> bool:
         print(Sql.GET_USER_BY_USERNAME.value)
         username_exists = Database.get_item(Sql.GET_USER_BY_USERNAME.value, (userinfo[0],))
         if username_exists:
@@ -20,7 +20,7 @@ class UserLoginHandler:
         return False
 
     @staticmethod
-    def authenticate_user(user_info):
+    def authenticate_user(user_info) -> bool:
         username, password = user_info
 
         password_in_db = Database.get_item(Sql.GET_PASSWORD.value, (username,))[0]

@@ -16,7 +16,6 @@ class Blog(Post):
     """
     def __init__(self, blog_info: Tuple) -> None:
         (
-            # blog_id will be auto-incremented
             self.title,
             self.content,
             self.creator,
@@ -27,14 +26,14 @@ class Blog(Post):
         self.blog_id = None
         self.blog_info = blog_info
 
-    def add_content(self) -> Union[bool, None]:
+    def add_content(self) -> Union[int, None]:
         """
         Method to add a new content
         """
         try:
             self.blog_id = Database.insert_item(Sql.INSERT_BLOG.value, self.blog_info)
             if self.blog_id:
-                return True
+                return self.blog_id
             # return False
 
         except Exception as exc:
