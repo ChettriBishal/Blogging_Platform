@@ -10,12 +10,15 @@ from config import prompts
 
 class AddBlogHandler:
     @staticmethod
-    def add_new_blog(blog_obj) -> Union[int, bool]:
+    def add_new_blog(blog_details) -> Union[int, bool]:
         try:
-            blog_id = Database.insert_item(Sql.INSERT_BLOG.value, (blog_obj.blog_info,))
+            print(blog_details)
+            blog_id = Database.insert_item(Sql.INSERT_BLOG.value, blog_details)
+            print(f"Blog id = {blog_id}")
             if blog_id:
                 return blog_id
             return False
 
         except Exception as exc:
+            # create a custom exception to handle this
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)

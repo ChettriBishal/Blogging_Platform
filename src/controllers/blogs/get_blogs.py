@@ -28,6 +28,7 @@ class GetBlogs:
             blogs = None
 
         if blogs is None:
+            # return 404
             print(prompts.NO_BLOG_BY_USER.format(username))
             return
 

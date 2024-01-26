@@ -152,7 +152,7 @@ class Sql(Enum):
 
     INSERT_BLOG = """
     INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date)
-    VALUES(%s,%s,%s,%s,%s,%s)
+    VALUES(%s,%s,%s,%s,%s,%s);
     """
 
     EDIT_BLOG = """
