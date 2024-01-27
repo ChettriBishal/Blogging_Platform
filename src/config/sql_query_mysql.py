@@ -151,8 +151,7 @@ class Sql(Enum):
     """
 
     INSERT_BLOG = """
-    INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date)
-    VALUES(%s,%s,%s,%s,%s,%s);
+    INSERT INTO blogs(title,content,creator_id,upvotes,tag_name,creation_date) VALUES(%s,%s,%s,%s,%s,%s);
     """
 
     EDIT_BLOG = """
@@ -167,10 +166,17 @@ class Sql(Enum):
     WHERE title = %s AND creator_id = %s
     """
 
-    GET_BLOGS_BY_USERNAME = """
+    GET_BLOGS_BY_USERID = """
     SELECT * 
     FROM blogs 
     WHERE creator_id = %s
+    """
+
+    GET_BLOGS_BY_USERNAME = """
+    SELECT b.*
+    FROM blogs b
+    JOIN users u ON b.creator_id = u.user_id
+    WHERE u.username = %s; 
     """
 
     GET_BLOGS_BY_TAG_NAME = """

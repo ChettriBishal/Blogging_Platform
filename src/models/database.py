@@ -37,16 +37,16 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 if data is None:
-                    cursor.execute_query()
+                    cursor.execute()
                 else:
-                    cursor.execute_query(data)
+                    cursor.execute(query, data)
 
-                response = cursor.execute(query, data).fetchall()
+                response = cursor.fetchall()
                 return response
 
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
-                cursor.rollback()
+                cls.blog_db_connection.connection.rollback()
                 return None
 
     @classmethod
@@ -56,8 +56,6 @@ class Database:
         """
         with cls.blog_db_connection as cursor:
             try:
-                print("Inside insert item database method")
-                print(data)
                 cursor.execute(query, data)
                 cls.blog_db_connection.connection.commit()
                 return cursor.lastrowid
