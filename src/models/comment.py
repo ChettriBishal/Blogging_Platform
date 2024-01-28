@@ -1,7 +1,7 @@
 """This module contains the various operations on a comment"""
 
 from typing import Union, Tuple
-from controllers.post import Post
+from models.post import Post
 from config.sql_query_mysql import Sql
 from models.database import Database
 from config import prompts

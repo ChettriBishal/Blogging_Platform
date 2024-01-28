@@ -1,10 +1,5 @@
-import requests
 from flask.views import MethodView
-from flask_jwt_extended import jwt_required
-from flask_smorest import Blueprint, abort
-from controllers.blog import Blog
-from controllers.blogs.create_blog import CreateBlog
-from schemas.blog_schema import BlogSchema
+from flask_smorest import Blueprint
 
 blp = Blueprint('Blog', __name__, description='Operations on blogs')
 

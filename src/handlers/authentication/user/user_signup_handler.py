@@ -1,10 +1,8 @@
 from datetime import datetime
 from typing import Union
 
-from controllers.user import User
+from models.user import User
 from config.roles import Role
-from config.flags import Flag
-from utils import validation
 from models.database import Database
 from config.sql_query_mysql import Sql
 from utils.authentication.hash_password_util import HashPassword

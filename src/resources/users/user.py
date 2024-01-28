@@ -1,10 +1,8 @@
-import requests
 from flask.views import MethodView
 from config.flags import Flag
-from flask import jsonify
-from controllers.user import User
+from models.user import User
 
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
+from flask_jwt_extended import create_access_token, create_refresh_token
 
 from flask_smorest import Blueprint, abort
 from schemas.authentication_schema import SignUpSchema, LoginSchema

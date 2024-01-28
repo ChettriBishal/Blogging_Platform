@@ -1,17 +1,11 @@
-import requests
 from flask import request
 from flask.views import MethodView
-from config.flags import Flag
-from flask import jsonify
-from controllers.user import User
 
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
+from flask_jwt_extended import jwt_required
 
 from flask_smorest import Blueprint, abort
 from controllers.blogs.create_blog import CreateBlog
 from controllers.blogs.get_blogs import GetBlogs
-from schemas.blog_schema import BlogSchema, BlogPostSchema
-from handlers.user.user_info_handler import UserInfoHandler
 
 blp = Blueprint("User_blog", __name__, description="User blog operations")
 

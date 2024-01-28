@@ -1,10 +1,8 @@
 """Module which allows user to register into the platform"""
 
-from datetime import datetime
 from typing import Tuple, Union
 
-from controllers.user import User
-from config.roles import Role
+from models.user import User
 from config.flags import Flag
 from utils import validation
 

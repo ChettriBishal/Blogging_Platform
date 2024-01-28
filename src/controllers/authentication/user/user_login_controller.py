@@ -1,13 +1,7 @@
-import hashlib
-from datetime import datetime
-from typing import Tuple, Union
+from typing import Tuple
 
-from controllers.user import User
-from config.roles import Role
 from config.flags import Flag
 from utils import validation
-from models.database import Database
-from config.sql_query_mysql import Sql
 
 from handlers.authentication.user.user_login_handler import UserLoginHandler
 

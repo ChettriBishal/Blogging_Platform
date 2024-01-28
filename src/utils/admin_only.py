@@ -4,7 +4,7 @@ from typing import Optional
 from functools import wraps
 from config.roles import Role
 from config.prompts import ONLY_ADMIN
-from controllers.user import User
+from models.user import User
 
 
 def admin(func):

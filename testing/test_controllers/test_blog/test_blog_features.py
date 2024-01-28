@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, call
-from controllers.blog import Blog, Comment, Sql, filepaths
+from models.blog import Blog, Comment, Sql, filepaths
 from config import prompts
 
 

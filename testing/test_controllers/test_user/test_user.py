@@ -1,5 +1,5 @@
 import pytest
-from controllers.user import User, Sql
+from models.user import User, Sql
 
 
 class TestUser:

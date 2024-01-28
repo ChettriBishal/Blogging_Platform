@@ -1,5 +1,5 @@
 import pytest
-from controllers.comment import Comment, Sql
+from models.comment import Comment, Sql
 from config import prompts
 
 

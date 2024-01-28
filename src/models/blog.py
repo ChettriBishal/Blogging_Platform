@@ -1,10 +1,10 @@
 """This module contains various operations performed on a blog"""
 
 from typing import Union, Tuple, List
-from controllers.post import Post
+from models.post import Post
 from config.sql_query_mysql import Sql
 from models.database import Database
-from controllers.comment import Comment
+from models.comment import Comment
 from loggers.general_logger import GeneralLogger
 from config import filepaths
 from config import prompts

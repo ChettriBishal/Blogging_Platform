@@ -1,5 +1,3 @@
-import json
-from controllers.blog import Blog
 from config import prompts
 from handlers.blogs.get_blogs_handler import GetBlogsHandler
 from handlers.user.user_info_handler import UserInfoHandler

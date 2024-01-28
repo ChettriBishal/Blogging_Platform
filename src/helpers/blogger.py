@@ -6,11 +6,11 @@ from typing import List, Union
 
 from config import prompts
 from utils.admin_only import admin
-from controllers.blog import Blog
-from controllers.comment import Comment
+from models.blog import Blog
+from models.comment import Comment
 from config.sql_query_mysql import Sql
 from controllers.authentication import Authentication
-from controllers.user import User
+from models.user import User
 from config.flags import Flag
 from config.roles import Role
 from utils import take_input, validation
