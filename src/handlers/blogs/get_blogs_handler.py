@@ -14,10 +14,7 @@ class GetBlogsHandler:
 
     @staticmethod
     def blogs_by_username(username):
-        print(f"username in get blogs handler = {username}")
         blogs = Database.get_items(Sql.GET_BLOGS_BY_USERNAME.value, username)
-        print(f"Inside the blogs by username function")
-        print(blogs)
         return blogs
 
     @staticmethod

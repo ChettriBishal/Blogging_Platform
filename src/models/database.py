@@ -73,11 +73,11 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 cursor.execute(query, data)
-                cursor.commit()
+                cls.blog_db_connection.connection.commit()
 
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
-                cursor.rollback()
+                cls.blog_db_connection.connection.rollback()
                 return None
 
     @classmethod
@@ -92,7 +92,7 @@ class Database:
 
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
-                cursor.rollback()
+                cls.blog_db_connection.connection.rollback()
                 return None
 
     @classmethod
@@ -107,5 +107,5 @@ class Database:
 
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
-                cursor.rollback()
+                cls.blog_db_connection.connection.rollback()
                 return None

@@ -10,10 +10,10 @@ from controllers.blogs.get_blogs import GetBlogs
 blp = Blueprint("User_blog", __name__, description="User blog operations")
 
 
-@blp.route('/users/<string:userId>/blogs')
+@blp.route('/users/<int:userId>/blogs')
 class BlogsFromId(MethodView):
     def get(self, userId):
-        access_blog = GetBlogs(userId=userId)
+        access_blog = GetBlogs(user_id=userId)
         blogs = access_blog.get_blogs_by_username()
         return blogs
 
@@ -29,12 +29,4 @@ class BlogsFromId(MethodView):
         abort(500, message="Could not post blog")
 
 
-@blp.route('/users/<int:userId>/blogs')
-class BlogByUserId(MethodView):
-    def get(self, userId):
-        print(f"Userid = {userId}")
-        access_blog = GetBlogs(user_id=userId)
-        print("Line number 42")
-        blogs = access_blog.get_blogs_by_username()
-        return blogs
 

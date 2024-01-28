@@ -40,11 +40,9 @@ class GetBlogs:
         To view blogs by a particular user using his username
         """
 
-        print(f"First line of the get blogs by username function")
         if self.username is None:
             return Flag.INVALID_OPERATION.value
 
-        print("After the if condition")
         blogs = GetBlogsHandler.blogs_by_username(self.username)
 
         if len(blogs) < 1:
