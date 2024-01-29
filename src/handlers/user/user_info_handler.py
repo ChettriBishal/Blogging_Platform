@@ -17,3 +17,8 @@ class UserInfoHandler:
     def get_user_row_by_username(username):
         user_details = Database.get_item(Sql.GET_USER_ROW_BY_USERNAME.value, (username,))
         return user_details
+
+    @staticmethod
+    def get_all_users():
+        users = Database.get_items(Sql.GET_ALL_USERS.value, None)
+        return users

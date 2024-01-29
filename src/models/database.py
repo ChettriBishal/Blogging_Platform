@@ -37,10 +37,9 @@ class Database:
         with cls.blog_db_connection as cursor:
             try:
                 if data is None:
-                    cursor.execute()
+                    cursor.execute(query)
                 else:
                     cursor.execute(query, data)
-
                 response = cursor.fetchall()
                 return response
 

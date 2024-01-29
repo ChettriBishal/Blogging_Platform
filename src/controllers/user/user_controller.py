@@ -1,7 +1,5 @@
 from typing import Union, List, Dict
 from models.user.user_model import User
-from models.database import Database
-from config.sql_query_mysql import Sql
 from config import filepaths
 from utils.authentication.hash_password_util import HashPassword
 from utils import validation
@@ -26,9 +24,8 @@ class UserController:
         To get all the users in the platform
         """
         try:
-            user_list = Database.get_items(Sql.GET_ALL_USERS.value)
-            users = [User(*record[1:]) for record in user_list]
-
+            user_list = UserInfoHandler.get_all_users()
+            users = [UserResponse(record).to_dict() for record in user_list]
             return users
 
         except PermissionError as permission_exc:
