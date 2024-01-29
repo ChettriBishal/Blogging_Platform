@@ -120,6 +120,12 @@ class Sql(Enum):
     WHERE username = %s;
     """
 
+    GET_USER_ROW_BY_USERNAME = """
+    SELECT * 
+    FROM users
+    WHERE username = %s;
+    """
+
     GET_USER_ID_BY_USERNAME = """
     SELECT user_id
     FROM users 

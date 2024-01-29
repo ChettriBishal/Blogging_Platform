@@ -1,13 +1,14 @@
 from flask.views import MethodView
 from config.flags import Flag
-from models.user import User
+from models.user.user_model import User
 
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
 
 from flask_smorest import Blueprint, abort
 from schemas.authentication_schema import SignUpSchema, LoginSchema
 from controllers.authentication.user.user_login_controller import UserLogin
 from controllers.authentication.user.user_signup_controller import UserSignUp
+from controllers.user.user_controller import UserController
 
 blp = Blueprint("User", __name__, description="User operations")
 
@@ -52,8 +53,10 @@ class UserLogoutRoute(MethodView):
 
 @blp.route('/personal')
 class GetUserData(MethodView):
+    @jwt_required()
     def get(self):
-        return {"message": "Personal data of the user"}
+        user_access_object = UserController()
+        return user_access_object.get_self_details()
 
 
 @blp.route('/users/<string:userId>')

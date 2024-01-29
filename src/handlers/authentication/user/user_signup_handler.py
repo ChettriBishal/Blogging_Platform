@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Union
 
-from models.user import User
+from models.user.user_model import User
 from config.roles import Role
 from models.database import Database
 from config.sql_query_mysql import Sql

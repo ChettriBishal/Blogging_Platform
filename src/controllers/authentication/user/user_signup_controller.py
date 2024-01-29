@@ -2,7 +2,7 @@
 
 from typing import Tuple, Union
 
-from models.user import User
+from models.user.user_model import User
 from config.flags import Flag
 from utils import validation
 

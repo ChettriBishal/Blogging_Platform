@@ -58,6 +58,3 @@ class GetBlogs:
             blog_responses.append(BlogResponse(blog_response).to_dict())
         return blog_responses
 
-        # blogs = [Blog(blog[1:]) for blog in blogs]
-        # for blog in blogs:
-        #     print(blog.details())

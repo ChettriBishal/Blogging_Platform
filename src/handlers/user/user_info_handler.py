@@ -12,3 +12,8 @@ class UserInfoHandler:
     def get_username_by_userid(userid):
         username = Database.get_item(Sql.GET_USERNAME_BY_USERID.value, (userid,))
         return username
+
+    @staticmethod
+    def get_user_row_by_username(username):
+        user_details = Database.get_item(Sql.GET_USER_ROW_BY_USERNAME.value, (username,))
+        return user_details
