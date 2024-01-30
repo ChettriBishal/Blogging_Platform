@@ -23,6 +23,7 @@ class GetBlogs:
         To get all the blogs posted so far
         """
         blogs = GetBlogsHandler.blog_collection()
+        blogs = [BlogResponse(blog).to_dict() for blog in blogs]
         return blogs
 
     @staticmethod

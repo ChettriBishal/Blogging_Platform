@@ -19,7 +19,6 @@ class UserController:
         return user_obj.to_dict()
 
     def get_all_users(self):
-        # put rbac for admin here
         """
         To get all the users in the platform
         """
@@ -30,6 +29,15 @@ class UserController:
 
         except PermissionError as permission_exc:
             GeneralLogger.info(permission_exc, filepaths.USER_LOG_FILE)
+
+    def get_user_details_by_username(self, username) -> Dict:
+        user_info = UserInfoHandler.get_user_row_by_username(username)
+        return UserResponse(user_info).to_dict()
+
+    def get_user_details_by_userid(self, userid) -> Dict:
+        username = UserInfoHandler.get_username_by_userid(userid)
+        userinfo = self.get_user_details_by_username(username[0])
+        return userinfo
 
     def remove_user_by_username(self):
         pass

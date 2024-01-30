@@ -9,7 +9,8 @@ blp = Blueprint('Blog', __name__, description='Operations on blogs')
 @blp.route('/blogs')
 class GetAllBlogs(MethodView):
     def get(self):
-        return {"message": "Will update this tomorrow gotta wait"}
+        blogs = GetBlogs.get_all_blogs()
+        return blogs
 
 
 @blp.route('/blogs/<int:blogId>')
@@ -17,9 +18,4 @@ class GetSpecificBlog(MethodView):
     def get(self, blogId):
         blog = GetBlogs.get_single_blog(blogId)
         return blog
-
-
-# posting a blog
-# @blp.route('/users/<int:userId>/blogs')
-# class BlogUser(MethodView):
 

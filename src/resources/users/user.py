@@ -67,7 +67,15 @@ class GetAllUsers(MethodView):
         return user_access_object.get_all_users()
 
 
-@blp.route('/users/<string:userId>')
+@blp.route('/users/<int:userId>')
 class GetUserDataFromId(MethodView):
     def get(self, userId):
-        return {"message": f"User details of {userId}"}
+        user_access_object = UserController()
+        return user_access_object.get_user_details_by_userid(userId)
+
+
+@blp.route('/users/<string:username>')
+class GetUserDataFromName(MethodView):
+    def get(self, username):
+        user_access_object = UserController()
+        return user_access_object.get_user_details_by_username(username)
