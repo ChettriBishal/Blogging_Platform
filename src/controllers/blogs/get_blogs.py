@@ -26,8 +26,10 @@ class GetBlogs:
         return blogs
 
     @staticmethod
-    def get_single_blog():
+    def get_single_blog(blog_id):
         """Get a single blog by id"""
+        blog = GetBlogsHandler.blog_by_id(blog_id)
+        return BlogResponse(blog).to_dict()
 
     # UPDATE you have to use userid to fetch the blogs now
     @staticmethod

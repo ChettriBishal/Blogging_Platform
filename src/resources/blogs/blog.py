@@ -1,6 +1,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
 
+from controllers.blogs.get_blogs import GetBlogs
+
 blp = Blueprint('Blog', __name__, description='Operations on blogs')
 
 
@@ -10,10 +12,11 @@ class GetAllBlogs(MethodView):
         return {"message": "Will update this tomorrow gotta wait"}
 
 
-@blp.route('/blogs/<string:blogId>')
+@blp.route('/blogs/<int:blogId>')
 class GetSpecificBlog(MethodView):
     def get(self, blogId):
-        return {"message": f"Showing blog {blogId}"}
+        blog = GetBlogs.get_single_blog(blogId)
+        return blog
 
 
 # posting a blog

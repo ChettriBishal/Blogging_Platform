@@ -10,7 +10,8 @@ class GetBlogsHandler:
 
     @staticmethod
     def blog_by_id(blog_id):
-        pass
+        blog = Database.get_item(Sql.GET_BLOG_BY_BLOG_ID.value, (blog_id,))
+        return blog
 
     @staticmethod
     def blogs_by_username(username):

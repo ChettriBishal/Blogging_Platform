@@ -172,6 +172,10 @@ class Sql(Enum):
     WHERE title = %s AND creator_id = %s
     """
 
+    GET_BLOG_BY_BLOG_ID = """
+    SELECT * FROM blogs WHERE blog_id = %s;
+    """
+
     GET_BLOGS_BY_USERID = """
     SELECT * 
     FROM blogs 
