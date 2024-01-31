@@ -6,7 +6,7 @@ blp = Blueprint('Comments', __name__, description='Operations related to comment
 
 
 @blp.route('/blogs/<string:blogId>/comments')
-class GetBlogComments(MethodView):
+class BlogComments(MethodView):
     def get(self, blogId):
         return {"message": f"Comments for blog id {blogId}"}
 

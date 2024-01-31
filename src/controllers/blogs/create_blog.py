@@ -5,7 +5,7 @@ from typing import Tuple
 
 class CreateBlog:
     """
-        This function allows the user to create a new blog
+        This allows the user to create a new blog
     """
 
     def __init__(self, blog_info_received):

@@ -18,4 +18,3 @@ class GetSpecificBlog(MethodView):
     def get(self, blogId):
         blog = GetBlogs.get_single_blog(blogId)
         return blog
-

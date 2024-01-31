@@ -1,7 +1,7 @@
 from flask import Flask
 from resources.users.user import blp as UserRoute
 from resources.blogs.blog import blp as BlogRoute
-from resources.comment import blp as CommentRoute
+from resources.comments.comment import blp as CommentRoute
 from resources.blogs.user_blog import blp as UserBlogRoute
 from flask_smorest import Api
 
