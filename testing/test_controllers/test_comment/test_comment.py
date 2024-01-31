@@ -1,20 +1,20 @@
 import pytest
-from models.comment import Comment, Sql
+from models.comments import Comment, Sql
 from config import prompts
 
 
 class TestComment:
     @pytest.fixture(autouse=True)
     def mock_database(self, mocker):
-        return mocker.patch('controllers.comment.Database')
+        return mocker.patch('controllers.comments.Database')
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
-        return mocker.patch('controllers.comment.GeneralLogger')
+        return mocker.patch('controllers.comments.GeneralLogger')
 
     @pytest.fixture
     def Comment(self, mocker):
-        return mocker.patch('controllers.comment.Comment')
+        return mocker.patch('controllers.comments.Comment')
 
     @pytest.fixture
     def comment_info_start(self):
@@ -88,7 +88,7 @@ class TestComment:
         mock_logger.error.assert_not_called()
 
     def test_edit_content_negative(self, comment_instance, mock_database, mock_logger):
-        mock_database.get_item.return_value = None  # no comment found
+        mock_database.get_item.return_value = None  # no comments found
         comment_instance.comment_id = None
 
         result = comment_instance.edit_content("New Content")

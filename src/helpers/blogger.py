@@ -6,8 +6,8 @@ from typing import List, Union
 
 from config import prompts
 from utils.admin_only import admin
-from models.blog import Blog
-from models.comment import Comment
+from models.blogs import Blog
+from models.comments import Comment
 from config.sql_query_mysql import Sql
 from controllers.authentication import Authentication
 from models.user import User
@@ -158,7 +158,7 @@ def view_blogs_by_tag_name(tag_name: str) -> None:
 
 def view_one_blog() -> bool:
     """
-    View a particular blog by its name
+    View a particular blogs by its name
     """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
@@ -184,7 +184,7 @@ def view_one_blog() -> bool:
 
 def create_blog(active_user: User) -> None:
     """
-    This function allows the user to create a new blog
+    This function allows the user to create a new blogs
     """
     title, content, tag = take_input.get_blog_post_details()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
@@ -204,7 +204,7 @@ def create_blog(active_user: User) -> None:
 
 def edit_blog(active_user: User) -> None:
     """
-    This function allows the user to edit his blog if it exists
+    This function allows the user to edit his blogs if it exists
     """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
@@ -228,7 +228,7 @@ def edit_blog(active_user: User) -> None:
 
 def remove_blog(active_user: User) -> None:
     """
-    This function allows the user to remove his blog
+    This function allows the user to remove his blogs
     """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
@@ -237,7 +237,7 @@ def remove_blog(active_user: User) -> None:
         print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
         return Flag.DOES_NOT_EXIST.value
 
-    # create blog object
+    # create blogs object
     current_blog = Blog(blog_details[1:])
     current_blog.set_blog_id(blog_details[0])
 
@@ -254,7 +254,7 @@ def remove_blog(active_user: User) -> None:
 @admin
 def admin_remove_blog(active_user: User) -> None:
     """
-    This function allows the admin to remove any blog
+    This function allows the admin to remove any blogs
     """
 
     title = take_input.get_title()
@@ -279,7 +279,7 @@ def admin_remove_blog(active_user: User) -> None:
 
 def upvote_blog(active_user: User) -> None:
     """
-    This function allows the user to upvote any blog that exists.
+    This function allows the user to upvote any blogs that exists.
     """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))
@@ -302,7 +302,7 @@ def upvote_blog(active_user: User) -> None:
 
 def comment_on_blog(active_user: User) -> None:
     """
-    This function allows the user to comment on a blog that exists.
+    This function allows the user to comments on a blogs that exists.
     """
     title = take_input.get_title()
     blog_details = Database.get_item(Sql.GET_BLOG_RECORD_BY_TITLE.value, (title,))

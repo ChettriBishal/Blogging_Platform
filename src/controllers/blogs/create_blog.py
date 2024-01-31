@@ -5,7 +5,7 @@ from typing import Tuple
 
 class CreateBlog:
     """
-        This allows the user to create a new blog
+        This allows the user to create a new blogs
     """
 
     def __init__(self, blog_info_received):
@@ -20,7 +20,7 @@ class CreateBlog:
 
     def create_blog_details_obj(self) -> Tuple:
         """This creates a details object as per the database schema"""
-        current_date = datetime.today()
+        current_date = datetime.now()
         self.creation_date = current_date.strftime("%Y-%m-%d %H:%M:%S")
         resultant_blog_info = (self.title, self.content, self.user_id, 0, self.tag, current_date)
         return resultant_blog_info

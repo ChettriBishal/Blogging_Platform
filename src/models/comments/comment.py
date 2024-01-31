@@ -1,4 +1,4 @@
-"""This module contains the various operations on a comment"""
+"""This module contains the various operations on a comments"""
 
 from typing import Union, Tuple
 from models.post import Post
@@ -11,7 +11,7 @@ from config.filepaths import COMMENT_LOG_FILE
 
 class Comment(Post):
     """
-    Class containing various methods associated with a comment object
+    Class containing various methods associated with a comments object
     """
     def __init__(self, comment_info: Tuple) -> None:
         (
@@ -27,7 +27,7 @@ class Comment(Post):
 
     def add_content(self) -> Union[bool, None]:
         """
-        Method to add new comment content
+        Method to add new comments content
         """
         try:
             self.comment_id = Database.insert_item(Sql.INSERT_COMMENT.value, self.comment_info)
@@ -39,7 +39,7 @@ class Comment(Post):
 
     def edit_content(self, new_content: str) -> Union[bool, None]:
         """
-        Method to edit content of the comment
+        Method to edit content of the comments
         """
         try:
             comment_id = Database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator,))[0]
@@ -51,7 +51,7 @@ class Comment(Post):
 
     def remove_content(self) -> Union[bool, None]:
         """
-        Method to remove content of the comment
+        Method to remove content of the comments
         """
         try:
             comment_to_remove = Database.get_item(Sql.GET_COMMENT_ID.value, (self.blog_id, self.creator))
@@ -63,7 +63,7 @@ class Comment(Post):
 
     def upvote(self, user_id: str) -> Union[bool, None]:
         """
-        Method to upvote the comment
+        Method to upvote the comments
         """
         try:
             upvote_record = Database.get_item(Sql.CHECK_COMMENT_UPVOTE.value, (user_id, self.comment_id,))
@@ -83,7 +83,7 @@ class Comment(Post):
 
     def details(self) -> str:
         """
-        Method to get details of the comment
+        Method to get details of the comments
         """
         comment_info = (self.creator, self.content, self.creation_date)
 

@@ -7,7 +7,7 @@ from flask_smorest import Blueprint, abort
 from controllers.blogs.create_blog import CreateBlog
 from controllers.blogs.get_blogs import GetBlogs
 
-blp = Blueprint("User_blog", __name__, description="User blog operations")
+blp = Blueprint("User_blog", __name__, description="User blogs operations")
 
 
 @blp.route('/users/<int:userId>/blogs')
@@ -25,8 +25,8 @@ class BlogsFromId(MethodView):
         blog_creation.user_id = userId
         blog_added = blog_creation.create_new_blog()
         if blog_added:
-            return {"message": f"{userId} successfully added a blog!"}, 201
-        abort(500, message="Could not post blog")
+            return {"message": f"{userId} successfully added a blogs!"}, 201
+        abort(500, message="Could not post blogs")
 
 
 

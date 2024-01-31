@@ -26,15 +26,15 @@ ENTER_EMAIL = "Enter your email address: "
 
 ENTER_VALID_EMAIL = "Enter a valid email address "
 
-ENTER_BLOG_TITLE = "Enter the title of the blog post: "
+ENTER_BLOG_TITLE = "Enter the title of the blogs post: "
 
 ENTER_BLOG_CONTENT = "Enter the post content: "
 
-ENTER_BLOG_TAG = "Enter the tag for the blog: "
+ENTER_BLOG_TAG = "Enter the tag for the blogs: "
 
 ENTER_TAG_FOR_BLOGS = "Enter tag to search for blogs: "
 
-ENTER_COMMENT = "Enter the comment: "
+ENTER_COMMENT = "Enter the comments: "
 
 USER_SIGNED_UP = "User with username `{}` has signed up successfully!"
 
@@ -68,12 +68,12 @@ BLOGGER_MENU = f"""
 1. View blogs
 2. View blogs by a user
 3. View blogs by a tag
-4. View a single blog
-5. Create a new blog
-6. Edit existing blog
-7. Remove a blog 
-8. Upvote a blog
-9. Comment on a blog
+4. View a single blogs
+5. Create a new blogs
+6. Edit existing blogs
+7. Remove a blogs 
+8. Upvote a blogs
+9. Comment on a blogs
 10. Change password
 11. Exit
 
@@ -81,7 +81,7 @@ Enter your choice: """
 
 ADMIN_SPECIFIC = f"""
 {render.renderText("ADMIN")}
-1. Remove a blog 
+1. Remove a blogs 
 2. List all users
 3. Remove user by username
 4. Change Password
@@ -89,7 +89,7 @@ ADMIN_SPECIFIC = f"""
 
 Enter your choice: """
 
-ENTER_NEW_CONTENT = "Enter the new content for the blog: "
+ENTER_NEW_CONTENT = "Enter the new content for the blogs: "
 
 COMMENTS = "\n--------------Comments--------------"
 
@@ -107,7 +107,7 @@ ADMIN_CHOICE_PROMPT = f"""
 
 Enter your choice: """
 
-CHOOSE_ANOTHER_TITLE = "A blog by this title already exists. Please choose another one!"
+CHOOSE_ANOTHER_TITLE = "A blogs by this title already exists. Please choose another one!"
 
 SYSTEM_START = "The app has started"
 
@@ -126,17 +126,17 @@ Try again...
 
 USERNAME_ALREADY_EXISTS = "This username `{}` already exists"
 
-BLOG_NOT_FOUND_BLOG_USER = "Can't find blog `{}` written by `{}`!"
+BLOG_NOT_FOUND_BLOG_USER = "Can't find blogs `{}` written by `{}`!"
 
 ADMIN_CANT_BE_REMOVED = "Admin accounts can't be removed!"
 
-BLOG_NOT_FOUND_NAME = "Can't find blog `{}`..."
+BLOG_NOT_FOUND_NAME = "Can't find blogs `{}`..."
 
-BLOGS_NOT_FOUND = "No blog found!"
+BLOGS_NOT_FOUND = "No blogs found!"
 
-NO_BLOG_BY_USER = "No blog written by user `{}`"
+NO_BLOG_BY_USER = "No blogs written by user `{}`"
 
-NO_BLOG_OF_TAG_NAME = "No blog found under tag name `{}`"
+NO_BLOG_OF_TAG_NAME = "No blogs found under tag name `{}`"
 
 SUCCESSFUL_PASSWORD_CHANGE = "Password changed successfully!"
 
@@ -156,19 +156,19 @@ WRONG_PASSWORD = "Wrong Password! Please try again..."
 
 BLOG_EDITED = "`{}` was edited successfully!"
 
-COULD_NOT_EDIT_BLOG = "Could not edit the blog `{}`"
+COULD_NOT_EDIT_BLOG = "Could not edit the blogs `{}`"
 
-REMOVED_COMMENT_WITH_ID = "Removed comment with id `{}`"
+REMOVED_COMMENT_WITH_ID = "Removed comments with id `{}`"
 
 BLOG_REMOVED = "Blog with title `{}` has been removed!"
 
-COULD_NOT_REMOVE_BLOG = "Could not remove the blog!"
+COULD_NOT_REMOVE_BLOG = "Could not remove the blogs!"
 
 UPVOTED_BLOG = "Blog with title `{}` has been upvoted!"
 
-COULD_NOT_UPVOTE_BLOG = "Could not upvote blog `{}` again!"
+COULD_NOT_UPVOTE_BLOG = "Could not upvote blogs `{}` again!"
 
-USER_COMMENTED = "`{}` commented on the blog `{}`"
+USER_COMMENTED = "`{}` commented on the blogs `{}`"
 
 BLOG_DETAILS = """
 ---------------------------------------------------------------------------------------------------------

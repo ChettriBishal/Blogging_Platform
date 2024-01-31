@@ -241,7 +241,7 @@ class TestBlogger:
         mocker.patch.object(take_input, 'get_blog_post_details', return_value=('test_title', 'test_content', 'test'))
         mock_database.get_item.return_value = False  # assuming this is a new entry
         blog_instance = mock_blog()
-        blog_instance.add_content.return_value = True  # added the blog successfully
+        blog_instance.add_content.return_value = True  # added the blogs successfully
 
         mock_user.username = 'test_user'
         blogger.create_blog(mock_user)

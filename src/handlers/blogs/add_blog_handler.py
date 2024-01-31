@@ -8,7 +8,7 @@ from config import filepaths
 class AddBlogHandler:
     @staticmethod
     def add_new_blog(blog_details) -> Union[int, bool]:
-        """Makes database call for inserting a new blog"""
+        """Makes database call for inserting a new blogs"""
         try:
             blog_id = Database.insert_item(Sql.INSERT_BLOG.value, blog_details)
             if blog_id:

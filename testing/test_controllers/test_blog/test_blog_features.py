@@ -1,21 +1,21 @@
 import pytest
 from unittest.mock import patch, call
-from models.blog import Blog, Comment, Sql, filepaths
+from models.blogs import Blog, Comment, Sql, filepaths
 from config import prompts
 
 
 class TestBlog:
     @pytest.fixture(autouse=True)
     def mock_database(self, mocker):
-        return mocker.patch('controllers.blog.Database')
+        return mocker.patch('controllers.blogs.Database')
 
     @pytest.fixture(autouse=True)
     def mock_logger(self, mocker):
-        return mocker.patch('controllers.blog.GeneralLogger')
+        return mocker.patch('controllers.blogs.GeneralLogger')
 
     @pytest.fixture
     def Blog(self, mocker):
-        return mocker.patch('controllers.blog.Blog')
+        return mocker.patch('controllers.blogs.Blog')
 
     @pytest.fixture(autouse=True)
     def blog_info(self):
@@ -63,27 +63,27 @@ class TestBlog:
         mock_logger.error.assert_called_once()
 
     def test_edit_content_positive(self, blog_instance, mock_database, mock_logger):
-        blog_instance.blog_id = 42  # Simulating an existing blog ID
+        blog_instance.blog_id = 42  # Simulating an existing blogs ID
 
         result = blog_instance.edit_content("New Test Content")
 
         assert (result is True)
         mock_database.get_item.assert_not_called()
-        mock_database.query_with_params.assert_called_once_with(Sql.EDIT_BLOG.value, ("New Test Content", 42,))
+        mock_database.query_with_params.assert_called_once_with(Sql.EDIT_BLOG_CONTENT.value, ("New Test Content", 42,))
         mock_logger.error.assert_not_called()
 
     def test_edit_content_negative(self, blog_instance, mock_database, mock_logger):
-        blog_instance.blog_id = 42  # Simulating an existing blog ID
+        blog_instance.blog_id = 42  # Simulating an existing blogs ID
 
         mock_database.query_with_params.side_effect = Exception("Test Error")
         result = blog_instance.edit_content("New Test Content")
 
         assert (result is None)
         mock_database.get_item.assert_not_called()
-        mock_database.query_with_params.assert_called_once_with(Sql.EDIT_BLOG.value, ("New Test Content", 42,))
+        mock_database.query_with_params.assert_called_once_with(Sql.EDIT_BLOG_CONTENT.value, ("New Test Content", 42,))
         mock_logger.error.assert_called_once()
 
-    @patch('controllers.blog.Blog.remove_comments')
+    @patch('controllers.blogs.Blog.remove_comments')
     def test_remove_content_positive(self, monkeypatch, blog_instance, mock_database, mock_logger):
         blog_instance.blog_id = 42
         blog_instance.remove_comments.return_value = True
@@ -95,7 +95,7 @@ class TestBlog:
         mock_database.remove_item.assert_called_once_with(Sql.REMOVE_BLOG_BY_ID.value, (42,))
         mock_logger.error.assert_not_called()
 
-    @patch('controllers.blog.Blog.remove_comments')
+    @patch('controllers.blogs.Blog.remove_comments')
     def test_remove_content_negative(self, monkeypatch, blog_instance, mock_database, mock_logger):
         blog_instance.blog_id = 42
         blog_instance.remove_comments.side_effect = Exception("Test Error")
@@ -181,7 +181,7 @@ class TestBlog:
         ], any_order=True)
         mock_database.remove_item.assert_called()
 
-    @patch('controllers.blog.Blog.remove_comments')
+    @patch('controllers.blogs.Blog.remove_comments')
     def test_remove_content_by_title_positive(self, mock_remove_comments, mock_database, blog_instance, mock_logger):
         blog_instance.blog_id = 42
         mock_database.get_item.return_value = 42
@@ -194,7 +194,7 @@ class TestBlog:
         mock_database.remove_item.assert_called_once_with(Sql.REMOVE_BLOG_BY_ID.value, (42,))
         mock_logger.error.assert_not_called()
 
-    @patch('controllers.blog.Blog.remove_comments')
+    @patch('controllers.blogs.Blog.remove_comments')
     def test_remove_content_by_title_negative(self, mock_remove_comments, mock_database, blog_instance, mock_logger):
         mock_database.get_item.return_value = None
         mock_remove_comments.return_value = None

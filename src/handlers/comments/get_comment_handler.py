@@ -1,6 +1,6 @@
 from models.database import Database
 from config.sql_query_mysql import Sql
-from models.comment_response import CommentResponse
+from models.comments.comment_response import CommentResponse
 from typing import Union, List
 
 

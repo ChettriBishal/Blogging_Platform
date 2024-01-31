@@ -14,7 +14,7 @@ class BlogComments(MethodView):
         comments = GetComments.get_comments_by_blog_id(blogId)
         if comments:
             return comments, 200
-        abort(404, detail="No comment present for this blog")
+        abort(404, detail="No comments present for this blogs")
 
     @jwt_required()
     def post(self, blogId):
@@ -23,11 +23,11 @@ class BlogComments(MethodView):
         comment_object = AddComment(content=content, blog_id=blogId)
         comment_added = comment_object.add_comment()
         if comment_added:
-            return {"message": f"Added a new comment to {blogId}"}, 201
-        abort(500, detail="Could not comment to the blog")
+            return {"message": f"Added a new comments to {blogId}"}, 201
+        abort(500, detail="Could not comments to the blogs")
 
 
 @blp.route('/blogs/<int:blogId>/comments/<int:commentId>')
 class GetSpecificCommentForBlog(MethodView):
     def get(self, blogId, commentId):
-        return {"message": f"Comment {commentId} for blog {blogId}"}
+        return {"message": f"Comment {commentId} for blogs {blogId}"}

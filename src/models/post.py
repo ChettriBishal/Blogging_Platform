@@ -1,4 +1,4 @@
-"""This module represents the abstract entity Post which blog and comment inherit"""
+"""This module represents the abstract entity Post which blogs and comments inherit"""
 from abc import ABC, abstractmethod
 
 

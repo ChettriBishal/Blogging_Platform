@@ -2,7 +2,7 @@ from config import prompts
 from handlers.blogs.get_blogs_handler import GetBlogsHandler
 from handlers.user.user_info_handler import UserInfoHandler
 from config.flags import Flag
-from models.blog_response import BlogResponse
+from models.blogs.blog_response import BlogResponse
 
 
 class GetBlogs:
@@ -28,7 +28,7 @@ class GetBlogs:
 
     @staticmethod
     def get_single_blog(blog_id):
-        """Get a single blog by id"""
+        """Get a single blogs by id"""
         blog = GetBlogsHandler.blog_by_id(blog_id)
         return BlogResponse(blog).to_dict()
 

@@ -10,9 +10,9 @@ BLOGGING_DB = os.path.join(project_root, 'storage', 'user.db')
 
 USER_LOG_FILE = os.path.join(project_root, 'storage', 'user.log')
 
-BLOG_LOG_FILE = os.path.join(project_root, 'storage', 'blog.log')
+BLOG_LOG_FILE = os.path.join(project_root, 'storage', 'blogs.log')
 
-COMMENT_LOG_FILE = os.path.join(project_root, 'storage', 'comment.log')
+COMMENT_LOG_FILE = os.path.join(project_root, 'storage', 'comments.log')
 
 DB_LOG_FILE = os.path.join(project_root, 'storage', 'db.log')
 

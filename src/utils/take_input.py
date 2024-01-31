@@ -38,7 +38,7 @@ def get_new_password() -> str:
 
 def get_blog_post_details() -> Tuple:
     """
-    To get the post details for creating a new blog
+    To get the post details for creating a new blogs
     """
     title = input(prompts.ENTER_BLOG_TITLE)
 
@@ -63,7 +63,7 @@ def get_blog_post_details() -> Tuple:
 
 def get_comment() -> str:
     """
-    To get the comment content from the user
+    To get the comments content from the user
     """
     content = input(prompts.ENTER_COMMENT)
 
@@ -76,7 +76,7 @@ def get_comment() -> str:
 
 def get_title() -> str:
     """
-    To get the title for the blog from the user
+    To get the title for the blogs from the user
     """
     title = input(prompts.ENTER_BLOG_TITLE)
 
