@@ -25,7 +25,7 @@ class BlogsFromId(MethodView):
         blog_creation.user_id = userId
         blog_added = blog_creation.create_new_blog()
         if blog_added:
-            return {"message": f"{userId} successfully added a blogs!"}, 201
+            return {"message": f"{userId} successfully added a blog!"}, 201
         abort(500, message="Could not post blogs")
 
 

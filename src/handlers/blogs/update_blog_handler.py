@@ -26,7 +26,7 @@ class UpdateBlogHandler:
     @staticmethod
     def update_blog_tag(blog_id, new_tag):
         try:
-            Database.query_with_params(Sql.EDIT_BLOG_TITLE.value, (new_tag, blog_id,))
+            Database.query_with_params(Sql.EDIT_BLOG_TAG.value, (new_tag, blog_id,))
             return True
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)

@@ -173,6 +173,12 @@ class Sql(Enum):
     WHERE blog_id = %s
     """
 
+    EDIT_BLOG_TAG = """
+    UPDATE blogs 
+    SET tag_name = %s
+    WHERE blog_id = %s
+    """
+
     GET_BLOG_ID = """
     SELECT blog_id 
     FROM blogs 
