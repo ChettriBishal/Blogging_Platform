@@ -191,6 +191,12 @@ class Sql(Enum):
     WHERE blog_id = %s
     """
 
+    GET_CREATOR_ID_FOR_COMMENT = """
+    SELECT creator_id
+    FROM comments
+    WHERE blog_id = %s AND comment_id = %s;
+    """
+
     GET_BLOG_BY_BLOG_ID = """
     SELECT * FROM blogs WHERE blog_id = %s;
     """
@@ -236,6 +242,12 @@ class Sql(Enum):
     SELECT * 
     FROM comments 
     WHERE blog_id = %s
+    """
+
+    GET_SPECIFIC_COMMENT = """
+    SELECT * 
+    FROM comments 
+    WHERE blog_id = %s AND comment_id = %s;
     """
 
     INSERT_COMMENT = """

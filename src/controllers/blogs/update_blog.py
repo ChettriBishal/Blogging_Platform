@@ -13,6 +13,7 @@ class UpdateBlog:
         self.tag = kwargs.get('tag')
 
     def authenticate_user(self):
+        """Check if the user in session was the actual creator"""
         current_userid = GetCurrentUser.get_user_id()
         creator_id = BlogInfoHandler.get_creator_id_from_blog_id(self.blog_id)
         if current_userid != creator_id:

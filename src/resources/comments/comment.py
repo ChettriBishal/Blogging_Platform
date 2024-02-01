@@ -4,6 +4,7 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import jwt_required
 from controllers.comments.add_comment import AddComment
 from controllers.comments.get_comments import GetComments
+from controllers.comments.update_comment import UpdateComment
 
 blp = Blueprint('Comments', __name__, description='Operations related to comments')
 
@@ -30,4 +31,17 @@ class BlogComments(MethodView):
 @blp.route('/blogs/<int:blogId>/comments/<int:commentId>')
 class GetSpecificCommentForBlog(MethodView):
     def get(self, blogId, commentId):
-        return {"message": f"Comment {commentId} for blogs {blogId}"}
+        comment = GetComments.get_specific_comment(blogId, commentId)
+        if comment:
+            return comment, 200
+        abort(404, detail="comment not found")
+
+    def put(self, blogId, commentId):
+        comment_info = request.get_json()
+        update_comment = UpdateComment(blog_id=blogId, comment_id=commentId, content=comment_info.get('content'))
+        if not update_comment.authenticate_user():
+            abort(403, detail="Operation not allowed")
+
+        update_comment.update_content()
+        return {"message": "Successfully updated the comment"}, 200
+
