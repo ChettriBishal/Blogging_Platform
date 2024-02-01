@@ -4,6 +4,7 @@ from flask_smorest import Blueprint, abort
 
 from controllers.blogs.get_blogs import GetBlogs
 from controllers.blogs.update_blog import UpdateBlog
+from controllers.blogs.remove_blog import RemoveBlog
 
 blp = Blueprint('Blog', __name__, description='Operations on blogs')
 
@@ -36,11 +37,14 @@ class GetSpecificBlog(MethodView):
         update_blog.update_tag()
 
         return {"message": "Successfully updated the blog"}, 200
-        # if content and not update_blog.update_content():
-        #     pass
-        # if title and update_blog.update_title():
-        #     pass
-        # if tag and update_blog.update_tag():
-        #     pass
 
-# put operation on a blog, just check if the creator id is same as the current user in session
+    def delete(self, blogId):
+        remove_blog = RemoveBlog(blog_id=blogId)
+        if not remove_blog.authenticate_user():
+            abort(403, detail="Operation not allowed")
+
+        status = remove_blog.remove_blog_by_id()
+        if status:
+            return {"message": "Successfully removed the blog"}, 200
+        abort(500, detail="Could not remove the blog")
+

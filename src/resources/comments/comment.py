@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from controllers.comments.add_comment import AddComment
 from controllers.comments.get_comments import GetComments
 from controllers.comments.update_comment import UpdateComment
+from controllers.comments.remove_comment import RemoveComment
 
 blp = Blueprint('Comments', __name__, description='Operations related to comments')
 
@@ -45,3 +46,10 @@ class GetSpecificCommentForBlog(MethodView):
         update_comment.update_content()
         return {"message": "Successfully updated the comment"}, 200
 
+    def delete(self, blogId, commentId):
+        remove_comment = RemoveComment(blog_id=blogId, comment_id=commentId)
+        if not remove_comment.authenticate_user():
+            abort(403, detail="Operation not allowed")
+
+        remove_comment.remove_comment()
+        return {"message": "Successfully removed the comment"}, 200

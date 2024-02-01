@@ -1,6 +1,7 @@
 from models.database import Database
 from config.sql_query_mysql import Sql
 from loggers.general_logger import GeneralLogger
+from handlers.comments.remove_comment_handler import RemoveCommentHandler
 from config import filepaths
 
 
@@ -10,22 +11,15 @@ class RemoveBlogHandler:
         """
         This function allows the user to remove his blogs
         """
-        title = take_input.get_title()
-        blog_details = Database.get_item(Sql.GET_BLOG_RECORD.value, (title, active_user.username))
+        try:
+            # firstly remove all the comments of the blog
+            RemoveCommentHandler.remove_comment_by_blog_id(blog_id)
+            # then remove the blog
+            Database.remove_item(Sql.REMOVE_BLOG_BY_ID.value, (blog_id,))
+            return True
 
-        if blog_details is None:
-            print(prompts.BLOG_NOT_FOUND_BLOG_USER.format(title, active_user.username))
-            return Flag.DOES_NOT_EXIST.value
+        except Exception as exc:
+            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
+            return False
 
-        # create blogs object
-        current_blog = Blog(blog_details[1:])
-        current_blog.set_blog_id(blog_details[0])
 
-        blog_removed = current_blog.remove_content()
-
-        if blog_removed:
-            print(prompts.BLOG_REMOVED.format(title))
-            GeneralLogger.info(prompts.BLOG_REMOVED.format(title), filepaths.BLOG_LOG_FILE)
-
-        else:
-            print(prompts.COULD_NOT_REMOVE_BLOG)
