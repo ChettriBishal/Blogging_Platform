@@ -19,3 +19,7 @@ class DoesNotExist(CustomException):
 
 class AlreadyExists(CustomException):
     pass
+
+
+class DbException(CustomException):
+    pass
