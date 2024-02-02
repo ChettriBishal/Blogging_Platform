@@ -7,6 +7,7 @@ from config import filepaths
 class UpdateBlogHandler:
     @staticmethod
     def update_blog_title(blog_id, new_title):
+        """Update the title of the blog"""
         try:
             Database.query_with_params(Sql.EDIT_BLOG_TITLE.value, (new_title, blog_id,))
             return True
@@ -16,6 +17,7 @@ class UpdateBlogHandler:
 
     @staticmethod
     def update_blog_content(blog_id, new_content):
+        """Update the actual content of a specific blog"""
         try:
             Database.query_with_params(Sql.EDIT_BLOG_CONTENT.value, (new_content, blog_id,))
             return True
@@ -25,6 +27,7 @@ class UpdateBlogHandler:
 
     @staticmethod
     def update_blog_tag(blog_id, new_tag):
+        """Update the blog tag for a given blog"""
         try:
             Database.query_with_params(Sql.EDIT_BLOG_TAG.value, (new_tag, blog_id,))
             return True

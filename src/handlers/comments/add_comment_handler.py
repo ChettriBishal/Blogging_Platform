@@ -8,6 +8,7 @@ from typing import Union
 class AddCommentHandler:
     @staticmethod
     def add_new_comment(comment_details) -> Union[int, bool, None]:
+        """To add a new comment into the DB"""
         try:
             comment_id = Database.insert_item(Sql.INSERT_COMMENT.value, comment_details)
             if comment_id:

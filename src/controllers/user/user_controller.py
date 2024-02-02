@@ -49,15 +49,4 @@ class UserController:
         """
         To change the password: performed by the active user
         """
-        new_passw = take_input.get_new_password()
-
-        if validation.validate_password(new_passw):
-            hashed_passw = HashPassword.hash_password(new_passw)
-
-            if active_user.change_password(hashed_passw):
-                print(prompts.SUCCESSFUL_PASSWORD_CHANGE)
-                GeneralLogger.info(prompts.USER_CHANGED_PASSWORD.format(active_user.username), filepaths.USER_LOG_FILE)
-
-        else:
-            print(prompts.ENTER_STRONG_PASSWORD)
-            change_password(active_user)
+        pass

@@ -1,8 +1,4 @@
 from typing import Tuple, Dict, Union
-
-from config.flags import Flag
-from utils import validation
-
 from handlers.authentication.user.user_login_handler import UserLoginHandler
 from utils.exceptions import DbException, WrongCredentials, DoesNotExist
 

@@ -26,6 +26,7 @@ class CreateBlog:
         return resultant_blog_info
 
     def create_new_blog(self) -> bool:
+        """To create a new blog"""
         blog_post_d = self.create_blog_details_obj()
         blog_added = AddBlogHandler.add_new_blog(blog_post_d)
         if blog_added:

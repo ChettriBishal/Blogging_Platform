@@ -18,6 +18,7 @@ class RemoveComment:
         return True
 
     def remove_comment(self):
+        """Remove comment by its ID"""
         comment_removed = RemoveCommentHandler.remove_comment_by_id(self.comment_id)
         return comment_removed
 

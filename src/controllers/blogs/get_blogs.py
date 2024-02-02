@@ -15,8 +15,6 @@ class GetBlogs:
         elif 'username' not in kwargs and 'user_id' in kwargs:
             self.username = UserInfoHandler.get_username_by_userid(kwargs['user_id'])
 
-    # def blog_info_to_json(self, blog_info):
-
     @staticmethod
     def get_all_blogs():
         """
