@@ -6,6 +6,7 @@ from typing import Any, Optional, Tuple, List
 from loggers.general_logger import GeneralLogger
 from config import filepaths
 from models.db_connection import DBConnection
+from utils.exceptions import DbException
 
 
 class Database:
@@ -28,6 +29,7 @@ class Database:
 
             except mysql.connector.Error as error:
                 GeneralLogger.error(str(error), filepaths.DB_LOG_FILE)
+                raise DbException(code=500, message="Could not fetch the data")
 
     @classmethod
     def get_items(cls, query: str, data=None) -> Optional[List]:
@@ -46,7 +48,7 @@ class Database:
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
-                return None
+                raise DbException(code=500, message="Could not fetch the data")
 
     @classmethod
     def insert_item(cls, query: str, data: Any) -> Optional[int]:
@@ -62,7 +64,7 @@ class Database:
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
-                return None
+                raise DbException(code=500, message="Could not insert data")
 
     @classmethod
     def remove_item(cls, query: str, data: Any) -> Optional[None]:
@@ -77,7 +79,7 @@ class Database:
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
-                return None
+                raise DbException(code=500, message="Could not remove data")
 
     @classmethod
     def single_query(cls, query: str) -> Optional[None]:
@@ -92,7 +94,7 @@ class Database:
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
-                return None
+                raise DbException(code=500, message="Could not process data")
 
     @classmethod
     def query_with_params(cls, query: str, data: Any) -> Optional[None]:
@@ -107,4 +109,4 @@ class Database:
             except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
-                return None
+                raise DbException(code=500, message="Could not process data")

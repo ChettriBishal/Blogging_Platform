@@ -31,15 +31,18 @@ class UserController:
             GeneralLogger.info(permission_exc, filepaths.USER_LOG_FILE)
 
     def get_user_details_by_username(self, username) -> Dict:
+        """Get user details by username"""
         user_info = UserInfoHandler.get_user_row_by_username(username)
         return UserResponse(user_info).to_dict()
 
     def get_user_details_by_userid(self, userid) -> Dict:
+        """Get user details by user ID"""
         username = UserInfoHandler.get_username_by_userid(userid)
         userinfo = self.get_user_details_by_username(username[0])
         return userinfo
 
     def remove_user_by_username(self):
+        """To remove user by username -> only performed by admins"""
         pass
 
     def change_password(active_user: User) -> None:

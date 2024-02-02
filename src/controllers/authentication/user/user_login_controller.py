@@ -1,9 +1,10 @@
-from typing import Tuple
+from typing import Tuple, Dict, Union
 
 from config.flags import Flag
 from utils import validation
 
 from handlers.authentication.user.user_login_handler import UserLoginHandler
+from utils.exceptions import DbException, WrongCredentials, DoesNotExist
 
 
 class UserLogin:
@@ -12,20 +13,20 @@ class UserLogin:
     """
 
     @staticmethod
-    def sign_in(*user_info: Tuple) -> bool:
+    def sign_in(*user_info: Tuple):
         """
         Method to allow user entry to the system
         """
-        username, password = user_info
+        try:
+            user_logged_in = UserLoginHandler(user_info)
+            return user_logged_in.user_login()
 
-        if validation.validate_username(username) is None:
-            return Flag.INVALID_USERNAME.value
+        except DbException as exc:
+            return {"code": exc.code, "message": exc.message}, exc.code
 
-        user_presence = UserLoginHandler.check_user_presence(user_info)
-        if not user_presence:
-            return Flag.DOES_NOT_EXIST.value
+        except WrongCredentials as exc:
+            return {"message": exc.message}, exc.code
 
-        user_logged_in = UserLoginHandler.authenticate_user(user_info)
-
-        return user_logged_in
+        except DoesNotExist as exc:
+            return {"message": exc.message}, exc.code
 

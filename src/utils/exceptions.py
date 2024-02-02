@@ -23,3 +23,7 @@ class AlreadyExists(CustomException):
 
 class DbException(CustomException):
     pass
+
+
+class WrongCredentials(CustomException):
+    pass

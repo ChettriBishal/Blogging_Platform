@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class Config:
+class FlaskConfig:
     PROPAGATE_EXCEPTIONS = True
     API_TITLE = "Blogging Platform API"
     API_VERSION = "v1"
