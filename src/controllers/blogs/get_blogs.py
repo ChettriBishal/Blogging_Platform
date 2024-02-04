@@ -6,7 +6,7 @@ from models.blogs.blog_response import BlogResponse
 
 
 class GetBlogs:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self.user_id = kwargs.get('user_id')
         self.username = kwargs.get('username')
 

@@ -1,15 +1,14 @@
 from flask.views import MethodView
 from config.flags import Flag
 from models.user.user_model import User
-
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
-
+from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
 from schemas.authentication_schema import SignUpSchema, LoginSchema
 from controllers.authentication.user.user_login_controller import UserLogin
 from controllers.authentication.user.user_signup_controller import UserSignUp
 from controllers.user.user_controller import UserController
 from config.message import Message
+from config.constants import authorization_bearer
 
 blp = Blueprint("User", __name__, description="User operations")
 
@@ -19,11 +18,7 @@ class UserSignUpRoute(MethodView):
     @blp.arguments(SignUpSchema)
     def post(self, user_data):
         auth_val = UserSignUp.sign_up(user_data['username'], user_data['password'], user_data['email'])
-
-        if auth_val == Flag.ALREADY_EXISTS.value:
-            abort(409, message=Message.USER_ALREADY_EXISTS)
-        elif isinstance(auth_val, User):
-            return {"message": Message.BLOGGER_REGISTERED}, 201
+        return auth_val
 
 
 @blp.route('/login')
@@ -37,12 +32,13 @@ class UserLoginRoute(MethodView):
 @blp.route('/logout')
 class UserLogoutRoute(MethodView):
     def post(self):
-        return {"message": "Signed out successfully"}
+        return {"message": Message.SIGNED_OUT}
 
 
 @blp.route('/personal')
 class GetUserData(MethodView):
     @jwt_required()
+    @blp.doc(parameters=authorization_bearer)
     def get(self):
         user_access_object = UserController()
         return user_access_object.get_self_details()

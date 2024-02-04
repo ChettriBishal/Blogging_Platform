@@ -5,6 +5,8 @@ from flask_smorest import Blueprint, abort
 from controllers.blogs.get_blogs import GetBlogs
 from controllers.blogs.update_blog import UpdateBlog
 from controllers.blogs.remove_blog import RemoveBlog
+from config.constants import authorization_bearer
+from config.message import Message
 
 blp = Blueprint('Blog', __name__, description='Operations on blogs')
 
@@ -22,6 +24,7 @@ class GetSpecificBlog(MethodView):
         blog = GetBlogs.get_single_blog(blogId)
         return blog
 
+    @blp.doc(parameters=authorization_bearer)
     def put(self, blogId):
         updated_info = request.get_json()
         content = updated_info.get('content')
@@ -30,21 +33,22 @@ class GetSpecificBlog(MethodView):
 
         update_blog = UpdateBlog(blog_id=blogId, content=content, title=title, tag=tag)
         if not update_blog.authenticate_user():
-            abort(403, detail="Only the writer can edit the blog")
+            abort(403, detail=Message.OPERATION_NOT_ALLOWED)
 
         update_blog.update_content()
         update_blog.update_title()
         update_blog.update_tag()
 
-        return {"message": "Successfully updated the blog"}, 200
+        return {"message": Message.SUCCESSFUL_UPDATE}, 200
 
+    @blp.doc(parameters=authorization_bearer)
     def delete(self, blogId):
         remove_blog = RemoveBlog(blog_id=blogId)
         if not remove_blog.authenticate_user():
-            abort(403, detail="Operation not allowed")
+            abort(403, detail=Message.OPERATION_NOT_ALLOWED)
 
         status = remove_blog.remove_blog_by_id()
         if status:
-            return {"message": "Successfully removed the blog"}, 200
-        abort(500, detail="Could not remove the blog")
+            return {"message": Message.SUCCESSFUL_REMOVAL}, 200
+        abort(500, detail=Message.FAILURE_IN_REMOVAL)
 

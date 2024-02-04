@@ -5,12 +5,14 @@ from config.sql_query_mysql import Sql
 from models.database import Database
 from loggers.general_logger import GeneralLogger
 from config import filepaths
+from utils.exceptions import DbException
 
 
 class User:
     """
     Class containing various methods associated to a user object
     """
+
     def __init__(self, *user_info):
         (
             # receive user_id from the database itself
@@ -43,9 +45,9 @@ class User:
             self.user_id = Database.insert_item(Sql.INSERT_USER.value, self.user_info)
             return True
 
-        except Exception as exc:
-            GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
-            return False
+        except DbException as exc:
+            GeneralLogger.error(exc.message, filepaths.USER_LOG_FILE)
+            raise DbException
 
     def set_user_id(self, user_id: str) -> None:
         """
@@ -76,5 +78,3 @@ class User:
         except Exception as exc:
             GeneralLogger.error(exc, filepaths.USER_LOG_FILE)
             return False
-
-

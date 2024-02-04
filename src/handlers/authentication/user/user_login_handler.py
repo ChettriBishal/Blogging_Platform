@@ -28,8 +28,8 @@ class UserLoginHandler:
         """To validate user info as entered against the database"""
         try:
             username, password = self.userinfo
-
             password_in_db = Database.get_item(Sql.GET_PASSWORD.value, (username,))[0]
+
             if CheckPassword.check_password(password, password_in_db):
                 return True
             return False
