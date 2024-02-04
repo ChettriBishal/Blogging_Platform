@@ -3,6 +3,8 @@ from config.sql_query_mysql import Sql
 from models.database import Database
 from loggers.general_logger import GeneralLogger
 from config import filepaths
+from utils.exceptions import DbException
+from config.message import Message
 
 
 class AddBlogHandler:
@@ -15,6 +17,6 @@ class AddBlogHandler:
                 return blog_id
             return False
 
-        except Exception as exc:
-            # create a custom exception to handle this
-            GeneralLogger.error(exc, filepaths.BLOG_LOG_FILE)
+        except DbException as exc:
+            GeneralLogger.error(exc.message, filepaths.BLOG_LOG_FILE)
+            raise DbException(code=exc.code, message=Message.COULD_NOT_ADD_BLOG)

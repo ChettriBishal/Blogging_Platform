@@ -27,3 +27,7 @@ class DbException(CustomException):
 
 class WrongCredentials(CustomException):
     pass
+
+
+class InsufficientPermission(CustomException):
+    pass

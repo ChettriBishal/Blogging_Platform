@@ -23,3 +23,6 @@ class Message:
     COULD_NOT_FETCH = "Could not fetch the required data."
     COULD_NOT_INSERT = "Could not insert the required data."
     COULD_NOT_COMPLETE = "Could not complete the request."
+    COULD_NOT_ADD_BLOG = "Could not add the blog."
+    COULD_NOT_UPDATE_TITLE = "Could not update the title of the blog."
+    COULD_NOT_UPDATE_CONTENT_BLOG = "Could not update the content of the blog."

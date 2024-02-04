@@ -1,6 +1,8 @@
 from datetime import datetime
 from handlers.blogs.add_blog_handler import AddBlogHandler
-from typing import Tuple
+from typing import Tuple, Any
+from utils.exceptions import DbException
+from config.message import Message
 
 
 class CreateBlog:
@@ -25,11 +27,13 @@ class CreateBlog:
         resultant_blog_info = (self.title, self.content, self.user_id, 0, self.tag, current_date)
         return resultant_blog_info
 
-    def create_new_blog(self) -> bool:
+    def create_new_blog(self) -> tuple[dict[str, Any], int] | bool | Any:
         """To create a new blog"""
-        blog_post_d = self.create_blog_details_obj()
-        blog_added = AddBlogHandler.add_new_blog(blog_post_d)
-        if blog_added:
-            return True
-
-        return False
+        try:
+            blog_post_d = self.create_blog_details_obj()
+            blog_added = AddBlogHandler.add_new_blog(blog_post_d)
+            if blog_added:
+                return {"message": Message.SUCCESSFUL_POST}, 201
+            return {"message": Message.FAILURE_IN_POST}, 500
+        except DbException as exc:
+            return exc.dump()

@@ -2,9 +2,10 @@ from handlers.blogs.update_blog_handler import UpdateBlogHandler
 from utils.users.get_current_user import GetCurrentUser
 from handlers.user.user_info_handler import UserInfoHandler
 from handlers.blogs.blog_info_handler import BlogInfoHandler
+from config.message import Message
+from utils.exceptions import DbException
 
 
-# you can update the title, tag or the content nothing else
 class UpdateBlog:
     def __init__(self, **kwargs):
         self.blog_id = kwargs.get('blog_id')
@@ -38,3 +39,16 @@ class UpdateBlog:
             update_status = UpdateBlogHandler.update_blog_tag(self.blog_id, self.tag)
             return update_status
 
+    def update_the_blog(self):
+        try:
+            if not self.authenticate_user():
+                return {"message": Message.OPERATION_NOT_ALLOWED}, 403
+
+            self.update_tag()
+            self.update_content()
+            self.update_title()
+
+            return {"message": Message.SUCCESSFUL_UPDATE}, 200
+
+        except DbException as exc:
+            return exc.dump()
