@@ -19,9 +19,9 @@ class RemoveBlog:
 
     def remove_blog_by_id(self):
         """Remove blog by id"""
-        if not self.authenticate_user():
-            return {"message": Message.OPERATION_NOT_ALLOWED}, 403
         try:
+            if not self.authenticate_user():
+                return {"message": Message.OPERATION_NOT_ALLOWED}, 403
             blog_removed = RemoveBlogHandler.remove_blog(self.blog_id)
             if blog_removed:
                 return {"message": Message.SUCCESSFUL_REMOVAL}, 200
