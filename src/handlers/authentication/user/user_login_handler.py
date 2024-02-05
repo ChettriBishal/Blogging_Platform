@@ -5,6 +5,7 @@ from models.database import Database
 from config.sql_query_mysql import Sql
 from utils.authentication.check_password_util import CheckPassword
 from utils.exceptions import DbException, DoesNotExist, WrongCredentials
+from utils.tokens.token import Token
 from config.message import Message
 
 
@@ -46,13 +47,8 @@ class UserLoginHandler:
             user_logged_in = self.authenticate_user()
 
             if user_logged_in:
-                user_additional_claims = {"username": self.username}
-                access_token = create_access_token(identity=self.username, fresh=True,
-                                                   additional_claims=user_additional_claims)
-                refresh_token = create_refresh_token(identity=self.username,
-                                                     additional_claims=user_additional_claims)
-
-                return {"access_token": access_token, "refresh_token": refresh_token}, 200
+                tokens = Token.generate_token(self.username)
+                return tokens, 200
             else:
                 raise WrongCredentials(code=401, message=Message.WRONG_CREDENTIALS)
 

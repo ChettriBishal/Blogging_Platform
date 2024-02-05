@@ -35,6 +35,20 @@ class Sql(Enum):
     )
     """
 
+    CREATE_TOKENS_TABLE = """
+    CREATE TABLE IF NOT EXISTS tokens(
+    token_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    access_token TEXT,
+    refresh_token TEXT,
+    token_status TEXT,
+    FOREIGN KEY (user_id) 
+        REFERENCES users(user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    )
+    """
+
     CREATE_BLOG_UPVOTES_TABLE = """
     CREATE TABLE IF NOT EXISTS blog_upvotes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -278,5 +292,23 @@ class Sql(Enum):
 
     GET_ALL_BLOGS = """
     SELECT * FROM blogs
+    """
+
+    INSERT_TOKEN_DETAILS = """
+    INSERT INTO tokens(
+    user_id, access_token, refresh_token
+    ) VALUES (%s, %s, %s)  
+    """
+
+    UPDATE_TOKEN_STATUS = """
+    UPDATE tokens
+    SET token_status = %s
+    WHERE access_token = %s
+    """
+
+    GET_TOKEN_STATUS = """
+    SELECT token_status
+    FROM tokens
+    WHERE access_token = %s
     """
 
