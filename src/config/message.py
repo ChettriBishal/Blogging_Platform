@@ -26,3 +26,4 @@ class Message:
     COULD_NOT_ADD_BLOG = "Could not add the blog."
     COULD_NOT_UPDATE_TITLE = "Could not update the title of the blog."
     COULD_NOT_UPDATE_CONTENT_BLOG = "Could not update the content of the blog."
+    LOGGED_OUT = "Logged out successfully."

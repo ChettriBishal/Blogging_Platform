@@ -1,13 +1,11 @@
 from flask.views import MethodView
-from config.flags import Flag
-from models.user.user_model import User
-from flask_jwt_extended import jwt_required
-from flask_smorest import Blueprint, abort
+from flask_jwt_extended import jwt_required, get_jwt
+from flask_smorest import Blueprint
 from schemas.authentication_schema import SignUpSchema, LoginSchema
 from controllers.authentication.user.user_login_controller import UserLogin
 from controllers.authentication.user.user_signup_controller import UserSignUp
 from controllers.user.user_controller import UserController
-from config.message import Message
+from controllers.authentication.user.user_logout_controller import LogoutController
 from config.constants import authorization_bearer
 
 blp = Blueprint("User", __name__, description="User operations")
@@ -31,8 +29,12 @@ class UserLoginRoute(MethodView):
 
 @blp.route('/logout')
 class UserLogoutRoute(MethodView):
+    @jwt_required()
+    @blp.doc(parameters=authorization_bearer)
     def post(self):
-        return {"message": Message.SIGNED_OUT}
+        token = get_jwt()
+        logout_response = LogoutController.logout(token)
+        return logout_response
 
 
 @blp.route('/personal')

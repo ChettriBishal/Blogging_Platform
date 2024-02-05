@@ -12,8 +12,6 @@ app.app_context().push()
 app.config.from_object(FlaskConfig)
 
 api = Api(app)
-
-
 jwt = JWTManager(app)
 
 api.register_blueprint(UserRoute)
