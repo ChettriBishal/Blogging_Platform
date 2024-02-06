@@ -7,15 +7,17 @@ from flask_jwt_extended import create_access_token, create_refresh_token, get_jt
 class Token:
     @staticmethod
     def check_token_revoked(jwt_payload):
-        jti_access_token = jwt_payload["jti"]
+        """check if token is revoked or not"""
+        jti_access_token = jwt_payload.get('jti')
 
-        result = Database.get_item(Sql.GET_TOKEN_STATUS.value, (jti_access_token,))
-        if result[0]['token_status'] == "revoked":
+        result = Database.get_item(Sql.GET_TOKEN_STATUS.value, (jti_access_token,))[0]
+        if result == "revoked":
             return True
         return False
 
     @staticmethod
     def revoke_token(jwt_payload):
+        """To change the status of token to revoked"""
         jti_access_token = jwt_payload["jti"]
 
         Database.query_with_params(Sql.UPDATE_TOKEN_STATUS.value, ('revoked', jti_access_token,))

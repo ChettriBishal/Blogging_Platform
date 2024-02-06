@@ -1,8 +1,5 @@
-from models.comments.comment import Comment
 from datetime import datetime
-from config.filepaths import COMMENT_LOG_FILE
-from config import prompts
-from loggers.general_logger import GeneralLogger
+from utils.exceptions import DbException
 from utils.users.get_current_user import GetCurrentUser
 from handlers.user.user_info_handler import UserInfoHandler
 from handlers.comments.add_comment_handler import AddCommentHandler
@@ -30,11 +27,13 @@ class AddComment:
 
     def add_comment(self):
         """To add a new comments to a blogs"""
+        try:
+            self.structure_comment_info()
+            comment_id = AddCommentHandler.add_new_comment(self.comment_info)
 
-        self.structure_comment_info()
-        comment_id = AddCommentHandler.add_new_comment(self.comment_info)
-
-        if comment_id:
-            return True
-        else:
-            return False
+            if comment_id:
+                return True
+            else:
+                return False
+        except DbException as exc:
+            return exc.dump()

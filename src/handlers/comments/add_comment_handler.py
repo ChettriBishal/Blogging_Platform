@@ -3,6 +3,8 @@ from config.sql_query_mysql import Sql
 from loggers.general_logger import GeneralLogger
 from config import filepaths
 from typing import Union
+from utils.exceptions import DbException
+from config.message import Message
 
 
 class AddCommentHandler:
@@ -15,6 +17,6 @@ class AddCommentHandler:
                 return comment_id
             return False
 
-        except Exception as exc:
-            # create a custom exception to handle this
+        except DbException as exc:
             GeneralLogger.error(exc, filepaths.COMMENT_LOG_FILE)
+            raise DbException(exc.code, Message.COULD_NOT_COMMENT)

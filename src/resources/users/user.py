@@ -30,7 +30,7 @@ class UserLoginRoute(MethodView):
 @blp.route('/logout')
 class UserLogoutRoute(MethodView):
     @jwt_required()
-    @blp.doc(parameters=authorization_bearer)
+    # @blp.doc(parameters=authorization_bearer)
     def post(self):
         token = get_jwt()
         logout_response = LogoutController.logout(token)
