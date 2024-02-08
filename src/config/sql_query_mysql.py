@@ -299,12 +299,12 @@ class Sql(Enum):
     user_id, access_token, refresh_token
     ) VALUES (%s, %s, %s)  
     """
-
     UPDATE_TOKEN_STATUS = """
-    UPDATE tokens
-    SET token_status = %s
-    WHERE access_token = %s
-    """
+        UPDATE tokens
+        SET token_status = %s
+        WHERE access_token = %s
+        """
+
 
     GET_TOKEN_STATUS = """
     SELECT token_status
