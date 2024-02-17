@@ -11,6 +11,10 @@ class RemoveBlog:
 
     def authenticate_user(self):
         """Check if the user in session was the actual creator"""
+        current_user_role = GetCurrentUser.get_user_role()
+        if int(current_user_role) == 1:  # if admin
+            return True
+
         current_userid = GetCurrentUser.get_user_id()
         creator_id = BlogInfoHandler.get_creator_id_from_blog_id(self.blog_id)
         if current_userid != creator_id:
@@ -28,5 +32,3 @@ class RemoveBlog:
             return {"message": Message.FAILURE_IN_REMOVAL}, 500
         except DbException as exc:
             return exc.dump()
-
-

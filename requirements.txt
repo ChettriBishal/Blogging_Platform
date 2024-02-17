@@ -10,3 +10,4 @@ python-dotenv~=1.0.0
 Werkzeug~=3.0.1
 mysql~=0.0.3
 mysql-connector-python~=8.3.0
+shortuuid~=1.0.11

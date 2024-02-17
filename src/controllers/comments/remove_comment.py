@@ -11,6 +11,10 @@ class RemoveComment:
 
     def authenticate_user(self):
         """Authenticate that the current user in session has commented on the blog"""
+        current_user_role = GetCurrentUser.get_user_role()
+        if int(current_user_role) == 1:  # if admin
+            return True
+
         current_userid = GetCurrentUser.get_user_id()
         creator_id = CommentInfoHandler.get_creator_id_for_comment(self.blog_id, self.comment_id)
         if current_userid != creator_id:

@@ -117,6 +117,11 @@ class Sql(Enum):
     WHERE username = %s
     """
 
+    REMOVE_USER_BY_USERID = """
+    DELETE FROM users 
+    WHERE user_id = %s
+    """
+
     UPDATE_PASSWORD = """
     UPDATE users 
     SET password = %s

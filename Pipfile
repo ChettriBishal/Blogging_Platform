@@ -12,6 +12,7 @@ prettytable = "*"
 mysql = "*"
 python-dotenv = "*"
 mysql-connector-python = "*"
+shortuuid = "*"
 
 [dev-packages]
 
