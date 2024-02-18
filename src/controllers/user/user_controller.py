@@ -7,7 +7,8 @@ from loggers.general_logger import GeneralLogger
 from models.user.user_response_model import UserResponse
 from utils.users.get_current_user import GetCurrentUser
 from handlers.user.user_info_handler import UserInfoHandler
-
+from utils.exceptions import DbException
+from config.message import Message
 
 class UserController:
     """This will help with user related operations"""
@@ -41,9 +42,21 @@ class UserController:
         userinfo = self.get_user_details_by_username(username[0])
         return userinfo
 
-    def remove_user_by_username(self):
+    def remove_user_by_username(self, username):
         """To remove user by username -> only performed by admins"""
-        pass
+        try:
+            UserInfoHandler.remove_user_by_username(username)
+            return {"code": 200, "message": Message.USER_REMOVED}
+        except DbException as exc:
+            return {"code": exc.code, "message": exc.message}, exc.code
+
+    def remove_user_by_userid(self, userid):
+        """To remove user by username -> only performed by admins"""
+        try:
+            UserInfoHandler.remove_user_by_userid(userid)
+            return {"code": 200, "message": Message.USER_REMOVED}
+        except DbException as exc:
+            return {"code": exc.code, "message": exc.message}, exc.code
 
     def change_password(active_user: User) -> None:
         """

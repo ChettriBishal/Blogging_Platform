@@ -3,6 +3,7 @@ from resources.users.user import blp as UserRoute
 from resources.blogs.blog import blp as BlogRoute
 from resources.comments.comment import blp as CommentRoute
 from resources.blogs.user_blog import blp as UserBlogRoute
+from resources.users.admin import blp as AdminRoute
 from flask_smorest import Api
 from config.flask_config import FlaskConfig
 from utils.tokens.jwt_config_loader import initialise_jwt_config
@@ -26,6 +27,7 @@ api.register_blueprint(UserRoute)
 api.register_blueprint(BlogRoute)
 api.register_blueprint(CommentRoute)
 api.register_blueprint(UserBlogRoute)
+api.register_blueprint(AdminRoute)
 
 
 if __name__ == "__main__":

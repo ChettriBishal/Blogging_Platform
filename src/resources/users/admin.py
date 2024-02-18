@@ -6,13 +6,13 @@ from config.constants import authorization_bearer
 blp = Blueprint("Admin", __name__, description="Admin operations")
 
 
-
 @blp.route('/users/<int:userId>')
 class RemoveUserById(MethodView):
     @blp.doc(parameters=authorization_bearer)
     def delete(self, userId):
+        print("Inside the resource///")
         user_access_object = UserController()
-        return user_access_object.remove_user_by_username(userId)
+        return user_access_object.remove_user_by_userid(userId)
 
 
 @blp.route('/users/<string:username>')
@@ -20,4 +20,4 @@ class RemoveUserByUsername(MethodView):
     @blp.doc(parameters=authorization_bearer)
     def delete(self, username):
         user_access_object = UserController()
-        return user_access_object.get_user_details_by_username(username)
+        return user_access_object.remove_user_by_username(username)
