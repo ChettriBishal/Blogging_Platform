@@ -1,4 +1,5 @@
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from controllers.blogs.get_blogs import GetBlogs
@@ -22,6 +23,7 @@ class GetSpecificBlog(MethodView):
         blog = GetBlogs.get_single_blog(blogId)
         return blog
 
+    @jwt_required()
     @blp.doc(parameters=authorization_bearer)
     def put(self, blogId):
         updated_info = request.get_json()
@@ -33,6 +35,7 @@ class GetSpecificBlog(MethodView):
         update_blog_status = update_blog.update_the_blog()
         return update_blog_status
 
+    @jwt_required()
     @blp.doc(parameters=authorization_bearer)
     def delete(self, blogId):
         remove_blog = RemoveBlog(blog_id=blogId)
