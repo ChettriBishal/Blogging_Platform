@@ -27,7 +27,7 @@ class UserSignUpHandler:
         except DbException:
             raise DbException(code=500, message=Message.INTERNAL_SERVER_ERROR)
 
-    def register_user(self) -> Union[User, None]:
+    def register_user(self) -> int:
         """This creates a user object which interacts with the database"""
         try:
             if self.check_user_presence():
@@ -38,7 +38,7 @@ class UserSignUpHandler:
             registration_date = datetime.today().strftime('%Y-%m-%d')
             new_user = User(username, hashed_password, Role.BLOGGER.value, email, registration_date)
 
-            new_user.add()
-            return new_user
+            user_id = new_user.add()
+            return user_id
         except DbException:
             raise DbException

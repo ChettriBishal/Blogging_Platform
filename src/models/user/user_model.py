@@ -37,13 +37,13 @@ class User:
             'registration_date': self.registration_date,
         }
 
-    def add(self) -> bool:
+    def add(self) -> int:
         """
         Method to add a new user to the system
         """
         try:
             self.user_id = Database.insert_item(Sql.INSERT_USER.value, self.user_info)
-            return True
+            return self.user_id
 
         except DbException as exc:
             GeneralLogger.error(exc.message, filepaths.USER_LOG_FILE)

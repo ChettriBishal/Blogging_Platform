@@ -21,7 +21,7 @@ class UserSignUp:
         """
         try:
             register_obj = UserSignUpHandler(user_info)
-            register_obj.register_user()
-            return {"message": Message.BLOGGER_REGISTERED}, 201
+            user_id = register_obj.register_user()
+            return {"userId": user_id, "message": Message.BLOGGER_REGISTERED}, 201
         except AlreadyExists as exc:
             return exc.dump()
