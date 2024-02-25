@@ -1,6 +1,7 @@
 """This module defines how db connection is created"""
 import os
 import mysql.connector
+import pymysql
 
 
 class DBConnection:
@@ -24,12 +25,21 @@ class DBConnection:
         """
         # self.connection = sqlite3.connect(self.host)
 
-        self.connection = mysql.connector.connect(
-            host='localhost',
-            user=os.getenv('DB_USERNAME'),
+        # self.connection = mysql.connector.connect(
+        #     host=os.getenv('DB_HOST'),
+        #     user=os.getenv('DB_USERNAME'),
+        #     password=os.getenv('DB_PASSWORD'),
+        #     database=os.getenv('DB_NAME')
+        # )
+        self.connection = pymysql.connect(
+            port=int(os.getenv('DB_PORT')),
+            cursorclass=pymysql.cursors.DictCursor,
+            host=os.getenv('DB_HOST'),
+            user=os.getenv('DB_USER'),
             password=os.getenv('DB_PASSWORD'),
-            database=os.getenv('DB_NAME')
+            db=os.getenv('DB_NAME'),
         )
+
         self.cursor = self.connection.cursor()
         return self.cursor
 

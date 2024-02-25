@@ -28,7 +28,7 @@ class BlogComments(MethodView):
         comment_object = AddComment(content=content, blog_id=blogId)
         comment_added = comment_object.add_comment()
         if comment_added:
-            return {"message": Message.SUCCESSFUL_POST}, 201
+            return {"commentId": comment_added, "message": Message.SUCCESSFUL_POST}, 201
         abort(500, detail=Message.COULD_NOT_COMMENT)
 
 

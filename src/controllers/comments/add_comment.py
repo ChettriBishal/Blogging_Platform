@@ -32,7 +32,7 @@ class AddComment:
             comment_id = AddCommentHandler.add_new_comment(self.comment_info)
 
             if comment_id:
-                return True
+                return comment_id
             else:
                 return False
         except DbException as exc:

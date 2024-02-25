@@ -33,7 +33,7 @@ class CreateBlog:
             blog_post_d = self.create_blog_details_obj()
             blog_added = AddBlogHandler.add_new_blog(blog_post_d)
             if blog_added:
-                return {"message": Message.SUCCESSFUL_POST}, 201
+                return {"blogId": blog_added, "message": Message.SUCCESSFUL_POST}, 201
             return {"message": Message.FAILURE_IN_POST}, 500
         except DbException as exc:
             return exc.dump()

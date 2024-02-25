@@ -1,6 +1,7 @@
 """This module defines the various database operations"""
 
 import mysql.connector
+import pymysql
 from typing import Any, Optional, Tuple, List
 
 from loggers.general_logger import GeneralLogger
@@ -28,7 +29,8 @@ class Database:
                 response = cursor.fetchone()
                 return response
 
-            except mysql.connector.Error as error:
+            # except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(str(error), filepaths.DB_LOG_FILE)
                 raise DbException(code=500, message=Message.COULD_NOT_FETCH)
 
@@ -46,7 +48,7 @@ class Database:
                 response = cursor.fetchall()
                 return response
 
-            except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_FETCH)
@@ -62,7 +64,7 @@ class Database:
                 cls.blog_db_connection.connection.commit()
                 return cursor.lastrowid
 
-            except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_INSERT)
@@ -77,7 +79,7 @@ class Database:
                 cursor.execute(query, data)
                 cls.blog_db_connection.connection.commit()
 
-            except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.FAILURE_IN_REMOVAL)
@@ -92,7 +94,7 @@ class Database:
                 cursor.execute(query)
                 cls.blog_db_connection.connection.commit()
 
-            except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_COMPLETE)
@@ -107,7 +109,7 @@ class Database:
                 cursor.execute(query, data)
                 cls.blog_db_connection.connection.commit()
 
-            except mysql.connector.Error as error:
+            except pymysql.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_COMPLETE)
