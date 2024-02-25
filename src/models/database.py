@@ -48,7 +48,7 @@ class Database:
                 response = cursor.fetchall()
                 return response
 
-            except pymysql.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_FETCH)
@@ -64,7 +64,7 @@ class Database:
                 cls.blog_db_connection.connection.commit()
                 return cursor.lastrowid
 
-            except pymysql.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_INSERT)
@@ -79,7 +79,7 @@ class Database:
                 cursor.execute(query, data)
                 cls.blog_db_connection.connection.commit()
 
-            except pymysql.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.FAILURE_IN_REMOVAL)
@@ -94,7 +94,7 @@ class Database:
                 cursor.execute(query)
                 cls.blog_db_connection.connection.commit()
 
-            except pymysql.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_COMPLETE)
@@ -109,7 +109,7 @@ class Database:
                 cursor.execute(query, data)
                 cls.blog_db_connection.connection.commit()
 
-            except pymysql.Error as error:
+            except mysql.connector.Error as error:
                 GeneralLogger.error(error, filepaths.DB_LOG_FILE)
                 cls.blog_db_connection.connection.rollback()
                 raise DbException(code=500, message=Message.COULD_NOT_COMPLETE)
